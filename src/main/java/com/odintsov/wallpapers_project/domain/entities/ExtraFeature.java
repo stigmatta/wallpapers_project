@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "WSH_EXTRA_FEATURES", schema = "SYS")
+@Table(name = "WSH_EXTRA_FEATURES")
 public class ExtraFeature {
 
     @Id

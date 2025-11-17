@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "WSH_ORDER_ITEM_EXTRA_FEATURES", schema = "SYS")
+@Table(name = "WSH_ORDER_ITEM_EXTRA_FEATURES")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

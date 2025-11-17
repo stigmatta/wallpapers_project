@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "WSH_PRINT_METHODS", schema = "SYS")
+@Table(name = "WSH_PRINT_METHODS")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

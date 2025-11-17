@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "WSH_PRINTING_METHODS_LINK", schema = "SYS")
+@Table(name = "WSH_PRINTING_METHODS_LINK")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

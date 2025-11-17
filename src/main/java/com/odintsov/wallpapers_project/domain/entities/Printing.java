@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "WSH_PRINTINGS", schema = "SYS")
+@Table(name = "WSH_PRINTINGS")
 public class Printing {
 
     @Id

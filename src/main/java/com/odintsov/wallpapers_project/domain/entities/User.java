@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "WSH_USERS", schema = "SYS")
+@Table(name = "WSH_USERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

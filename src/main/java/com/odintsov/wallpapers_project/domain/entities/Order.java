@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "WSH_ORDERS", schema = "SYS")
+@Table(name = "WSH_ORDERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
