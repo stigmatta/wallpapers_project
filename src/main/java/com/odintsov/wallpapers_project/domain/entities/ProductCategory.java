@@ -1,6 +1,5 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import com.odintsov.wallpapers_project.domain.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +20,8 @@ public class ProductCategory {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "PRODUCT_TYPE", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_TYPE_ID") // Foreign key to WSH_PRODUCT_TYPES table
     private ProductType productType;
 }
 
