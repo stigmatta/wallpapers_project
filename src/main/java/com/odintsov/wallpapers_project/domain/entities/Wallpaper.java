@@ -23,11 +23,9 @@ public class Wallpaper {
     @JoinColumn(name = "CATEGORY_ID")
     private ProductCategory category;
 
-    // --- Добавленное Поле Цены ---
     @Column(nullable = false)
     private Double basePrice;
 
-    // --- Добавленное Отношение Many-to-Many ---
     @ManyToMany
     @JoinTable(
             name = "WSH_WALLPAPER_MATERIAL_LINK",

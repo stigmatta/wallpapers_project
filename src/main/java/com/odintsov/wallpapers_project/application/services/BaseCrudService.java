@@ -1,7 +1,14 @@
 package com.odintsov.wallpapers_project.application.services;
 
+import com.odintsov.wallpapers_project.application.exceptions.EntityNotFoundException;
 import com.odintsov.wallpapers_project.application.interfaces.BaseService;
+import com.odintsov.wallpapers_project.domain.repositories.BaseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 import java.util.List;
 
 /**
@@ -15,31 +22,50 @@ import java.util.List;
  * @param <T>  the type of the entity
  * @param <ID> the type of the entity identifier
  */
-public abstract class BaseCrudService<T, ID> implements BaseService<T, ID> {
+public abstract class BaseCrudService<
+        T,
+        ID,
+        DTO,
+        R extends BaseRepository<T, ID> & JpaSpecificationExecutor<T>>
+        implements BaseService<T, ID, DTO> {
 
     /**
      * The JPA repository used for performing CRUD operations.
      */
-    protected final JpaRepository<T, ID> repository;
+
+    protected final R repository;
 
     /**
      * Constructs a new BaseCrudService with the given JPA repository.
      *
      * @param repository the JPA repository used by this service
      */
-    protected BaseCrudService(JpaRepository<T, ID> repository) {
+    protected BaseCrudService(R repository) {
         this.repository = repository;
     }
 
     /**
-     * Retrieves all entities from the repository.
+     * Builds a Specification from a filter DTO.
+     * Must be implemented by each service that wants to support filtering.
      *
-     * @return a list of all entities
+     * @param filter a filter DTO
+     * @return Specification<T> representing the query conditions
      */
-    @Override
-    public List<T> findAll() {
-        return repository.findAll();
+    protected abstract Specification<T> buildSpecification(DTO filter);
+
+
+    /**
+     * Retrieves all entities that match the given specification, with pagination.
+     *
+     * @param filterDto     JPA Specification (filters)
+     * @param pageable pagination and sorting information
+     * @return paged list of entities
+     */
+    public Page<T> findAll(DTO filterDto, Pageable pageable) {
+        Specification<T> spec = buildSpecification(filterDto);
+        return repository.findAll(spec, pageable);
     }
+
 
     /**
      * Finds an entity by its ID.
@@ -51,7 +77,7 @@ public abstract class BaseCrudService<T, ID> implements BaseService<T, ID> {
     @Override
     public T findById(ID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(id));
     }
 
     /**
@@ -90,7 +116,7 @@ public abstract class BaseCrudService<T, ID> implements BaseService<T, ID> {
     @Override
     public T update(ID id, T entity) {
         repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(id));
         return repository.save(entity);
     }
 
