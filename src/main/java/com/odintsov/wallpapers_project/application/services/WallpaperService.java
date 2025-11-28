@@ -32,7 +32,7 @@ public class WallpaperService extends BaseCrudService<Wallpaper,
 
         if (filter.category() != null) {
             spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("category"), filter.category()));
+                    cb.equal(root.get("category").get("id"), filter.category()));
         }
 
         if (filter.basePrice() != null) {
@@ -42,7 +42,7 @@ public class WallpaperService extends BaseCrudService<Wallpaper,
 
         if (filter.availableMaterials() != null && !filter.availableMaterials().isEmpty()) {
             spec = spec.and((root, query, cb) ->
-                    root.get("material").in(filter.availableMaterials()));
+                    root.join("availableMaterials").get("id").in(filter.availableMaterials()));
         }
 
         return spec;
