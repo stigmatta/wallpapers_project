@@ -21,18 +21,23 @@ import java.util.List;
  *
  * @param <T>  the type of the entity
  * @param <ID> the type of the entity identifier
+ * @param <FilterDTO> the type of the filter DTO for queries
+ * @param <ListResponse> the type of the response DTO for list operations
+ * @param <DetailedResponse> the type of the response DTO for single entity operations
+ * @param <R> the repository type
  */
 public abstract class BaseCrudService<
         T,
         ID,
-        DTO,
+        FilterDTO,
+        ListResponse,
+        DetailedResponse,
         R extends BaseRepository<T, ID> & JpaSpecificationExecutor<T>>
-        implements BaseService<T, ID, DTO> {
+        implements BaseService<T, ID, FilterDTO, ListResponse, DetailedResponse> {
 
     /**
      * The JPA repository used for performing CRUD operations.
      */
-
     protected final R repository;
 
     /**
@@ -51,44 +56,66 @@ public abstract class BaseCrudService<
      * @param filter a filter DTO
      * @return Specification<T> representing the query conditions
      */
-    protected abstract Specification<T> buildSpecification(DTO filter);
+    protected abstract Specification<T> buildSpecification(FilterDTO filter);
 
+    /**
+     * Converts an entity to a list response DTO.
+     * Must be implemented by each service.
+     *
+     * @param entity the entity to convert
+     * @return the list response DTO
+     */
+    protected abstract ListResponse toListResponseDto(T entity);
+
+    /**
+     * Converts an entity to a detailed response DTO.
+     * Must be implemented by each service.
+     *
+     * @param entity the entity to convert
+     * @return the detailed response DTO
+     */
+    protected abstract DetailedResponse toDetailedResponseDto(T entity);
 
     /**
      * Retrieves all entities that match the given specification, with pagination.
+     * Returns list response DTOs instead of entities.
      *
-     * @param filterDto     JPA Specification (filters)
+     * @param filterDto filter DTO (required, cannot be null)
      * @param pageable pagination and sorting information
-     * @return paged list of entities
+     * @return paged list of list response DTOs
+     * @throws IllegalArgumentException if filterDto is null
      */
-    public Page<T> findAll(DTO filterDto, Pageable pageable) {
+    @Override
+    public Page<ListResponse> findAll(FilterDTO filterDto, Pageable pageable) {
         Specification<T> spec = buildSpecification(filterDto);
-        return repository.findAll(spec, pageable);
+        Page<T> entities = repository.findAll(spec, pageable);
+        return entities.map(this::toListResponseDto);
     }
 
-
     /**
-     * Finds an entity by its ID.
+     * Finds an entity by its ID and returns it as a detailed response DTO.
      *
      * @param id the ID of the entity to retrieve
-     * @return the found entity
-     * @throws RuntimeException if the entity is not found
+     * @return the detailed response DTO
+     * @throws EntityNotFoundException if the entity is not found
      */
     @Override
-    public T findById(ID id) {
-        return repository.findById(id)
+    public DetailedResponse findById(ID id) {
+        T entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
+        return toDetailedResponseDto(entity);
     }
 
     /**
-     * Saves a new entity or updates an existing one.
+     * Saves a new entity or updates an existing one and returns it as a detailed response DTO.
      *
      * @param entity the entity to save
-     * @return the saved entity
+     * @return the detailed response DTO of the saved entity
      */
     @Override
-    public T save(T entity) {
-        return repository.save(entity);
+    public DetailedResponse save(T entity) {
+        T savedEntity = repository.save(entity);
+        return toDetailedResponseDto(savedEntity);
     }
 
     /**
@@ -103,21 +130,22 @@ public abstract class BaseCrudService<
     }
 
     /**
-     * Updates an existing entity with the given ID.
+     * Updates an existing entity with the given ID and returns it as a detailed response DTO.
      *
      * <p>This method checks whether the entity with the given ID exists
      * before saving the updated entity.</p>
      *
      * @param id     the ID of the entity to update
      * @param entity the updated entity data
-     * @return the saved entity
-     * @throws RuntimeException if the entity with the given ID is not found
+     * @return the detailed response DTO of the updated entity
+     * @throws EntityNotFoundException if the entity with the given ID is not found
      */
     @Override
-    public T update(ID id, T entity) {
+    public DetailedResponse update(ID id, T entity) {
         repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
-        return repository.save(entity);
+        T updatedEntity = repository.save(entity);
+        return toDetailedResponseDto(updatedEntity);
     }
 
     /**

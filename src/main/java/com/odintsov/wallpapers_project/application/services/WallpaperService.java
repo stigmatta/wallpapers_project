@@ -1,16 +1,22 @@
 package com.odintsov.wallpapers_project.application.services;
 
+import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilter;
+import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperListResponse;
+import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
+import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
+import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
 
 
 @Service
 public class WallpaperService extends BaseCrudService<Wallpaper,
-        Long, WallpaperFilter, WallpaperRepository>
+        Long, WallpaperFilter, WallpaperListResponse, WallpaperDetailedResponse, WallpaperRepository>
 {
 
     protected WallpaperService(WallpaperRepository repository) {
@@ -31,8 +37,10 @@ public class WallpaperService extends BaseCrudService<Wallpaper,
         }
 
         if (filter.category() != null) {
-            spec = spec.and((root, query, cb) ->
-                    cb.equal(root.get("category").get("id"), filter.category()));
+            spec = spec.and((root, query, cb) -> {
+                Join<Wallpaper, Category> categories = root.join("categories");
+                return cb.equal(categories.get("id"), filter.category());
+            });
         }
 
         if (filter.basePrice() != null) {
@@ -40,12 +48,38 @@ public class WallpaperService extends BaseCrudService<Wallpaper,
                     cb.lessThanOrEqualTo(root.get("basePrice"), filter.basePrice()));
         }
 
-        if (filter.availableMaterials() != null && !filter.availableMaterials().isEmpty()) {
-            spec = spec.and((root, query, cb) ->
-                    root.join("availableMaterials").get("id").in(filter.availableMaterials()));
-        }
-
         return spec;
+    }
+
+    @Override
+    protected WallpaperListResponse toListResponseDto(Wallpaper entity) {
+        return new WallpaperListResponse(
+                entity.getId(),
+                entity.getName(),
+                entity.getImage(),
+                entity.getCategories().stream()
+                        .map(Category::getName)
+                        .toList(),
+                entity.getBasePrice(),
+                entity.getSalePrice()
+        );
+    }
+
+    @Override
+    protected WallpaperDetailedResponse toDetailedResponseDto(Wallpaper entity) {
+        return new WallpaperDetailedResponse (
+                entity.getId(),
+                entity.getName(),
+                entity.getArticle(),
+                entity.getBasePrice(),
+                entity.getSalePrice(),
+                entity.getImage(),
+                entity.getDescription(),
+                entity.getDensity(),
+                entity.getWaterproof(),
+                entity.getRooms().stream()
+                        .map(WallpaperRoom::getName).collect(Collectors.toSet())
+        );
     }
 
 

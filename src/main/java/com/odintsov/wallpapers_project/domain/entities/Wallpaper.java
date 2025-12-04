@@ -2,35 +2,36 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Set; // Добавляем Set
+import java.util.Set;
 
 @Entity
 @Table(name = "WSH_WALLPAPERS")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Wallpaper {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Wallpaper extends BaseProduct {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+    @Column(name = "DENSITY", nullable = false)
+    private Float density;
 
-    @Column(nullable = false)
-    private String name;
-    private String image;
-
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    private ProductCategory category;
-
-    @Column(nullable = false)
-    private Double basePrice;
-
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "WSH_WALLPAPER_MATERIAL_LINK",
             joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
             inverseJoinColumns = @JoinColumn(name = "MATERIAL_ID")
     )
-    private Set<WallpaperMaterial> availableMaterials;
+    private Set<WallpaperMaterial> materials;
+
+    @Column(name = "WATERPROOF", nullable = false)
+    private Boolean waterproof;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "WSH_WALLPAPER_ROOM_LINK",
+            joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROOM_ID")
+    )
+    private Set<WallpaperRoom> rooms;
 }

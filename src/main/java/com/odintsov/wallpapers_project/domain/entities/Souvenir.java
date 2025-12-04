@@ -9,25 +9,14 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Souvenir {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+public class Souvenir extends BaseProduct {
 
     @Column(nullable = false)
-    private String name;
-
-    @Column
-    private String image;
-
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    private ProductCategory category;
+    private Float width;
 
     @Column(nullable = false)
-    private Double price;
+    private Float length;
+
+    @Column(nullable = false)
+    private Float thickness;
 }
-
