@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "WSH_SOUVENIRS")
@@ -9,6 +10,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+
 public class Souvenir extends BaseProduct {
 
     @Column(nullable = false)

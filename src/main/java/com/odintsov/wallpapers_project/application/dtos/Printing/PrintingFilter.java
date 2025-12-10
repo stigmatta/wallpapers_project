@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.application.dtos.Wallpaper;
+package com.odintsov.wallpapers_project.application.dtos.Printing;
 
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
 import lombok.Data;
@@ -10,4 +10,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class WallpaperFilter extends BaseProductFilter { }
+public class PrintingFilter extends BaseProductFilter {
+    private String printMethod;
+}

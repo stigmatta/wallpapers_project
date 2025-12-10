@@ -1,9 +1,7 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,10 @@ import java.util.List;
 @Table(name = "WSH_PRINT_METHODS")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
+
 public class PrintMethod {
 
     @Id
@@ -29,6 +30,6 @@ public class PrintMethod {
     @OneToMany(mappedBy = "printMethod", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "printMethod", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "method")
     private List<PrintingMethodsLink> printingLinks = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.application.dtos.Wallpaper;
+package com.odintsov.wallpapers_project.application.dtos.Souvenir;
 
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductListResponse;
 import lombok.Data;
@@ -10,4 +10,4 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @SuperBuilder
-public class WallpaperListResponse extends BaseProductListResponse {}
+public class SouvenirListResponse extends BaseProductListResponse {}

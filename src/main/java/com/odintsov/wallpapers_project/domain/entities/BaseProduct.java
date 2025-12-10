@@ -2,12 +2,15 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.util.List;
 import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @MappedSuperclass
+@SuperBuilder
 public abstract class BaseProduct {
 
     @Id

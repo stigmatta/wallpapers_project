@@ -2,8 +2,8 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -11,11 +11,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "WSH_PRINTINGS")
 public class Printing extends BaseProduct {
 
     @OneToMany(mappedBy = "printing", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<PrintingMethodsLink> printingLinks = new ArrayList<>();
+    private List<PrintingMethodsLink> printingLinks;
 }

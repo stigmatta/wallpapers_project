@@ -1,25 +1,16 @@
 package com.odintsov.wallpapers_project.application.dtos.Wallpaper;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductDetailedResponse;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class WallpaperDetailedResponse {
-    private Long id;
-    private String name;
-    private String article;
-    private Float basePrice;
-    private Float salePrice;
-    private String image;
-    private String description;
-
+@SuperBuilder
+public class WallpaperDetailedResponse extends BaseProductDetailedResponse {
     private Float density;
     private Boolean waterproof;
     private Set<String> rooms;

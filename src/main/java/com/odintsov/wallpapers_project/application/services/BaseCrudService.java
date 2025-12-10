@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.application.services;
 
 import com.odintsov.wallpapers_project.application.exceptions.EntityNotFoundException;
 import com.odintsov.wallpapers_project.application.interfaces.BaseService;
+import com.odintsov.wallpapers_project.application.mappers.CommonMapper;
 import com.odintsov.wallpapers_project.domain.repositories.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,14 +40,17 @@ public abstract class BaseCrudService<
      * The JPA repository used for performing CRUD operations.
      */
     protected final R repository;
+    protected final CommonMapper<T, ListResponse, DetailedResponse> mapper;
+
 
     /**
      * Constructs a new BaseCrudService with the given JPA repository.
      *
      * @param repository the JPA repository used by this service
      */
-    protected BaseCrudService(R repository) {
+    protected BaseCrudService(R repository, CommonMapper<T, ListResponse, DetailedResponse> mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     /**
@@ -58,23 +62,6 @@ public abstract class BaseCrudService<
      */
     protected abstract Specification<T> buildSpecification(FilterDTO filter);
 
-    /**
-     * Converts an entity to a list response DTO.
-     * Must be implemented by each service.
-     *
-     * @param entity the entity to convert
-     * @return the list response DTO
-     */
-    protected abstract ListResponse toListResponseDto(T entity);
-
-    /**
-     * Converts an entity to a detailed response DTO.
-     * Must be implemented by each service.
-     *
-     * @param entity the entity to convert
-     * @return the detailed response DTO
-     */
-    protected abstract DetailedResponse toDetailedResponseDto(T entity);
 
     /**
      * Retrieves all entities that match the given specification, with pagination.
@@ -89,7 +76,7 @@ public abstract class BaseCrudService<
     public Page<ListResponse> findAll(FilterDTO filterDto, Pageable pageable) {
         Specification<T> spec = buildSpecification(filterDto);
         Page<T> entities = repository.findAll(spec, pageable);
-        return entities.map(this::toListResponseDto);
+        return entities.map(mapper::toListResponseDto);
     }
 
     /**
@@ -103,7 +90,7 @@ public abstract class BaseCrudService<
     public DetailedResponse findById(ID id) {
         T entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
-        return toDetailedResponseDto(entity);
+        return mapper.toDetailedResponseDto(entity);
     }
 
     /**
@@ -115,7 +102,7 @@ public abstract class BaseCrudService<
     @Override
     public DetailedResponse save(T entity) {
         T savedEntity = repository.save(entity);
-        return toDetailedResponseDto(savedEntity);
+        return mapper.toDetailedResponseDto(savedEntity);
     }
 
     /**
@@ -145,7 +132,7 @@ public abstract class BaseCrudService<
         repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
         T updatedEntity = repository.save(entity);
-        return toDetailedResponseDto(updatedEntity);
+        return mapper.toDetailedResponseDto(updatedEntity);
     }
 
     /**

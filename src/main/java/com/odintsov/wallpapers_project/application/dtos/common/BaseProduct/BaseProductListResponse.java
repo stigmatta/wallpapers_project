@@ -1,0 +1,20 @@
+package com.odintsov.wallpapers_project.application.dtos.common.BaseProduct;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@SuperBuilder
+public abstract class BaseProductListResponse {
+    private Long id;
+    private String name;
+    private String image;
+    private String article;
+    private List<String> categoryNames;
+    private Float basePrice;
+    private Float salePrice;
+}

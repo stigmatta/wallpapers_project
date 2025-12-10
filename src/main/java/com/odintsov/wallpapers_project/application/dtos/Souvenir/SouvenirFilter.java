@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.application.dtos.Wallpaper;
+package com.odintsov.wallpapers_project.application.dtos.Souvenir;
 
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
 import lombok.Data;
@@ -10,4 +10,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class WallpaperFilter extends BaseProductFilter { }
+public class SouvenirFilter extends BaseProductFilter {
+    private Float width;
+    private Float length;
+    private Float thickness;
+}
