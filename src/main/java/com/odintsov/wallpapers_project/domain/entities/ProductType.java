@@ -9,7 +9,7 @@ import lombok.*;
  * This entity is typically used to classify categories or other product-related entities.
  */
 @Entity
-@Table(name = "WSH_PRODUCT_TYPES") // Assuming a standard naming convention
+@Table(name = "WSH_PRODUCT_TYPES")
 @Getter
 @Setter
 @NoArgsConstructor
