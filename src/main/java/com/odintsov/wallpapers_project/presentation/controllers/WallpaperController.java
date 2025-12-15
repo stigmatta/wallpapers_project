@@ -31,8 +31,7 @@ public class WallpaperController {
     }
 
     @GetMapping("/{id}")
-    public WallpaperDetailedResponse getById(@PathVariable Long id)
-    {
+    public WallpaperDetailedResponse getById(@PathVariable Long id) {
         return wallpaperService.findById(id);
     }
 }

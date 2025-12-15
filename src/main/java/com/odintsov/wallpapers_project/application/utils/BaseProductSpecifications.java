@@ -1,10 +1,9 @@
 package com.odintsov.wallpapers_project.application.utils;
 
-import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
-import org.springframework.data.jpa.domain.Specification;
-
+import com.odintsov.wallpapers_project.domain.entities.Category;
 import jakarta.persistence.criteria.Join;
+import org.springframework.data.jpa.domain.Specification;
 
 public class BaseProductSpecifications {
 
@@ -12,7 +11,7 @@ public class BaseProductSpecifications {
      * Generic specification builder for any entity T that has 'name', 'categories', 'basePrice'.
      *
      * @param filter the base product filter
-     * @param <T> the entity type (e.g., Wallpaper, Souvenir)
+     * @param <T>    the entity type (e.g., Wallpaper, Souvenir)
      * @return Specification<T>
      */
     public static <T> Specification<T> buildSpecification(BaseProductFilter filter) {

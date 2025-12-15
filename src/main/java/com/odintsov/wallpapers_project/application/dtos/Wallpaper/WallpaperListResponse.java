@@ -10,4 +10,5 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @SuperBuilder
-public class WallpaperListResponse extends BaseProductListResponse {}
+public class WallpaperListResponse extends BaseProductListResponse {
+}

@@ -2,13 +2,14 @@ package com.odintsov.wallpapers_project.application.mappers;
 
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingListResponse;
+import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class PrintingMapper implements CommonMapper<
+public class PrintingMapper implements DtoMapper<
         Printing,
         PrintingListResponse,
         PrintingDetailedResponse

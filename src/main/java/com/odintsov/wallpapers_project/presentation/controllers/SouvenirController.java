@@ -32,8 +32,7 @@ public class SouvenirController {
     }
 
     @GetMapping("/{id}")
-    public SouvenirDetailedResponse getById(@PathVariable Long id)
-    {
+    public SouvenirDetailedResponse getById(@PathVariable Long id) {
         return souvenirService.findById(id);
     }
 }

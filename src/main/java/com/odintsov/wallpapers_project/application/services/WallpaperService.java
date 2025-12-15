@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class WallpaperService extends BaseCrudService<
         Wallpaper,

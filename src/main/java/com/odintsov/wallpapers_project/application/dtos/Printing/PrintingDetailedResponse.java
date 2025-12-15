@@ -1,7 +1,9 @@
 package com.odintsov.wallpapers_project.application.dtos.Printing;
 
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductDetailedResponse;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 
@@ -9,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @SuperBuilder
-public class PrintingDetailedResponse extends BaseProductDetailedResponse {}
+public class PrintingDetailedResponse extends BaseProductDetailedResponse {
+}

@@ -2,12 +2,13 @@ package com.odintsov.wallpapers_project.application.mappers;
 
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirListResponse;
+import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SouvenirMapper implements CommonMapper<
+public class SouvenirMapper implements DtoMapper<
         Souvenir,
         SouvenirListResponse,
         SouvenirDetailedResponse

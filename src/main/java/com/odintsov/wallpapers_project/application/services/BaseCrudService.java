@@ -2,30 +2,18 @@ package com.odintsov.wallpapers_project.application.services;
 
 import com.odintsov.wallpapers_project.application.exceptions.EntityNotFoundException;
 import com.odintsov.wallpapers_project.application.interfaces.BaseService;
-import com.odintsov.wallpapers_project.application.mappers.CommonMapper;
-import com.odintsov.wallpapers_project.domain.repositories.BaseRepository;
+import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
+import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Base abstract CRUD service that provides common operations for
- * interacting with a JPA repository.
- *
- * <p>This class implements the {@link BaseService} interface and delegates
- * all CRUD operations to the injected {@link JpaRepository} instance.
- * It is intended to be extended by concrete service classes for specific entities.</p>
- *
- * @param <T>  the type of the entity
- * @param <ID> the type of the entity identifier
- * @param <FilterDTO> the type of the filter DTO for queries
- * @param <ListResponse> the type of the response DTO for list operations
- * @param <DetailedResponse> the type of the response DTO for single entity operations
- * @param <R> the repository type
+ * Base CRUD service that works with domain CrudRepository.
+ * Provides common implementations that can be overridden when needed.
  */
 public abstract class BaseCrudService<
         T,
@@ -33,60 +21,31 @@ public abstract class BaseCrudService<
         FilterDTO,
         ListResponse,
         DetailedResponse,
-        R extends BaseRepository<T, ID> & JpaSpecificationExecutor<T>>
-        implements BaseService<T, ID, FilterDTO, ListResponse, DetailedResponse> {
+        R extends CrudRepository<T, ID>
+        > implements BaseService<T, ID, FilterDTO, ListResponse, DetailedResponse> {
 
-    /**
-     * The JPA repository used for performing CRUD operations.
-     */
     protected final R repository;
-    protected final CommonMapper<T, ListResponse, DetailedResponse> mapper;
+    protected final DtoMapper<T, ListResponse, DetailedResponse> mapper;
 
-
-    /**
-     * Constructs a new BaseCrudService with the given JPA repository.
-     *
-     * @param repository the JPA repository used by this service
-     */
-    protected BaseCrudService(R repository, CommonMapper<T, ListResponse, DetailedResponse> mapper) {
+    protected BaseCrudService(R repository, DtoMapper<T, ListResponse, DetailedResponse> mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     /**
-     * Builds a Specification from a filter DTO.
-     * Must be implemented by each service that wants to support filtering.
-     *
-     * @param filter a filter DTO
-     * @return Specification<T> representing the query conditions
+     * Build JPA Specification from filter DTO.
+     * Implement this to define your filtering logic.
+     * <p>
+     * If you don't need filtering, just return an empty specification:
+     * return (root, query, cb) -> cb.conjunction();
      */
     protected abstract Specification<T> buildSpecification(FilterDTO filter);
 
 
     /**
-     * Retrieves all entities that match the given specification, with pagination.
-     * Returns list response DTOs instead of entities.
-     *
-     * @param filterDto filter DTO (required, cannot be null)
-     * @param pageable pagination and sorting information
-     * @return paged list of list response DTOs
-     * @throws IllegalArgumentException if filterDto is null
+     * Find entity by ID and return as DetailedResponse DTO.
+     * Override this method if you need custom find logic.
      */
-    @Override
-    public Page<ListResponse> findAll(FilterDTO filterDto, Pageable pageable) {
-        Specification<T> spec = buildSpecification(filterDto);
-        Page<T> entities = repository.findAll(spec, pageable);
-        return entities.map(mapper::toListResponseDto);
-    }
-
-    /**
-     * Finds an entity by its ID and returns it as a detailed response DTO.
-     *
-     * @param id the ID of the entity to retrieve
-     * @return the detailed response DTO
-     * @throws EntityNotFoundException if the entity is not found
-     */
-    @Override
     public DetailedResponse findById(ID id) {
         T entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
@@ -94,84 +53,88 @@ public abstract class BaseCrudService<
     }
 
     /**
-     * Saves a new entity or updates an existing one and returns it as a detailed response DTO.
-     *
-     * @param entity the entity to save
-     * @return the detailed response DTO of the saved entity
+     * Find all entities and return as list of ListResponse DTOs.
+     * Override this method if you need custom findAll logic.
      */
-    @Override
+    public List<ListResponse> findAll() {
+        return repository.findAll().stream()
+                .map(mapper::toListResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Save a new entity and return as DetailedResponse DTO.
+     * Override this method if you need validation or pre-save logic.
+     */
     public DetailedResponse save(T entity) {
         T savedEntity = repository.save(entity);
         return mapper.toDetailedResponseDto(savedEntity);
     }
 
     /**
-     * Saves all provided entities.
-     *
-     * @param entities a collection of entities to save
-     * @return the list of saved entities
+     * Save multiple entities and return as list of DetailedResponse DTOs.
+     * Override this method if you need batch validation logic.
      */
-    @Override
-    public List<T> saveAll(Iterable<T> entities) {
-        return repository.saveAll(entities);
+    public List<DetailedResponse> saveAll(List<T> entities) {
+        List<T> savedEntities = repository.saveAll(entities);
+        return savedEntities.stream()
+                .map(mapper::toDetailedResponseDto)
+                .collect(Collectors.toList());
     }
 
     /**
-     * Updates an existing entity with the given ID and returns it as a detailed response DTO.
-     *
-     * <p>This method checks whether the entity with the given ID exists
-     * before saving the updated entity.</p>
-     *
-     * @param id     the ID of the entity to update
-     * @param entity the updated entity data
-     * @return the detailed response DTO of the updated entity
-     * @throws EntityNotFoundException if the entity with the given ID is not found
+     * Update an existing entity and return as DetailedResponse DTO.
+     * Override this method if you need custom update logic.
      */
-    @Override
     public DetailedResponse update(ID id, T entity) {
         repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id));
+
         T updatedEntity = repository.save(entity);
         return mapper.toDetailedResponseDto(updatedEntity);
     }
 
     /**
-     * Deletes an entity by its ID.
-     *
-     * @param id the ID of the entity to delete
+     * Delete entity by ID.
+     * Override this method if you need pre-delete checks or soft delete.
      */
-    @Override
     public void deleteById(ID id) {
-        repository.deleteById(id);
+        T entity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id));
+        repository.delete(entity);
     }
 
     /**
-     * Deletes the provided entity.
-     *
-     * @param entity the entity to delete
+     * Delete entity directly.
+     * Override this method if needed.
      */
-    @Override
     public void delete(T entity) {
         repository.delete(entity);
     }
 
     /**
-     * Deletes all entities with the given IDs.
-     *
-     * @param ids an iterable of IDs whose entities should be deleted
+     * Check if entity exists by ID.
+     * Override this method if you have a more efficient existence check.
      */
-    @Override
-    public void deleteAllById(Iterable<? extends ID> ids) {
-        repository.deleteAllById(ids);
+    public boolean existsById(ID id) {
+        return repository.findById(id).isPresent();
     }
 
     /**
-     * Deletes all provided entities.
-     *
-     * @param entities an iterable of entities to delete
+     * Find all with pagination and filtering.
+     * Uses buildSpecification() to apply filters.
      */
-    @Override
-    public void deleteAll(Iterable<? extends T> entities) {
-        repository.deleteAll(entities);
+    public Page<ListResponse> findAll(FilterDTO filter, Pageable pageable) {
+        Specification<T> spec = buildSpecification(filter);
+        Page<T> page = repository.findAll(spec, pageable);
+        return page.map(mapper::toListResponseDto);
+    }
+
+    /**
+     * Count entities matching filter.
+     */
+    public long count(FilterDTO filter) {
+        Specification<T> spec = buildSpecification(filter);
+        return repository.count(spec);
     }
 }

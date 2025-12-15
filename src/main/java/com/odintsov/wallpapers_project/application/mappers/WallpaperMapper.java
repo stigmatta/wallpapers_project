@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.application.mappers;
 
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperListResponse;
+import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class WallpaperMapper implements CommonMapper<
+public class WallpaperMapper implements DtoMapper<
         Wallpaper,
         WallpaperListResponse,
         WallpaperDetailedResponse

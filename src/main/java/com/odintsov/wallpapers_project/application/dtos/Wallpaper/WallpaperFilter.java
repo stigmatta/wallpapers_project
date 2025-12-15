@@ -10,4 +10,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class WallpaperFilter extends BaseProductFilter { }
+public class WallpaperFilter extends BaseProductFilter {
+}

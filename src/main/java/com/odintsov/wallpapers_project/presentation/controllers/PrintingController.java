@@ -32,8 +32,7 @@ public class PrintingController {
     }
 
     @GetMapping("/{id}")
-    public PrintingDetailedResponse getById(@PathVariable Long id)
-    {
+    public PrintingDetailedResponse getById(@PathVariable Long id) {
         return printingService.findById(id);
     }
 }
