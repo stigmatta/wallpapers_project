@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-class RegisterUserUseCaseImpl implements RegisterUserUseCase {
+public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
 
     private final UserRepository userRepository;
     private final UserMapper mapper;

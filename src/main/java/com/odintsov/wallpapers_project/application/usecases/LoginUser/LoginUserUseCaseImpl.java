@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-class LoginUserUseCaseImpl implements LoginUserUseCase {
+public class LoginUserUseCaseImpl implements LoginUserUseCase {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
