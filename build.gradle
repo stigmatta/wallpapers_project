@@ -40,5 +40,5 @@ tasks.named('test') {
 }
 
 springBoot {
-    mainClass = 'com.odintsov.wallpapers.project.WallpapersProjectApplication'
+    mainClass = 'com.odintsov.wallpapers_project.WallpapersProjectApplication'
 }

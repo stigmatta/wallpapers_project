@@ -1,5 +1,5 @@
 # Етап 1 — збірка
-FROM eclipse-temurin:17-jdk AS builder
+FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /app
 
 # Копіюємо Gradle
@@ -15,7 +15,7 @@ COPY src src
 RUN ./gradlew build -x test --no-daemon --stacktrace
 
 # Етап 2 — фінальний образ
-FROM eclipse-temurin:17-jre AS runtime
+FROM eclipse-temurin:21-jre AS runtime
 WORKDIR /app
 
 # Копіюємо JAR (використовуємо маску для надійності)
