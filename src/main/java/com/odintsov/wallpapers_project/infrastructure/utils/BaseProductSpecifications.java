@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.application.utils;
+package com.odintsov.wallpapers_project.infrastructure.utils;
 
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
 import com.odintsov.wallpapers_project.domain.entities.Category;

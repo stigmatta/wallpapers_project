@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface JpaWallpaperRepository
-        extends JpaRepository<Wallpaper, Long>, JpaSpecificationExecutor<Wallpaper> {
+        extends JpaRepository<Wallpaper, String>, JpaSpecificationExecutor<Wallpaper> {
 }

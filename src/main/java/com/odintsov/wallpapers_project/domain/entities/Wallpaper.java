@@ -38,4 +38,12 @@ public class Wallpaper extends BaseProduct {
             inverseJoinColumns = @JoinColumn(name = "ROOM_ID")
     )
     private Set<WallpaperRoom> rooms;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "WALLPAPER_CATEGORY_LINK",
+            joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
+    )
+    protected Set<Category> categories;
 }

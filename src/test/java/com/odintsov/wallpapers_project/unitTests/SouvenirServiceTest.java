@@ -1,5 +1,6 @@
 package com.odintsov.wallpapers_project.unitTests;
 
+import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirListResponse;
 import com.odintsov.wallpapers_project.application.mappers.SouvenirMapper;
 import com.odintsov.wallpapers_project.application.services.SouvenirService;
@@ -54,12 +55,16 @@ class SouvenirServiceTest {
 
     @Test
     void testFindById_entityExists_returnsDetailedResponse() {
+        String souvenirId = "SOU-UUID-001";
         Souvenir souvenir = new Souvenir();
-        when(repository.findById(1L)).thenReturn(Optional.of(souvenir));
+        souvenir.setId(souvenirId);
 
-        service.findById(1L);
+        when(repository.findById(souvenirId)).thenReturn(Optional.of(souvenir));
+        when(mapper.toDetailedResponseDto(souvenir)).thenReturn(new SouvenirDetailedResponse());
 
-        verify(repository, times(1)).findById(1L);
+        service.findById(souvenirId);
+
+        verify(repository, times(1)).findById(souvenirId);
         verify(mapper, times(1)).toDetailedResponseDto(souvenir);
     }
 }

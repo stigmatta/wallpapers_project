@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "WSH_WALLPAPER_ROOMS")
@@ -14,9 +15,10 @@ import lombok.*;
 public class WallpaperRoom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
-    private Long id;
+    protected String id;
 
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;

@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 /**
  * Represents a distinct type of product (e.g., 'Wallpapers', 'Souvenirs').
@@ -22,10 +23,10 @@ public class ProductType {
      * Primary key with identity generation strategy.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
-    private Long id;
-
+    protected String id;
     /**
      * The name or identifier of the product type (e.g., "WALLPAPERS", "SOUVENIRS").
      * This field is typically unique and non-nullable.

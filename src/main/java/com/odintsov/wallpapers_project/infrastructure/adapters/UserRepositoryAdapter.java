@@ -1,15 +1,19 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters;
 
+import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import com.odintsov.wallpapers_project.infrastructure.persistence.JpaUserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
 public class UserRepositoryAdapter
-        extends BaseJpaRepositoryAdapter<User, Long, JpaUserRepository>
+        extends BaseJpaRepositoryAdapter<User, String, UserFilter, JpaUserRepository>
         implements UserRepository {
 
     public UserRepositoryAdapter(JpaUserRepository jpaRepository) {
@@ -34,6 +38,29 @@ public class UserRepositoryAdapter
     @Override
     public Optional<User> findByPhoneNumber(String phoneNumber) {
         return jpaRepository.findBuPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Page<User> filter(UserFilter filter, Pageable pageable) {
+        return super.filter(filter, pageable, f -> {
+            if (filter == null) {
+                return Specification.unrestricted();
+            }
+
+            Specification<User> spec = Specification.unrestricted();
+
+            if (filter.getUsername() != null && !filter.getUsername().isBlank()) {
+                spec = spec.and((root, query, cb) ->
+                        cb.like(cb.lower(root.get("username")), "%" + filter.getUsername().toLowerCase() + "%"));
+            }
+
+            if (filter.getEmail() != null && !filter.getEmail().isBlank()) {
+                spec = spec.and((root, query, cb) ->
+                        cb.like(cb.lower(root.get("email")), "%" + filter.getEmail().toLowerCase() + "%"));
+            }
+
+            return spec;
+        });
     }
 
 

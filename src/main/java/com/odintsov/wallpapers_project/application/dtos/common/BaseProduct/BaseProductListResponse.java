@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public abstract class BaseProductListResponse {
-    private Long id;
+    private String id;
     private String name;
     private String image;
     private String article;

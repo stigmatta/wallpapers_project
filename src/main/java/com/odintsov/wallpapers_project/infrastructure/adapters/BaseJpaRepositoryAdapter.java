@@ -1,5 +1,7 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters;
 
+import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
+import com.odintsov.wallpapers_project.infrastructure.interfaces.FilterSpecificationBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,8 +17,9 @@ import java.util.Optional;
 public abstract class BaseJpaRepositoryAdapter<
         T,
         ID,
+        F,
         JPA extends JpaRepository<T, ID> & JpaSpecificationExecutor<T>
-        > {
+        > implements CrudRepository<T, ID, F> {
 
     protected final JPA jpaRepository;
 
@@ -40,19 +43,29 @@ public abstract class BaseJpaRepositoryAdapter<
         return jpaRepository.saveAll(entities);
     }
 
-    public void delete(T entity) {
-        jpaRepository.delete(entity);
-    }
+    public void delete(ID id) { jpaRepository.deleteById(id);}
 
     public long count() {
         return jpaRepository.count();
     }
 
-    public Page<T> findAll(Specification<T> spec, Pageable pageable) {
+    public Page<T> findAll(Pageable pageable) {
+        return jpaRepository.findAll(pageable);
+    }
+
+    public Page<T> filter(F filter,
+                                       Pageable pageable,
+                                       FilterSpecificationBuilder<T, F> builder) {
+        Specification<T> spec = builder.build(filter);
         return jpaRepository.findAll(spec, pageable);
     }
 
     public long count(Specification<T> spec) {
         return jpaRepository.count(spec);
     }
+
+    public void flush() {
+        jpaRepository.flush();
+    }
+
 }

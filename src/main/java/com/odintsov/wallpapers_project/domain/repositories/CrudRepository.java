@@ -2,12 +2,11 @@ package com.odintsov.wallpapers_project.domain.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudRepository<T, ID> {
+public interface CrudRepository<T, ID, F> {
     Optional<T> findById(ID id);
 
     List<T> findAll();
@@ -16,11 +15,13 @@ public interface CrudRepository<T, ID> {
 
     List<T> saveAll(List<T> entities);
 
-    void delete(T entity);
+    void delete(ID id);
 
     long count();
 
-    Page<T> findAll(Specification<T> spec, Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
-    long count(Specification<T> spec);
+    Page<T> filter(F filter, Pageable pageable);
+
+    void flush();
 }

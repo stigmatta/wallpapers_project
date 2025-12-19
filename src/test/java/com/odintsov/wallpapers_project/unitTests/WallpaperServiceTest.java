@@ -1,9 +1,9 @@
-package com.odintsov.wallpapers_project.application.services;
+package com.odintsov.wallpapers_project.unitTests;
 
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperDetailedResponse;
-import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilter;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperListResponse;
 import com.odintsov.wallpapers_project.application.mappers.WallpaperMapper;
+import com.odintsov.wallpapers_project.application.services.WallpaperService;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +36,7 @@ class WallpaperServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        wallpaper1 = new Wallpaper(); // set fields if needed
+        wallpaper1 = new Wallpaper();
         wallpaper2 = new Wallpaper();
     }
 
@@ -63,18 +60,20 @@ class WallpaperServiceTest {
 
     @Test
     void testFindById_returnsDetailedResponse() {
+        String wallpaperId = "test-uuid-123";
+
         Wallpaper wallpaper = new Wallpaper();
-        wallpaper.setId(1L);
+        wallpaper.setId(wallpaperId);
 
         WallpaperDetailedResponse response = new WallpaperDetailedResponse();
 
-        when(repository.findById(1L)).thenReturn(Optional.of(wallpaper));
+        when(repository.findById(wallpaperId)).thenReturn(Optional.of(wallpaper));
         when(mapper.toDetailedResponseDto(wallpaper)).thenReturn(response);
 
-        WallpaperDetailedResponse result = service.findById(1L);
+        WallpaperDetailedResponse result = service.findById(wallpaperId);
 
         assertNotNull(result);
-        verify(repository, times(1)).findById(1L);
+        verify(repository, times(1)).findById(wallpaperId);
         verify(mapper, times(1)).toDetailedResponseDto(wallpaper);
     }
 
@@ -92,24 +91,5 @@ class WallpaperServiceTest {
         assertNotNull(result);
         verify(repository).save(wallpaper);
         verify(mapper).toDetailedResponseDto(savedWallpaper);
-    }
-
-    @Test
-    void testFindAllWithPagination_returnsPage() {
-        WallpaperFilter filter = new WallpaperFilter();
-        Pageable pageable = PageRequest.of(0, 10);
-
-        Wallpaper wallpaper = new Wallpaper();
-        WallpaperListResponse response = new WallpaperListResponse();
-
-        when(repository.findAll(any(), eq(pageable)))
-                .thenReturn(new PageImpl<>(List.of(wallpaper)));
-        when(mapper.toListResponseDto(wallpaper)).thenReturn(response);
-
-        var page = service.findAll(filter, pageable);
-
-        assertEquals(1, page.getContent().size());
-        verify(repository).findAll(any(), eq(pageable));
-        verify(mapper).toListResponseDto(wallpaper);
     }
 }

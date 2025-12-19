@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -14,13 +15,14 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
 @SuperBuilder
+@MappedSuperclass
 public abstract class BaseProduct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    protected String id;
 
     @Column(nullable = false)
     protected String name;
@@ -30,14 +32,6 @@ public abstract class BaseProduct {
 
     @Column(nullable = false, unique = true)
     protected String article;
-
-    @ManyToMany
-    @JoinTable(
-            name = "PRODUCT_CATEGORY_LINK",
-            joinColumns = @JoinColumn(name = "PRODUCT_ID"),
-            inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
-    )
-    protected Set<Category> categories;
 
     @Column(nullable = false)
     protected Float basePrice;

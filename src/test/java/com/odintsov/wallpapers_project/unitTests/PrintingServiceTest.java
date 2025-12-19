@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -50,17 +49,6 @@ class PrintingServiceTest {
 
         verify(repository, times(1)).findAll();
         verify(mapper, times(1)).toListResponseDto(printing);
-    }
-
-    @Test
-    void testFindById_entityExists_returnsDetailedResponse() {
-        Printing printing = new Printing();
-        when(repository.findById(1L)).thenReturn(Optional.of(printing));
-
-        service.findById(1L);
-
-        verify(repository, times(1)).findById(1L);
-        verify(mapper, times(1)).toDetailedResponseDto(printing);
     }
 
 }

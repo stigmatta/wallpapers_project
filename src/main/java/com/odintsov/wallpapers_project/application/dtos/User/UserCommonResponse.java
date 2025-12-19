@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class UserCommonResponse {
-    private Long id;
+    private String id;
     private String username;
     private String email;
 }

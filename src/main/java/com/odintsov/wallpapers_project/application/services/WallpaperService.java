@@ -4,17 +4,15 @@ import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperDetai
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilter;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperListResponse;
 import com.odintsov.wallpapers_project.application.mappers.WallpaperMapper;
-import com.odintsov.wallpapers_project.application.utils.BaseProductSpecifications;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class WallpaperService extends BaseCrudService<
         Wallpaper,
-        Long,
+        String,
         WallpaperFilter,
         WallpaperListResponse,
         WallpaperDetailedResponse,
@@ -24,11 +22,6 @@ public class WallpaperService extends BaseCrudService<
     public WallpaperService(WallpaperRepository repository,
                             WallpaperMapper mapper) {
         super(repository, mapper);
-    }
-
-    @Override
-    protected Specification<Wallpaper> buildSpecification(WallpaperFilter filter) {
-        return BaseProductSpecifications.buildSpecification(filter);
     }
 
 }

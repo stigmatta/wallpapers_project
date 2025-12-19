@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,10 @@ import java.util.List;
 public class PrintMethod {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
-    private Long id;
+    protected String id;
 
     @Column(nullable = false)
     private String name;

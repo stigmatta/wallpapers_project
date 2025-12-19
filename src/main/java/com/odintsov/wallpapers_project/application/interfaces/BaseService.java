@@ -12,7 +12,5 @@ public interface BaseService<T, ID, Filter, ListResponse, DetailedResponse> {
 
     DetailedResponse update(ID id, T entity);
 
-    void deleteById(ID id);
-
-    void delete(T entity);
+    void delete(ID id);
 }

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface JpaUserRepository
-        extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+        extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     @Query("SELECT u FROM User u WHERE u.email = :value OR u.username = :value")
     Optional<User> findByEmailOrUsername(@Param("value") String value);
 

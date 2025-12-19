@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public abstract class BaseProductDetailedResponse {
-    private Long id;
+    private String id;
     private String name;
     private String article;
     private Float basePrice;
