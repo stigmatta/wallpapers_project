@@ -76,7 +76,7 @@ public abstract class BaseCrudService<
      * через Specification (для Oracle) чи через Query (для Firebase).
      */
     public Page<ListResponse> findAll(FilterDTO filter, Pageable pageable) {
-        Page<T> page = repository.findAll(pageable);
+        Page<T> page = repository.filter(filter, pageable);
         return page.map(mapper::toListResponseDto);
     }
 
