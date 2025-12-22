@@ -17,4 +17,5 @@ public abstract class BaseProductListResponse {
     private List<String> categoryNames;
     private Float basePrice;
     private Float salePrice;
+    private String slug;
 }

@@ -27,6 +27,11 @@ public abstract class BaseProduct {
     @Column(nullable = false)
     protected String name;
 
+    // --- NEW FIELD ---
+    @Column(nullable = false, unique = true)
+    protected String slug;
+    // -----------------
+
     @Column(nullable = false)
     protected String description;
 
@@ -60,4 +65,15 @@ public abstract class BaseProduct {
     )
     @Column(name = "IMAGE_URL")
     protected List<String> gallery;
+
+    // Optional: Helper to auto-generate slug from name if missing
+    @PrePersist
+    @PreUpdate
+    public void generateSlug() {
+        if (this.slug == null && this.name != null) {
+            this.slug = this.name.toLowerCase()
+                    .replaceAll("[^a-z0-9\\s-]", "")
+                    .replaceAll("\\s+", "-");
+        }
+    }
 }

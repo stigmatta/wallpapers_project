@@ -17,3 +17,4 @@ public class WallpaperDetailedResponse extends BaseProductDetailedResponse {
     private Boolean waterproof;
     private Set<String> rooms;
 }
+

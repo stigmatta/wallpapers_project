@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity; // Recommended
 
 @RestController
 @RequestMapping("/wallpapers")
@@ -24,14 +24,22 @@ public class WallpaperController {
     @GetMapping
     public Page<WallpaperListResponse> getWallpapers(
             @ModelAttribute WallpaperFilter filter,
-            @PageableDefault(size = 20, sort = "id",
-                    direction = Sort.Direction.ASC) Pageable pageable
+            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
         return wallpaperService.findAll(filter, pageable);
     }
 
-    @GetMapping("/{id}")
+    // 1. Match UUIDs (Standard 36-char string with dashes)
+    // This Regex forces this method ONLY for valid UUIDs
+    @GetMapping("/{id:[0-9a-fA-F-]{36}}")
     public WallpaperDetailedResponse getById(@PathVariable String id) {
         return wallpaperService.findById(id);
+    }
+
+    // 2. Match Everything Else (Slugs)
+    // If the URL does not match the UUID regex above, it falls here
+    @GetMapping("/{slug}")
+    public WallpaperDetailedResponse getBySlug(@PathVariable String slug) {
+        return wallpaperService.findBySlug(slug);
     }
 }
