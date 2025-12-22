@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -28,5 +27,6 @@ public class Printing extends BaseProduct {
             joinColumns = @JoinColumn(name = "PRINTING_ID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
     )
-    protected Set<Category> categories;
+    protected List<Category> categories;
+
 }

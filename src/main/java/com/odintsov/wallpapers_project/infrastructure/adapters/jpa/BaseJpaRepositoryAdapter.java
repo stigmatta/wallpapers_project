@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.infrastructure.adapters;
+package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FilterSpecificationBuilder;

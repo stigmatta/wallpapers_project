@@ -1,4 +1,4 @@
-package com.odintsov.wallpapers_project.infrastructure.persistence;
+package com.odintsov.wallpapers_project.infrastructure.persistence.jpa;
 
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import org.springframework.data.jpa.repository.JpaRepository;

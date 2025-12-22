@@ -1,9 +1,9 @@
-package com.odintsov.wallpapers_project.infrastructure.adapters;
+package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
-import com.odintsov.wallpapers_project.infrastructure.persistence.JpaUserRepository;
+import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaUserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class UserRepositoryAdapter
+public class JpaUserRepositoryAdapter
         extends BaseJpaRepositoryAdapter<User, String, UserFilter, JpaUserRepository>
         implements UserRepository {
 
-    public UserRepositoryAdapter(JpaUserRepository jpaRepository) {
+    public JpaUserRepositoryAdapter(JpaUserRepository jpaRepository) {
         super(jpaRepository);
     }
 

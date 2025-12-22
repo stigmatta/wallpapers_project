@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -46,16 +44,19 @@ public class WallpaperInitializer {
         }
 
         WallpaperMaterial mat1 = WallpaperMaterial.builder()
+                .id(UUID.randomUUID().toString())
                 .name("САМОКЛЕЮЧІ")
                 .priceMultiplier(1.0)
                 .build();
 
         WallpaperMaterial mat2 = WallpaperMaterial.builder()
+                .id(UUID.randomUUID().toString())
                 .name("ФЛІЗЕЛІН")
                 .priceMultiplier(1.2)
                 .build();
 
         WallpaperMaterial mat3 = WallpaperMaterial.builder()
+                .id(UUID.randomUUID().toString())
                 .name("ВІНІЛ НА ФЛІЗЕЛІНІ")
                 .priceMultiplier(1.5)
                 .build();
@@ -69,10 +70,12 @@ public class WallpaperInitializer {
         }
 
         WallpaperRoom r1 = WallpaperRoom.builder()
+                .id(UUID.randomUUID().toString())
                 .name("ВІТАЛЬНЯ")
                 .build();
 
         WallpaperRoom r2 = WallpaperRoom.builder()
+                .id(UUID.randomUUID().toString())
                 .name("СПАЛЬНЯ")
                 .build();
 
@@ -87,6 +90,7 @@ public class WallpaperInitializer {
         WallpaperRoom r2 = rooms.get(1);
 
         Wallpaper wp1 = new Wallpaper();
+        wp1.setId(UUID.randomUUID().toString());
         wp1.setName("Hexagon Pattern");
         wp1.setArticle("WP-001");
         wp1.setBasePrice(49.99f);
@@ -96,10 +100,11 @@ public class WallpaperInitializer {
         wp1.setDensity(120.5f);
         wp1.setWaterproof(true);
         wp1.setQuantity(100);
-        wp1.setRooms(new HashSet<>(Arrays.asList(r1, r2)));
-        wp1.setMaterials(new HashSet<>(Arrays.asList(mat1, mat2)));
+        wp1.setRooms(new ArrayList<>(new HashSet<>(Arrays.asList(r1, r2))));
+        wp1.setMaterials(new ArrayList<>(new HashSet<>(Arrays.asList(mat1, mat2))));
 
         Wallpaper wp2 = new Wallpaper();
+        wp2.setId(UUID.randomUUID().toString());
         wp2.setName("Floral Vintage");
         wp2.setArticle("WP-002");
         wp2.setBasePrice(59.99f);
@@ -109,8 +114,8 @@ public class WallpaperInitializer {
         wp2.setDensity(110.0f);
         wp2.setWaterproof(false);
         wp2.setQuantity(80);
-        wp2.setRooms(new HashSet<>(Arrays.asList(r1, r2)));
-        wp2.setMaterials(new HashSet<>(List.of(mat2)));
+        wp2.setRooms(new ArrayList<>(new HashSet<>(Arrays.asList(r1, r2))));
+        wp2.setMaterials(new ArrayList<>(new HashSet<>(List.of(mat2))));
 
         return Arrays.asList(wp1, wp2);
     }

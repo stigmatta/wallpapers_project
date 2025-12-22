@@ -12,6 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class PrintingMethodsLinkId implements Serializable {
-    private Long printingId;
-    private Long methodId;
+    private String printingId;
+    private String methodId;
 }

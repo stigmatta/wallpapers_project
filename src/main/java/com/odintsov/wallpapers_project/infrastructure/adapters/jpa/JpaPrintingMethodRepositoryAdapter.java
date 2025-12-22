@@ -1,18 +1,18 @@
-package com.odintsov.wallpapers_project.infrastructure.adapters;
+package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.domain.entities.PrintMethod;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingMethodRepository;
-import com.odintsov.wallpapers_project.infrastructure.persistence.JpaPrintingMethodRepository;
+import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaPrintingMethodRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class PrintingMethodRepositoryAdapter implements PrintingMethodRepository {
+public class JpaPrintingMethodRepositoryAdapter implements PrintingMethodRepository {
 
     private final JpaPrintingMethodRepository jpaRepository;
 
-    public PrintingMethodRepositoryAdapter(JpaPrintingMethodRepository jpaRepository) {
+    public JpaPrintingMethodRepositoryAdapter(JpaPrintingMethodRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 

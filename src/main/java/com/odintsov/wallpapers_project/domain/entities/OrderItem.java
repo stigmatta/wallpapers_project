@@ -31,7 +31,7 @@ public class OrderItem {
     private String itemType;
 
     @Column(name = "PRODUCT_ID", nullable = false)
-    private Long productId;
+    private String productId;
 
     @Column(nullable = false)
     private Integer quantity;

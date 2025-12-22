@@ -1,21 +1,21 @@
-package com.odintsov.wallpapers_project.infrastructure.adapters;
+package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
 import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifications;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
-import com.odintsov.wallpapers_project.infrastructure.persistence.JpaSouvenirRepository;
+import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaSouvenirRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SouvenirRepositoryAdapter
+public class JpaSouvenirRepositoryAdapter
         extends BaseJpaRepositoryAdapter<Souvenir, String, SouvenirFilter, JpaSouvenirRepository>
         implements SouvenirRepository {
 
-    public SouvenirRepositoryAdapter(JpaSouvenirRepository jpaRepository) {
+    public JpaSouvenirRepositoryAdapter(JpaSouvenirRepository jpaRepository) {
         super(jpaRepository);
     }
 

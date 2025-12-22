@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "WSH_SOUVENIRS")
@@ -34,5 +34,5 @@ public class Souvenir extends BaseProduct {
             joinColumns = @JoinColumn(name = "SOUVENIR_ID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
     )
-    protected Set<Category> categories;
+    protected List<Category> categories;
 }

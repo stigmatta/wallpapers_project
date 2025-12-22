@@ -10,6 +10,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItemExtraFeatureId implements Serializable {
-    private Long orderItem;
-    private Long extraFeature;
+    private String orderItem;
+    private String extraFeature;
 }

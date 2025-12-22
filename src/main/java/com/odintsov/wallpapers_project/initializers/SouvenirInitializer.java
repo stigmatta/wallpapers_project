@@ -26,11 +26,11 @@ public class SouvenirInitializer {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             categories = categoryRepository.saveAll(List.of(
-                    Category.builder().name("Decor").build(),
-                    Category.builder().name("Gift").build(),
-                    Category.builder().name("Vintage").build()
+                    Category.builder().id(UUID.randomUUID().toString()).name("Decor").build(),
+                    Category.builder().id(UUID.randomUUID().toString()).name("Gift").build(),
+                    Category.builder().id(UUID.randomUUID().toString()).name("Vintage").build()
             ));
-            categoryRepository.flush(); // ГАРАНТУЄМО запис в Oracle
+            categoryRepository.flush();
         }
 
         Map<String, Category> catMap = categories.stream()
@@ -38,23 +38,25 @@ public class SouvenirInitializer {
 
         // 2. Створюємо сувеніри, приєднуючи існуючі категорії
         Souvenir s1 = Souvenir.builder()
+                .id(UUID.randomUUID().toString())
                 .name("Mini Eiffel Tower")
                 .article("SOU-001")
                 .basePrice(15.0f)
                 .quantity(100)
                 .description("Eiffel Tower")
                 .width(5.0f).length(5.0f).thickness(10.0f)
-                .categories(new HashSet<>(List.of(catMap.get("Decor"), catMap.get("Gift"))))
+                .categories(new ArrayList<>(new HashSet<>(List.of(catMap.get("Decor"), catMap.get("Gift")))))
                 .build();
 
         Souvenir s2 = Souvenir.builder()
+                .id(UUID.randomUUID().toString())
                 .name("Vintage Postcard")
                 .article("SOU-002")
                 .basePrice(3.0f)
                 .quantity(500)
                 .description("Postcard")
                 .width(10.0f).length(15.0f).thickness(0.1f)
-                .categories(new HashSet<>(List.of(catMap.get("Vintage"))))
+                .categories(new ArrayList<>(new HashSet<>(List.of(catMap.get("Vintage")))))
                 .build();
 
         // 3. Зберігаємо сувеніри

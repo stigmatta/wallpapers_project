@@ -1,18 +1,18 @@
-package com.odintsov.wallpapers_project.infrastructure.adapters;
+package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperMaterialRepository;
-import com.odintsov.wallpapers_project.infrastructure.persistence.JpaWallpaperMaterialRepository;
+import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaWallpaperMaterialRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class WallpaperMaterialRepositoryAdapter implements WallpaperMaterialRepository {
+public class JpaWallpaperMaterialRepositoryAdapter implements WallpaperMaterialRepository {
 
     private final JpaWallpaperMaterialRepository jpaRepository;
 
-    public WallpaperMaterialRepositoryAdapter(JpaWallpaperMaterialRepository jpaRepository) {
+    public JpaWallpaperMaterialRepositoryAdapter(JpaWallpaperMaterialRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 

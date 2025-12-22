@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "WSH_WALLPAPERS")
@@ -26,7 +26,7 @@ public class Wallpaper extends BaseProduct {
             joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
             inverseJoinColumns = @JoinColumn(name = "MATERIAL_ID")
     )
-    private Set<WallpaperMaterial> materials;
+    private List<WallpaperMaterial> materials;
 
     @Column(name = "WATERPROOF", nullable = false)
     private Boolean waterproof;
@@ -37,7 +37,7 @@ public class Wallpaper extends BaseProduct {
             joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROOM_ID")
     )
-    private Set<WallpaperRoom> rooms;
+    private List<WallpaperRoom> rooms;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
@@ -45,5 +45,5 @@ public class Wallpaper extends BaseProduct {
             joinColumns = @JoinColumn(name = "WALLPAPER_ID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
     )
-    protected Set<Category> categories;
+    protected List<Category> categories;
 }
