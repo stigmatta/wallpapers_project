@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -30,13 +29,11 @@ public class UserInitializer {
 
     private List<User> createUsers() {
         User admin = new User();
-        admin.setId(UUID.randomUUID().toString());
         admin.setUsername("admin");
         admin.setEmail("admin@wallpapers.com");
         admin.setHashedPassword(passwordEncoder.encode("admin123"));
 
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
         user.setUsername("user");
         user.setEmail("user@wallpapers.com");
         user.setHashedPassword(passwordEncoder.encode("user123"));

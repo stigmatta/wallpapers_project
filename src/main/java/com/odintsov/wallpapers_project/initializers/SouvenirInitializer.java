@@ -26,9 +26,9 @@ public class SouvenirInitializer {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             categories = categoryRepository.saveAll(List.of(
-                    Category.builder().id(UUID.randomUUID().toString()).name("Decor").build(),
-                    Category.builder().id(UUID.randomUUID().toString()).name("Gift").build(),
-                    Category.builder().id(UUID.randomUUID().toString()).name("Vintage").build()
+                    Category.builder().name("Decor").build(),
+                    Category.builder().name("Gift").build(),
+                    Category.builder().name("Vintage").build()
             ));
             categoryRepository.flush();
         }
@@ -38,7 +38,6 @@ public class SouvenirInitializer {
 
         // 2. Створюємо сувеніри, приєднуючи існуючі категорії
         Souvenir s1 = Souvenir.builder()
-                .id(UUID.randomUUID().toString())
                 .name("Mini Eiffel Tower")
                 .article("SOU-001")
                 .basePrice(15.0f)
@@ -49,7 +48,6 @@ public class SouvenirInitializer {
                 .build();
 
         Souvenir s2 = Souvenir.builder()
-                .id(UUID.randomUUID().toString())
                 .name("Vintage Postcard")
                 .article("SOU-002")
                 .basePrice(3.0f)

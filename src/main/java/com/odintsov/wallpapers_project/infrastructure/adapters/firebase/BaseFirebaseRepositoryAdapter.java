@@ -8,8 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
 
@@ -61,22 +63,28 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
     @Override
     public T save(T entity) {
+        String id = getOrCreateId(entity);
+
         await(
                 firestore.collection(collectionName())
-                        .document(getId(entity))
+                        .document(id)
                         .set(entity)
         );
+
         return entity;
     }
+
 
     @Override
     public List<T> saveAll(List<T> entities) {
         WriteBatch batch = firestore.batch();
 
         for (T entity : entities) {
+            String id = getOrCreateId(entity);
+
             batch.set(
                     firestore.collection(collectionName())
-                            .document(getId(entity)),
+                            .document(id),
                     entity
             );
         }
@@ -84,6 +92,7 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         await(batch.commit());
         return entities;
     }
+
 
     @Override
     public void delete(ID id) {
@@ -147,4 +156,23 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
     public void flush() {
         // NO-OP: Firebase has no persistence context
     }
+
+    private String getOrCreateId(T entity) {
+        try {
+            Method getId = entity.getClass().getMethod("getId");
+            Method setId = entity.getClass().getMethod("setId", String.class);
+
+            String id = (String) getId.invoke(entity);
+
+            if (id == null) {
+                id = UUID.randomUUID().toString();
+                setId.invoke(entity, id);
+            }
+            return id;
+
+        } catch (Exception e) {
+            throw new IllegalStateException("Entity must have getId()/setId()", e);
+        }
+    }
+
 }

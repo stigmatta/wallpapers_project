@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Primary
-
 public class FirebasePrintingRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<Printing, String, PrintingFilter>
         implements PrintingRepository {

@@ -19,10 +19,8 @@ public class CategoryInitializer {
     public void initCategories() {
         if (categoryRepository.count() == 0) {
             Category cat1 = new Category();
-            cat1.setId(UUID.randomUUID().toString());
             cat1.setName("Decor");
             Category cat2 = new Category();
-            cat2.setId(UUID.randomUUID().toString());
             cat2.setName("Gift");
             Category cat3 = new Category();
             cat3.setId(UUID.randomUUID().toString());

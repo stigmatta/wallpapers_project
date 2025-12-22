@@ -44,19 +44,16 @@ public class WallpaperInitializer {
         }
 
         WallpaperMaterial mat1 = WallpaperMaterial.builder()
-                .id(UUID.randomUUID().toString())
                 .name("САМОКЛЕЮЧІ")
                 .priceMultiplier(1.0)
                 .build();
 
         WallpaperMaterial mat2 = WallpaperMaterial.builder()
-                .id(UUID.randomUUID().toString())
                 .name("ФЛІЗЕЛІН")
                 .priceMultiplier(1.2)
                 .build();
 
         WallpaperMaterial mat3 = WallpaperMaterial.builder()
-                .id(UUID.randomUUID().toString())
                 .name("ВІНІЛ НА ФЛІЗЕЛІНІ")
                 .priceMultiplier(1.5)
                 .build();
@@ -90,7 +87,6 @@ public class WallpaperInitializer {
         WallpaperRoom r2 = rooms.get(1);
 
         Wallpaper wp1 = new Wallpaper();
-        wp1.setId(UUID.randomUUID().toString());
         wp1.setName("Hexagon Pattern");
         wp1.setArticle("WP-001");
         wp1.setBasePrice(49.99f);
@@ -104,7 +100,6 @@ public class WallpaperInitializer {
         wp1.setMaterials(new ArrayList<>(new HashSet<>(Arrays.asList(mat1, mat2))));
 
         Wallpaper wp2 = new Wallpaper();
-        wp2.setId(UUID.randomUUID().toString());
         wp2.setName("Floral Vintage");
         wp2.setArticle("WP-002");
         wp2.setBasePrice(59.99f);

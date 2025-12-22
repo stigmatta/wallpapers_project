@@ -12,6 +12,7 @@ import java.util.List;
 
 @Component
 @Primary
+
 public class FirebasePrintingMethodLinkRepositoryAdapter
         implements PrintingMethodLinkRepository {
 

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class PrintingInitializer {
@@ -40,13 +39,11 @@ public class PrintingInitializer {
         if (methods.size() >= 2) return;
 
         PrintMethod m1 = new PrintMethod();
-        m1.setId(UUID.randomUUID().toString());
 
         m1.setName("Inkjet");
         m1.setDeadline(3);
 
         PrintMethod m2 = new PrintMethod();
-        m2.setId(UUID.randomUUID().toString());
 
         m2.setName("Laser");
         m2.setDeadline(2);
@@ -65,7 +62,6 @@ public class PrintingInitializer {
         }
 
         Printing p1 = Printing.builder()
-                .id(UUID.randomUUID().toString())
                 .name("Classic Print")
                 .article("PR-002")
                 .basePrice(29.99f)
@@ -78,8 +74,8 @@ public class PrintingInitializer {
         Printing saved = printingRepository.save(p1);
 
         linkRepository.saveAll(List.of(
-                PrintingMethodsLink.builder().id(UUID.randomUUID().toString()).printing(saved).method(methods.get(0)).build(),
-                PrintingMethodsLink.builder().id(UUID.randomUUID().toString()).printing(saved).method(methods.get(1)).build()
+                PrintingMethodsLink.builder().printing(saved).method(methods.get(0)).build(),
+                PrintingMethodsLink.builder().printing(saved).method(methods.get(1)).build()
         ));
     }
 }
