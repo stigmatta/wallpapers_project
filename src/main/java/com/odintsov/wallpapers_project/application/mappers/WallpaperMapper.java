@@ -29,9 +29,13 @@ public class WallpaperMapper implements DtoMapper<
                         .toList())
                 .basePrice(entity.getBasePrice())
                 .salePrice(entity.getSalePrice())
+
+                // --- ADD THIS LINE ---
+                .slug(entity.getSlug())
+                // ---------------------
+
                 .build();
     }
-
     @Override
     public WallpaperDetailedResponse toDetailedResponseDto(Wallpaper entity) {
         return WallpaperDetailedResponse.builder()
