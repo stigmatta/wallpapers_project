@@ -4,16 +4,16 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
+import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
+import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.getOrCreateId;
 
 public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         implements CrudRepository<T, ID, F> {
@@ -157,22 +157,24 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         // NO-OP: Firebase has no persistence context
     }
 
-    private String getOrCreateId(T entity) {
-        try {
-            Method getId = entity.getClass().getMethod("getId");
-            Method setId = entity.getClass().getMethod("setId", String.class);
+    public Optional<T> findBySlug(String slug) {
 
-            String id = (String) getId.invoke(entity);
+        var snapshot = FirebaseUtils.await(
+                firestore.collection(collectionName())
+                        .whereEqualTo("slug", slug)
+                        .limit(1)
+                        .get()
+        );
 
-            if (id == null) {
-                id = UUID.randomUUID().toString();
-                setId.invoke(entity, id);
-            }
-            return id;
-
-        } catch (Exception e) {
-            throw new IllegalStateException("Entity must have getId()/setId()", e);
+        if (snapshot.isEmpty()) {
+            return Optional.empty();
         }
+
+        return Optional.of(
+                snapshot.getDocuments()
+                        .getFirst()
+                        .toObject(entityClass)
+        );
     }
 
 }

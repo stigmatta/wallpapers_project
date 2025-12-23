@@ -8,7 +8,8 @@ import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifica
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import java.util.Optional; // <--- Import this!
+
+import java.util.Optional;
 
 @Component
 public class JpaWallpaperRepositoryAdapter
@@ -19,16 +20,13 @@ public class JpaWallpaperRepositoryAdapter
         super(jpaRepository);
     }
 
-    // --- ADD THIS IMPLEMENTATION ---
-    @Override
-    public Optional<Wallpaper> findBySlug(String slug) {
-        // Delegate the specific query to the Spring Data JPA repository
-        return jpaRepository.findBySlug(slug);
-    }
-    // -------------------------------
-
     @Override
     public Page<Wallpaper> filter(WallpaperFilter filter, Pageable pageable) {
         return super.filter(filter, pageable, BaseProductSpecifications::buildSpecification);
+    }
+
+    @Override
+    public Optional<Wallpaper> findBySlug(String slug) {
+        return jpaRepository.findBySlug(slug);
     }
 }

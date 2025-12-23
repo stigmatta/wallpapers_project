@@ -24,12 +24,10 @@ public class WallpaperService extends BaseCrudService<
         super(repository, mapper);
     }
 
-    // --- ADD THIS METHOD ---
     public WallpaperDetailedResponse findBySlug(String slug) {
         Wallpaper wallpaper = repository.findBySlug(slug)
                 .orElseThrow(() -> new EntityNotFoundException("Wallpaper not found with slug: " + slug));
 
-        // Ensure your BaseMapper or WallpaperMapper has this method exposed
         return mapper.toDetailedResponseDto(wallpaper);
     }
 }

@@ -33,7 +33,7 @@ public class FirebaseWallpaperMaterialRepositoryAdapter
 
     @Override
     public List<WallpaperMaterial> saveAll(List<WallpaperMaterial> entities) {
-        return FirebaseUtils.saveAll(firestore, collectionName(), entities, WallpaperMaterial::getId);
+        return FirebaseUtils.saveAll(firestore, collectionName(), entities);
     }
 
     @Override

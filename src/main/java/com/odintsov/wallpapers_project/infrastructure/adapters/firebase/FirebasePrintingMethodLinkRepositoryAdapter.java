@@ -32,6 +32,6 @@ public class FirebasePrintingMethodLinkRepositoryAdapter
 
     @Override
     public List<PrintingMethodsLink> saveAll(List<PrintingMethodsLink> entities) {
-        return FirebaseUtils.saveAll(firestore, collectionName(), entities, PrintingMethodsLink::getId);
+        return FirebaseUtils.saveAll(firestore, collectionName(), entities);
     }
 }

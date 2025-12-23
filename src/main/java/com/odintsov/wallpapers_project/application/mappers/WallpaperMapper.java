@@ -8,6 +8,7 @@ import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,16 +25,16 @@ public class WallpaperMapper implements DtoMapper<
                 .name(entity.getName())
                 .image(entity.getImage())
                 .article(entity.getArticle())
-                .categoryNames(entity.getCategories().stream()
-                        .map(Category::getName)
-                        .toList())
+                .categoryNames(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream()
+                                .map(Category::getName)
+                                .toList()
+                )
                 .basePrice(entity.getBasePrice())
                 .salePrice(entity.getSalePrice())
-
-                // --- ADD THIS LINE ---
                 .slug(entity.getSlug())
-                // ---------------------
-
                 .build();
     }
     @Override

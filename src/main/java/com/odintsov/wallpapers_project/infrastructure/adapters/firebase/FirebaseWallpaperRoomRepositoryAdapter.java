@@ -44,6 +44,6 @@ public class FirebaseWallpaperRoomRepositoryAdapter
 
     @Override
     public List<WallpaperRoom> saveAll(List<WallpaperRoom> rooms) {
-        return FirebaseUtils.saveAll(firestore, collectionName(), rooms, WallpaperRoom::getId);
+        return FirebaseUtils.saveAll(firestore, collectionName(), rooms);
     }
 }

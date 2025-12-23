@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class JpaPrintingRepositoryAdapter
         extends BaseJpaRepositoryAdapter<Printing, String, PrintingFilter, JpaPrintingRepository>
@@ -31,5 +33,10 @@ public class JpaPrintingRepositoryAdapter
 
             return spec;
         });
+    }
+
+    @Override
+    public Optional<Printing> findBySlug(String slug) {
+        return jpaRepository.findBySlug(slug);
     }
 }

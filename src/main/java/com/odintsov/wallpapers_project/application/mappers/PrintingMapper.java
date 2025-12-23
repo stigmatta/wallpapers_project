@@ -7,6 +7,8 @@ import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 
 @Service
 public class PrintingMapper implements DtoMapper<
@@ -22,9 +24,13 @@ public class PrintingMapper implements DtoMapper<
                 .name(entity.getName())
                 .image(entity.getImage())
                 .article(entity.getArticle())
-                .categoryNames(entity.getCategories().stream()
-                        .map(Category::getName)
-                        .toList())
+                .categoryNames(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream()
+                                .map(Category::getName)
+                                .toList()
+                )
                 .basePrice(entity.getBasePrice())
                 .salePrice(entity.getSalePrice())
                 .build();

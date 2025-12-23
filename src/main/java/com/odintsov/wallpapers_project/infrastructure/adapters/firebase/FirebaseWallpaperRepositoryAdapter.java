@@ -6,8 +6,11 @@ import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilte
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.WallpaperFilterBuilder;
+import com.odintsov.wallpapers_project.infrastructure.utils.SlugUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Primary
@@ -31,6 +34,20 @@ public class FirebaseWallpaperRepositoryAdapter
     @Override
     protected String getId(Wallpaper entity) {
         return entity.getId();
+    }
+
+    @Override
+    public Wallpaper save(Wallpaper entity) {
+        SlugUtils.generateSlugIfMissing(entity);
+        return super.save(entity);
+    }
+
+    @Override
+    public List<Wallpaper> saveAll(List<Wallpaper> entities) {
+        for (Wallpaper entity : entities) {
+            SlugUtils.generateSlugIfMissing(entity);
+        }
+        return super.saveAll(entities);
     }
 
 }

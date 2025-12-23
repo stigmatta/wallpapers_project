@@ -30,7 +30,7 @@ public class FirebasePrintingMethodRepositoryAdapter implements PrintingMethodRe
     }
 
     public List<PrintMethod> saveAll(List<PrintMethod> entities) {
-        return FirebaseUtils.saveAll(firestore, collectionName(), entities, PrintMethod::getId);
+        return FirebaseUtils.saveAll(firestore, collectionName(), entities);
     }
 
     @Override

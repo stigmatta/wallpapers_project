@@ -7,8 +7,10 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteBatch;
 import com.odintsov.wallpapers_project.infrastructure.exceptions.FirebaseAccessException;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public final class FirebaseUtils {
@@ -36,10 +38,11 @@ public final class FirebaseUtils {
         return result;
     }
 
-    public static <T> List<T> saveAll(Firestore firestore, String collectionName, List<T> entities, IdExtractor<T> idExtractor) {
+    public static <T> List<T> saveAll(Firestore firestore, String collectionName, List<T> entities) {
         WriteBatch batch = firestore.batch();
         for (T entity : entities) {
-            batch.set(firestore.collection(collectionName).document(idExtractor.getId(entity)), entity);
+            String id = getOrCreateId(entity);
+            batch.set(firestore.collection(collectionName).document(id), entity);
         }
         await(batch.commit());
         return entities;
@@ -50,9 +53,22 @@ public final class FirebaseUtils {
         return snapshot.size();
     }
 
-    @FunctionalInterface
-    public interface IdExtractor<T> {
-        String getId(T entity);
+    public static <T> String getOrCreateId(T entity) {
+        try {
+            Method getId = entity.getClass().getMethod("getId");
+            Method setId = entity.getClass().getMethod("setId", String.class);
+
+            String id = (String) getId.invoke(entity);
+
+            if (id == null) {
+                id = UUID.randomUUID().toString();
+                setId.invoke(entity, id);
+            }
+            return id;
+
+        } catch (Exception e) {
+            throw new IllegalStateException("Entity must have getId()/setId()", e);
+        }
     }
 
 }

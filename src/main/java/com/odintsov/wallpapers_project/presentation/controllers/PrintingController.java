@@ -31,8 +31,13 @@ public class PrintingController {
         return printingService.findAll(filter, pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[0-9a-fA-F-]{36}}")
     public PrintingDetailedResponse getById(@PathVariable String id) {
         return printingService.findById(id);
+    }
+
+    @GetMapping("/{slug}")
+    public PrintingDetailedResponse getBySlug(@PathVariable String slug) {
+        return printingService.findBySlug(slug);
     }
 }

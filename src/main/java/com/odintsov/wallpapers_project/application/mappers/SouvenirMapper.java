@@ -7,6 +7,8 @@ import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 @Service
 public class SouvenirMapper implements DtoMapper<
         Souvenir,
@@ -21,9 +23,13 @@ public class SouvenirMapper implements DtoMapper<
                 .name(entity.getName())
                 .image(entity.getImage())
                 .article(entity.getArticle())
-                .categoryNames(entity.getCategories().stream()
-                        .map(Category::getName)
-                        .toList())
+                .categoryNames(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream()
+                                .map(Category::getName)
+                                .toList()
+                )
                 .basePrice(entity.getBasePrice())
                 .salePrice(entity.getSalePrice())
                 .build();

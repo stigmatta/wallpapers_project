@@ -31,8 +31,13 @@ public class SouvenirController {
         return souvenirService.findAll(filter, pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[0-9a-fA-F-]{36}}")
     public SouvenirDetailedResponse getById(@PathVariable String id) {
         return souvenirService.findById(id);
+    }
+
+    @GetMapping("/{slug}")
+    public SouvenirDetailedResponse getBySlug(@PathVariable String slug) {
+        return souvenirService.findBySlug(slug);
     }
 }

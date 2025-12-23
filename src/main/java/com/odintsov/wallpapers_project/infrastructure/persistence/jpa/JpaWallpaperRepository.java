@@ -1,4 +1,5 @@
-package com.odintsov.wallpapers_project.infrastructure.persistence;
+package com.odintsov.wallpapers_project.infrastructure.persistence.jpa;
+
 import java.util.Optional;
 
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;

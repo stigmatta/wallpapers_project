@@ -6,6 +6,7 @@ import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirListRes
 import com.odintsov.wallpapers_project.application.mappers.SouvenirMapper;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,13 @@ public class SouvenirService extends BaseCrudService<
     public SouvenirService(SouvenirRepository repository,
                            SouvenirMapper mapper) {
         super(repository, mapper);
+    }
+
+    public SouvenirDetailedResponse findBySlug(String slug) {
+        Souvenir souvenir = repository.findBySlug(slug)
+                .orElseThrow(() -> new EntityNotFoundException("Souvenir not found with slug: " + slug));
+
+        return mapper.toDetailedResponseDto(souvenir);
     }
 
 }

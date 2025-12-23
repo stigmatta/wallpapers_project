@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class JpaSouvenirRepositoryAdapter
         extends BaseJpaRepositoryAdapter<Souvenir, String, SouvenirFilter, JpaSouvenirRepository>
@@ -36,5 +38,10 @@ public class JpaSouvenirRepositoryAdapter
 
             return spec;
         });
+    }
+
+    @Override
+    public Optional<Souvenir> findBySlug(String slug) {
+        return jpaRepository.findBySlug(slug);
     }
 }
