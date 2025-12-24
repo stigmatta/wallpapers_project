@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Hexagon Pattern",
+    "article": "WP-001",
+    "basePrice": 49.99,
+    "salePrice": 39.99,
+    "image": "/images/hexagon.jpg",
+    "description": "Stylish hexagon wallpaper for modern interiors",
+    "density": 120.5,
+    "waterproof": true,
+    "quantity": 100,
+    "rooms": ["ВІТАЛЬНЯ", "СПАЛЬНЯ"],
+    "materials": ["САМОКЛЕЮЧІ", "ФЛІЗЕЛІН"]
+  },
+  {
+    "name": "Floral Vintage",
+    "article": "WP-002",
+    "basePrice": 59.99,
+    "salePrice": 49.99,
+    "image": "/images/floral.jpg",
+    "description": "Elegant vintage floral wallpaper",
+    "density": 110.0,
+    "waterproof": false,
+    "quantity": 80,
+    "rooms": ["ВІТАЛЬНЯ", "СПАЛЬНЯ"],
+    "materials": ["ФЛІЗЕЛІН"]
+  }
+]

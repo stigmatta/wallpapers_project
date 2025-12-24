@@ -4,12 +4,20 @@ import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
+import com.odintsov.wallpapers_project.initializers.dtos.SouvenirJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
+
+
 
 @Component
 @RequiredArgsConstructor
@@ -17,49 +25,50 @@ public class SouvenirInitializer {
 
     private final SouvenirRepository souvenirRepository;
     private final CategoryRepository categoryRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional
-    public void initSouvenirs() {
-        if (souvenirRepository.count() > 0) return;
-
-        // 1. Отримуємо категорії. Якщо їх немає - створюємо.
-        List<Category> categories = categoryRepository.findAll();
-        if (categories.isEmpty()) {
-            categories = categoryRepository.saveAll(List.of(
-                    Category.builder().name("Decor").build(),
-                    Category.builder().name("Gift").build(),
-                    Category.builder().name("Vintage").build()
-            ));
-            categoryRepository.flush();
+    public void initSouvenirs() throws IOException {
+        if (souvenirRepository.count() > 0) {
+            return;
         }
 
-        Map<String, Category> catMap = categories.stream()
-                .collect(Collectors.toMap(Category::getName, c -> c));
+        Map<String, Category> catMap = categoryRepository.findAll().stream()
+                .collect(Collectors.toMap(
+                        Category::getName,
+                        c -> c,
+                        (existing, duplicate) -> existing
+                ));
 
-        // 2. Створюємо сувеніри, приєднуючи існуючі категорії
-        Souvenir s1 = Souvenir.builder()
-                .name("Mini Eiffel Tower")
-                .article("SOU-001")
-                .basePrice(15.0f)
-                .quantity(100)
-                .description("Eiffel Tower")
-                .width(5.0f).length(5.0f).thickness(10.0f)
-                .categories(new ArrayList<>(new HashSet<>(List.of(catMap.get("Decor"), catMap.get("Gift")))))
-                .build();
+        List<SouvenirJson> souvenirData = objectMapper.readValue(
+                new ClassPathResource("data/souvenirs.json").getInputStream(),
+                new TypeReference<>() {
+                }
+        );
 
-        Souvenir s2 = Souvenir.builder()
-                .name("Vintage Postcard")
-                .article("SOU-002")
-                .basePrice(3.0f)
-                .quantity(500)
-                .description("Postcard")
-                .width(10.0f).length(15.0f).thickness(0.1f)
-                .categories(new ArrayList<>(new HashSet<>(List.of(catMap.get("Vintage")))))
-                .build();
+        List<Souvenir> souvenirs = souvenirData.stream().map(data -> {
+            List<Category> souvenirCategories = data.categories().stream()
+                    .map(catMap::get)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
 
-        // 3. Зберігаємо сувеніри
-        souvenirRepository.saveAll(List.of(s1, s2));
+            return Souvenir.builder()
+                    .name(data.name())
+                    .image(data.image())
+                    .article(data.article())
+                    .basePrice(data.basePrice())
+                    .quantity(data.quantity())
+                    .description(data.description())
+                    .width(data.width())
+                    .length(data.length())
+                    .thickness(data.thickness())
+                    .categories(souvenirCategories)
+                    .build();
+        }).collect(Collectors.toList());
+
+        souvenirRepository.saveAll(souvenirs);
         souvenirRepository.flush();
-
     }
+
+
 }

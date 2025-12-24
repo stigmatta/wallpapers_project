@@ -1,0 +1,5 @@
+[
+  { "name": "САМОКЛЕЮЧІ", "priceMultiplier": 1.0 },
+  { "name": "ФЛІЗЕЛІН", "priceMultiplier": 1.2 },
+  { "name": "ВІНІЛ НА ФЛІЗЕЛІНІ", "priceMultiplier": 1.5 }
+]

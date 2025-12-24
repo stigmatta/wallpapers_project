@@ -1,0 +1,12 @@
+[
+  {
+    "username": "admin",
+    "email": "admin@wallpapers.com",
+    "password": "admin123"
+  },
+  {
+    "username": "user",
+    "email": "user@wallpapers.com",
+    "password": "user123"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Mini Eiffel Tower",
+    "image": "https://s3-odintsov-3c2.s3.eu-central-1.amazonaws.com/eiffel_tower.webp",
+    "article": "SOU-001",
+    "basePrice": 15.0,
+    "quantity": 100,
+    "description": "Eiffel Tower",
+    "width": 5.0,
+    "length": 5.0,
+    "thickness": 10.0,
+    "categories": ["Decor", "Gift"]
+  },
+  {
+    "name": "Vintage Postcard",
+    "image": "https://s3-odintsov-3c2.s3.eu-central-1.amazonaws.com/vintage_postcard.webp",
+    "article": "SOU-002",
+    "basePrice": 3.0,
+    "quantity": 500,
+    "description": "Postcard",
+    "width": 10.0,
+    "length": 15.0,
+    "thickness": 0.1,
+    "categories": ["Vintage"]
+  }
+]

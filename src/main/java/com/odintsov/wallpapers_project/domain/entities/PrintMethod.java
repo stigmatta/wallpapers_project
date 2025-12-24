@@ -29,9 +29,6 @@ public class PrintMethod {
     @Column(nullable = false)
     private Integer deadline;
 
-    @OneToMany(mappedBy = "printMethod", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
-
     @OneToMany(mappedBy = "method")
     private List<PrintingMethodsLink> printingLinks = new ArrayList<>();
 }

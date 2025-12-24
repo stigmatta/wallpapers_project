@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Classic Print",
+    "article": "PR-002",
+    "basePrice": 29.99,
+    "salePrice": 24.99,
+    "image": "/images/classic_print.jpg",
+    "description": "High-quality classic print for interiors",
+    "quantity": 50,
+    "methods": ["Inkjet", "Laser"]
+  }
+]
