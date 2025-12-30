@@ -1,13 +1,15 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
+import com.odintsov.wallpapers_project.domain.enums.ProductFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Entity representing additional features or options that can be applied to products.
@@ -44,13 +46,10 @@ public class ExtraFeature {
     @Column(name = CommonFields.DESCRIPTION)
     private String description;
 
-    /**
-     * Reference to all order item links where this specific feature was applied.
-     * <p>
-     * Uses {@code orphanRemoval = true} to ensure that if a feature-link is removed
-     * from this list, it is also deleted from the database.
-     */
-    @OneToMany(mappedBy = "extraFeature", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<OrderItemExtraFeature> orderItemExtraFeatures = new ArrayList<>();
+    @Column(name = ProductFields.PRICE, nullable = false)
+    private Double price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = IdFields.PRODUCT_TYPE_ID)
+    private ProductType productType;
 }

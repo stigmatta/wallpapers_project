@@ -45,12 +45,12 @@ public abstract class BaseJpaRepositoryAdapter<
         return jpaRepository.findAll();
     }
 
-    public T save(T entity) {
+    public <S extends T> S save(S entity) {
         return jpaRepository.save(entity);
     }
 
-    public List<T> saveAll(List<T> entities) {
-        return jpaRepository.saveAll(entities);
+    public void saveAll(List<? extends T> entities) {
+        jpaRepository.saveAll(entities);
     }
 
     public void delete(ID id) {

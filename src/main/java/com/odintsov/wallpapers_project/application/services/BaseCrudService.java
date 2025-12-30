@@ -6,6 +6,7 @@ import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
 import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,10 +34,14 @@ public abstract class BaseCrudService<
         R extends CrudRepository<T, ID, FilterDTO>
         > implements BaseService<T, ID, FilterDTO, ListResponse, DetailedResponse> {
 
-    /** The repository used for data persistence. */
+    /**
+     * The repository used for data persistence.
+     */
     protected final R repository;
 
-    /** The mapper used to convert between domain entities and DTOs. */
+    /**
+     * The mapper used to convert between domain entities and DTOs.
+     */
     protected final DtoMapper<T, ListResponse, DetailedResponse> mapper;
 
     /**
@@ -52,6 +57,7 @@ public abstract class BaseCrudService<
 
     /**
      * {@inheritDoc}
+     *
      * @throws EntityNotFoundException if no entity is found with the given id
      */
     @Override
@@ -88,14 +94,16 @@ public abstract class BaseCrudService<
      * @return a list of detailed DTOs representing the saved entities
      */
     public List<DetailedResponse> saveAll(List<T> entities) {
-        List<T> savedEntities = repository.saveAll(entities);
-        return savedEntities.stream()
+        repository.saveAll(entities);
+
+        return entities.stream()
                 .map(mapper::toDetailedResponseDto)
                 .collect(Collectors.toList());
     }
 
     /**
      * {@inheritDoc}
+     *
      * @throws EntityNotFoundException if the entity with the specified id does not exist
      */
     @Override
@@ -109,6 +117,7 @@ public abstract class BaseCrudService<
 
     /**
      * {@inheritDoc}
+     *
      * @throws EntityNotFoundException if the entity with the specified id does not exist
      */
     @Override

@@ -1,0 +1,31 @@
+[
+  {
+    "productType": "WALLPAPER",
+    "attributeKey": "width",
+    "dataType": "NUMBER",
+    "isRequired": true,
+    "validationRules": {
+      "min": 10,
+      "max": 5000
+    }
+  },
+  {
+    "productType": "WALLPAPER",
+    "attributeKey": "height",
+    "dataType": "NUMBER",
+    "isRequired": true,
+    "validationRules": {
+      "min": 10,
+      "max": 10000
+    }
+  },
+  {
+    "productType": "WALLPAPER",
+    "attributeKey": "material_id",
+    "dataType": "ENTITY_REFERENCE",
+    "isRequired": true,
+    "validationRules": {
+      "collection": "WSH_WALLPAPER_MATERIALS"
+    }
+  }
+]

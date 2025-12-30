@@ -1,5 +1,6 @@
 package com.odintsov.wallpapers_project.application.services;
 
+import com.odintsov.wallpapers_project.application.exceptions.UnauthorizedException;
 import com.odintsov.wallpapers_project.domain.entities.UserSession;
 import com.odintsov.wallpapers_project.domain.repositories.SessionRepository;
 import org.springframework.stereotype.Service;
@@ -51,11 +52,11 @@ public class SessionService {
         String token = extractTokenFromHeader(authHeader);
 
         UserSession session = sessionRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid session token"));
+                .orElseThrow(UnauthorizedException::new);
 
         if (session.getExpiresAt() != null && session.getExpiresAt().isBefore(LocalDateTime.now())) {
             sessionRepository.deleteByToken(token);
-            throw new RuntimeException("Session expired");
+            throw new UnauthorizedException("Session expired");
         }
 
         return session.getUserId();

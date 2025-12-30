@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odintsov.wallpapers_project.domain.entities.PrintMethod;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
 import com.odintsov.wallpapers_project.domain.entities.PrintingMethodsLink;
-import com.odintsov.wallpapers_project.domain.repositories.PrintingMethodLinkRepository;
-import com.odintsov.wallpapers_project.domain.repositories.PrintingMethodRepository;
-import com.odintsov.wallpapers_project.domain.repositories.PrintingRepository;
+import com.odintsov.wallpapers_project.domain.entities.ProductType;
+import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
+import com.odintsov.wallpapers_project.domain.repositories.*;
 import com.odintsov.wallpapers_project.initializers.dtos.PrintingJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
@@ -25,8 +25,10 @@ import java.util.stream.Collectors;
 public class PrintingInitializer {
 
     private final PrintingRepository printingRepository;
+    private final ProductRepository productRepository;
     private final PrintingMethodRepository methodsRepository;
     private final PrintingMethodLinkRepository linkRepository;
+    private final ProductTypeRepository productTypeRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
@@ -34,6 +36,9 @@ public class PrintingInitializer {
         if (printingRepository.count() > 0) {
             return;
         }
+
+        ProductType printingType = productTypeRepository.findByName(ProductTypes.PRINTING)
+                .orElseThrow(() -> new RuntimeException("ProductType not found in DB!"));
 
         if (methodsRepository.count() == 0) {
             List<PrintMethod> methods = objectMapper.readValue(
@@ -56,6 +61,7 @@ public class PrintingInitializer {
         for (PrintingJson data : printingData) {
             Printing printing = Printing.builder()
                     .name(data.name())
+                    .productType(printingType)
                     .article(data.article())
                     .price(data.basePrice())
                     .salePrice(data.salePrice())
@@ -64,7 +70,7 @@ public class PrintingInitializer {
                     .quantity(data.quantity())
                     .build();
 
-            Printing savedPrinting = printingRepository.save(printing);
+            Printing savedPrinting = productRepository.save(printing);
 
             List<PrintingMethodsLink> links = data.methods().stream()
                     .map(methodMap::get)

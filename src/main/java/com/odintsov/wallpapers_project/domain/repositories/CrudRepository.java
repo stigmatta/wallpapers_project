@@ -11,6 +11,7 @@ import java.util.Optional;
  * A generic base repository interface providing standard CRUD operations
  * and advanced filtering capabilities.
  * * @param <T>  The entity type managed by the repository.
+ *
  * @param <ID> The type of the entity's identifier (usually String or UUID).
  * @param <F>  The filter DTO type used for faceted search and criteria.
  */
@@ -18,9 +19,10 @@ public interface CrudRepository<T, ID, F> {
 
     /**
      * Retrieves an entity by its identifier.
+     *
      * @return an Optional containing the entity, or empty if not found.
      * @throws EntityNotFoundException if specific business logic requires
-     * the existence of the entity.
+     *                                 the existence of the entity.
      */
     Optional<T> findById(ID id) throws EntityNotFoundException;
 
@@ -32,12 +34,12 @@ public interface CrudRepository<T, ID, F> {
     /**
      * Saves a given entity. Use the returned instance for further operations.
      */
-    T save(T entity);
+    <S extends T> S save(S entity);
 
     /**
      * Saves all given entities in a batch.
      */
-    List<T> saveAll(List<T> entities);
+    void saveAll(List<? extends T> entities);
 
     /**
      * Deletes the entity with the given id.
@@ -56,7 +58,8 @@ public interface CrudRepository<T, ID, F> {
 
     /**
      * Filters entities based on a criteria object.
-     * @param filter the search criteria DTO.
+     *
+     * @param filter   the search criteria DTO.
      * @param pageable the pagination information.
      * @return a page of matching entities.
      */

@@ -1,14 +1,13 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
-import com.odintsov.wallpapers_project.domain.enums.IdFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Entity representing a historical record of a completed or archived order.
@@ -36,28 +35,13 @@ public class OrderHistory {
     @EqualsAndHashCode.Include
     protected String id;
 
-    /**
-     * The user to whom this order history belongs.
-     */
-    @ManyToOne
-    @JoinColumn(name = IdFields.USER_ID)
-    private User user;
-
-    /**
-     * The timestamp of when the original order was created or archived.
-     */
-    @Column(name = CommonFields.CREATED_AT, nullable = false)
-    private LocalDateTime createdAt;
-
-    /**
-     * Collection of souvenir products associated with this historical order.
-     */
-    @OneToMany(mappedBy = "order")
-    private List<SouvenirOrderItem> souvenirItems;
-
-    /**
-     * Collection of wallpaper products associated with this historical order.
-     */
-    @OneToMany(mappedBy = "order")
-    private List<WallpaperOrderItem> wallpaperItems;
+//    /**
+//     * The user to whom this order history belongs.
+//     */
+//    @ManyToOne
+//    @JoinColumn(name = IdFields.USER_ID)
+//    private User user;
+//
+//    @OneToMany(mappedBy = "orderHistory")
+//    private List<Order> orders;
 }

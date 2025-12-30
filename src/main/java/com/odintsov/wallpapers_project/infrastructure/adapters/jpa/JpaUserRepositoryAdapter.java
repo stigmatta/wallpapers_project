@@ -4,6 +4,7 @@ import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaUserRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,6 +21,7 @@ import java.util.Optional;
  * for partial and case-insensitive matching.
  */
 @Component
+@Profile("jpa")
 public class JpaUserRepositoryAdapter
         extends BaseJpaRepositoryAdapter<User, String, UserFilter, JpaUserRepository>
         implements UserRepository {

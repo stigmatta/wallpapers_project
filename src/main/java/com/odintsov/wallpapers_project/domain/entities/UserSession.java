@@ -61,6 +61,7 @@ public class UserSession {
     /**
      * Convenience constructor for initializing a new session.
      * * @param userId the owner of the session
+     *
      * @param token the generated session token
      */
     public UserSession(UUID userId, String token) {
@@ -72,6 +73,7 @@ public class UserSession {
     /**
      * Fluent API method to set both temporal fields.
      * * @param created timestamp of creation
+     *
      * @param expires timestamp of expiration
      * @return the updated {@link UserSession} instance
      */

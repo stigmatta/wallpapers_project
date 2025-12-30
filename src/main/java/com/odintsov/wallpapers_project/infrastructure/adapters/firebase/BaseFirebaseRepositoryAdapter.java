@@ -2,9 +2,9 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
 import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
-import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +22,11 @@ import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils
  * <p>
  * This class handles the complexity of Firestore document mapping,
  * asynchronous future resolution, and paginated filtering.
- * * @param <T>  The Domain Entity type.
- * @param <ID> The ID type (mapped to Document ID).
- * @param <F>  The Filter DTO type for dynamic queries.
+ * /**
+ *
+ * @param <T>  Domain Entity
+ * @param <ID> ID type
+ * @param <F>  Filter type
  */
 public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         implements CrudRepository<T, ID, F> {
@@ -33,6 +35,8 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
     protected final Firestore firestore;
     protected final Class<T> entityClass;
     protected final FirestoreFilterBuilder<F> filterBuilder;
+    protected String typeIdPath;
+    protected String typeIdValue;
 
     protected BaseFirebaseRepositoryAdapter(
             Class<T> entityClass,
@@ -45,27 +49,65 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
     protected abstract String collectionName();
 
+    protected CollectionReference getCollection() {
+        return firestore.collection(collectionName());
+    }
+
     protected abstract String getId(T entity);
+
+    protected void setTypeDiscriminator(String path, String value) {
+        this.typeIdPath = path;
+        this.typeIdValue = value;
+    }
+
+    protected Query applyTypeFilter(Query query) {
+        if (typeIdPath != null && typeIdValue != null) {
+            return query.whereEqualTo(typeIdPath, typeIdValue);
+        }
+        return query;
+    }
+
+    private Page<T> toPage(Query query, Pageable pageable) {
+        QuerySnapshot fullSnapshot = await(query.get());
+        long total = fullSnapshot.size();
+
+        Query pagedQuery = query
+                .offset((int) pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        QuerySnapshot pageSnapshot = await(pagedQuery.get());
+
+        List<T> content = pageSnapshot.getDocuments()
+                .stream()
+                .map(d -> d.toObject(entityClass))
+                .toList();
+
+        return new PageImpl<>(content, pageable, total);
+    }
 
 
     @Override
     public Optional<T> findById(ID id) {
-        DocumentSnapshot doc = await(
-                firestore.collection(collectionName())
-                        .document(id.toString())
-                        .get()
-        );
+        try {
+            DocumentSnapshot doc = await(
+                    firestore.collection(collectionName())
+                            .document(id.toString())
+                            .get()
+            );
 
-        return doc.exists()
-                ? Optional.ofNullable(doc.toObject(entityClass))
-                : Optional.empty();
+            if (!doc.exists()) return Optional.empty();
+
+            return Optional.ofNullable(doc.toObject(entityClass));
+        } catch (Exception e) {
+            throw new RuntimeException("Deserialization failed for " + entityClass.getSimpleName() +
+                    " with ID: " + id + ". Check data types (Float vs Double)!", e);
+        }
     }
 
     @Override
     public List<T> findAll() {
-        QuerySnapshot snapshot = await(
-                firestore.collection(collectionName()).get()
-        );
+        Query query = applyTypeFilter(firestore.collection(collectionName()));
+        QuerySnapshot snapshot = await(query.get());
 
         return snapshot.getDocuments()
                 .stream()
@@ -74,7 +116,7 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
     }
 
     @Override
-    public T save(T entity) {
+    public <S extends T> S save(S entity) {
         String id = getOrCreateId(entity);
 
         await(
@@ -88,7 +130,7 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
 
     @Override
-    public List<T> saveAll(List<T> entities) {
+    public void saveAll(List<? extends T> entities) {
         WriteBatch batch = firestore.batch();
 
         for (T entity : entities) {
@@ -102,7 +144,6 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         }
 
         await(batch.commit());
-        return entities;
     }
 
 
@@ -117,76 +158,44 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
     @Override
     public long count() {
-        QuerySnapshot snapshot = await(
-                firestore.collection(collectionName()).get()
-        );
-        return snapshot.size();
+        Query query = applyTypeFilter(firestore.collection(collectionName()));
+        return await(query.get()).size();
     }
 
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-
-        Query query = firestore.collection(collectionName())
-                .offset((int) pageable.getOffset())
-                .limit(pageable.getPageSize());
-
-        QuerySnapshot snapshot = await(query.get());
-
-        List<T> content = snapshot.getDocuments()
-                .stream()
-                .map(d -> d.toObject(entityClass))
-                .toList();
-
-        return new PageImpl<>(content, pageable, count());
+        Query query = applyTypeFilter(firestore.collection(collectionName()));
+        return toPage(query, pageable);
     }
 
 
     @Override
     public Page<T> filter(F filter, Pageable pageable) {
-
-        Query baseQuery = firestore.collection(collectionName());
+        Query baseQuery = applyTypeFilter(firestore.collection(collectionName()));
         Query filteredQuery = filterBuilder.apply(baseQuery, filter);
-
-        Query pagedQuery = filteredQuery
-                .offset((int) pageable.getOffset())
-                .limit(pageable.getPageSize());
-
-        QuerySnapshot snapshot = await(pagedQuery.get());
-
-        List<T> content = snapshot.getDocuments()
-                .stream()
-                .map(d -> d.toObject(entityClass))
-                .toList();
-
-        long total = await(filteredQuery.get()).size();
-
-        return new PageImpl<>(content, pageable, total);
-    }
-
-    @Override
-    public void flush() {
-        // NO-OP: Firebase has no persistence context
+        return toPage(filteredQuery, pageable);
     }
 
     public Optional<T> findBySlug(String slug) {
+        Query query = applyTypeFilter(firestore.collection(collectionName()))
+                .whereEqualTo(CommonFields.SLUG, slug)
+                .limit(1);
 
-        var snapshot = FirebaseUtils.await(
-                firestore.collection(collectionName())
-                        .whereEqualTo("slug", slug)
-                        .limit(1)
-                        .get()
-        );
+        var snapshot = await(query.get());
 
         if (snapshot.isEmpty()) {
             return Optional.empty();
         }
 
         return Optional.of(
-                snapshot.getDocuments()
-                        .getFirst()
-                        .toObject(entityClass)
+                snapshot.getDocuments().getFirst().toObject(entityClass)
         );
+    }
+
+    @Override
+    public void flush() {
+        // NO-OP: Firebase has no persistence context
     }
 
 }

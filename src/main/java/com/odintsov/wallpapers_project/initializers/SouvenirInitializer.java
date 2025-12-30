@@ -3,8 +3,12 @@ package com.odintsov.wallpapers_project.initializers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
+import com.odintsov.wallpapers_project.domain.entities.ProductType;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
+import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
+import com.odintsov.wallpapers_project.domain.repositories.ProductRepository;
+import com.odintsov.wallpapers_project.domain.repositories.ProductTypeRepository;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
 import com.odintsov.wallpapers_project.initializers.dtos.SouvenirJson;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +28,9 @@ import java.util.stream.Collectors;
 public class SouvenirInitializer {
 
     private final SouvenirRepository souvenirRepository;
+    private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductTypeRepository productTypeRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
@@ -32,6 +38,9 @@ public class SouvenirInitializer {
         if (souvenirRepository.count() > 0) {
             return;
         }
+
+        ProductType souvenirType = productTypeRepository.findByName(ProductTypes.SOUVENIR)
+                .orElseThrow(() -> new RuntimeException("ProductType not found in DB!"));
 
         Map<String, Category> catMap = categoryRepository.findAll().stream()
                 .collect(Collectors.toMap(
@@ -54,6 +63,7 @@ public class SouvenirInitializer {
 
             return Souvenir.builder()
                     .name(data.name())
+                    .productType(souvenirType)
                     .image(data.image())
                     .article(data.article())
                     .price(data.basePrice())
@@ -66,8 +76,7 @@ public class SouvenirInitializer {
                     .build();
         }).collect(Collectors.toList());
 
-        souvenirRepository.saveAll(souvenirs);
-        souvenirRepository.flush();
+        productRepository.saveAll(souvenirs);
     }
 
 

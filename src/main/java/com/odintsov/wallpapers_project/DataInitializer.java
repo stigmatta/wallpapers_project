@@ -26,11 +26,17 @@ public class DataInitializer implements CommandLineRunner {
     private final CategoryInitializer categoryInitializer;
     private final PrintingInitializer printingInitializer;
     private final UserInitializer userInitializer;
+    private final ProductTypeInitializer productTypeInitializer;
+    private final ProductTypeAttributeInitializer productTypeAttributeInitializer;
+    private final ExtraFeatureInitializer extraFeatureInitializer;
 
 
     @Override
     public void run(String... args) {
         try {
+            productTypeInitializer.initTypes();
+            productTypeAttributeInitializer.initAttributes();
+            extraFeatureInitializer.initExtraFeatures();
             categoryInitializer.initCategories();
             wallpaperInitializer.initWallpapers();
             printingInitializer.initPrintings();

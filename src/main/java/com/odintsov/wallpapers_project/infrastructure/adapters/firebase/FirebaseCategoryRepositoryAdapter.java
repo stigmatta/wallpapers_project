@@ -4,13 +4,13 @@ import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.NullTypeFirestoreFilterBuilder;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.lang.model.type.NullType;
 
 @Component
-@Primary
+@Profile("firebase")
 public class FirebaseCategoryRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<Category, String, NullType>
         implements CategoryRepository {

@@ -3,16 +3,18 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 import com.google.cloud.firestore.Firestore;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingFilter;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
+import com.odintsov.wallpapers_project.domain.enums.NestedFields;
+import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.PrintingFilterBuilder;
-import com.odintsov.wallpapers_project.infrastructure.utils.SlugUtils;
+import com.odintsov.wallpapers_project.infrastructure.utils.ProductTypeRegistry;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
+@Profile("firebase")
 @Primary
 public class FirebasePrintingRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<Printing, String, PrintingFilter>
@@ -20,34 +22,24 @@ public class FirebasePrintingRepositoryAdapter
 
     protected final Firestore firestore;
 
-    public FirebasePrintingRepositoryAdapter(Firestore firestore) {
+    public FirebasePrintingRepositoryAdapter(Firestore firestore, ProductTypeRegistry typeRegistry) {
         super(Printing.class, new PrintingFilterBuilder());
         this.firestore = firestore;
+        this.setTypeDiscriminator(
+                NestedFields.PRODUCT_TYPE_ID,
+                typeRegistry.getTypeId(ProductTypes.PRINTING)
+        );
     }
 
     @Override
     protected String collectionName() {
-        return TableNames.PRINTINGS;
+        return TableNames.PRODUCTS;
     }
 
 
     @Override
     protected String getId(Printing entity) {
         return entity.getId();
-    }
-
-    @Override
-    public Printing save(Printing entity) {
-        SlugUtils.generateSlugIfMissing(entity);
-        return super.save(entity);
-    }
-
-    @Override
-    public List<Printing> saveAll(List<Printing> entities) {
-        for (Printing entity : entities) {
-            SlugUtils.generateSlugIfMissing(entity);
-        }
-        return super.saveAll(entities);
     }
 
 }

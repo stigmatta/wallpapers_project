@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class SouvenirDetailedResponse extends BaseProductDetailedResponse {
-    private Float width;
-    private Float length;
-    private Float thickness;
+    private Double width;
+    private Double length;
+    private Double thickness;
 }

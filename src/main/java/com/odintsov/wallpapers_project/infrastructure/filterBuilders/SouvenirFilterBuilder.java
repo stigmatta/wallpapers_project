@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.infrastructure.filterBuilders;
 
 import com.google.cloud.firestore.Query;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
+import com.odintsov.wallpapers_project.domain.enums.SouvenirFields;
 
 public class SouvenirFilterBuilder extends BaseProductFirestoreFilterBuilder<SouvenirFilter> {
 
@@ -10,13 +11,13 @@ public class SouvenirFilterBuilder extends BaseProductFirestoreFilterBuilder<Sou
         Query query = super.apply(baseQuery, filter);
 
         if (filter.getWidth() != null) {
-            query = query.whereLessThanOrEqualTo("width", filter.getWidth());
+            query = query.whereLessThanOrEqualTo(SouvenirFields.WIDTH, filter.getWidth());
         }
         if (filter.getLength() != null) {
-            query = query.whereLessThanOrEqualTo("length", filter.getLength());
+            query = query.whereLessThanOrEqualTo(SouvenirFields.LENGTH, filter.getLength());
         }
         if (filter.getThickness() != null) {
-            query = query.whereLessThanOrEqualTo("thickness", filter.getThickness());
+            query = query.whereLessThanOrEqualTo(SouvenirFields.THICKNESS, filter.getThickness());
         }
 
         return query;

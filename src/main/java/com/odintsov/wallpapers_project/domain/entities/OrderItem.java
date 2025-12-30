@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Entity representing a specific line item within a customer's {@link Order}.
@@ -44,6 +46,10 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = IdFields.ORDER_ID)
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = IdFields.ORDER_HISTORY_ID)
+    private OrderHistory orderHistory;
 
     /**
      * The category or class name of the product (e.g., "WALLPAPER", "SOUVENIR").
@@ -77,5 +83,15 @@ public class OrderItem {
      */
     @OneToMany(mappedBy = "orderItem", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<OrderItemExtraFeature> extraFeatures = new ArrayList<>();
+    private List<OrderItemExtraFeature> orderItemExtraFeatures = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(
+            name = TableNames.ORDER_ITEM_SPECIFICATIONS,
+            joinColumns = @JoinColumn(name = IdFields.ORDER_ITEM_ID)
+    )
+    @MapKeyColumn(name = ProductFields.SPEC_KEY)
+    @Column(name = ProductFields.SPEC_VALUE)
+    @Builder.Default
+    private Map<String, String> specifications = new HashMap<>();
 }

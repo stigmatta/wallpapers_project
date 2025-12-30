@@ -26,6 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+
 public class Souvenir extends BaseProduct {
 
     /**
@@ -46,17 +47,17 @@ public class Souvenir extends BaseProduct {
      * The horizontal dimension of the souvenir in centimeters or millimeters.
      */
     @Column(name = SouvenirFields.WIDTH, nullable = false)
-    private Float width;
+    private Double width;
 
     /**
      * The vertical dimension of the souvenir.
      */
     @Column(name = SouvenirFields.LENGTH, nullable = false)
-    private Float length;
+    private Double length;
 
     /**
      * The depth or thickness of the souvenir material.
      */
     @Column(name = SouvenirFields.THICKNESS, nullable = false)
-    private Float thickness;
+    private Double thickness;
 }

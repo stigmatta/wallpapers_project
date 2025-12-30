@@ -6,14 +6,13 @@ import com.odintsov.wallpapers_project.domain.entities.PrintMethod;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingMethodRepository;
 import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Primary
-
+@Profile("firebase")
 public class FirebasePrintingMethodRepositoryAdapter implements PrintingMethodRepository {
 
     protected final Firestore firestore;

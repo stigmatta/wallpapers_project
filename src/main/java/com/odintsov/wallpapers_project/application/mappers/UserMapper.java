@@ -40,7 +40,7 @@ public class UserMapper implements FullMapper<
     }
 
     @Override
-    public User toEntity(RegisterUserCommand command) {
+    public User fromCommandToEntity(RegisterUserCommand command) {
         return User.builder()
                 .username(command.username())
                 .email(command.email())
@@ -48,6 +48,5 @@ public class UserMapper implements FullMapper<
                 .password(passwordEncoder.encode(command.password()))
                 .build();
     }
-
 
 }

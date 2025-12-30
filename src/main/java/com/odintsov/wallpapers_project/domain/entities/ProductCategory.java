@@ -23,27 +23,23 @@ import org.hibernate.annotations.UuidGenerator;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProductCategory {
 
-    /**
-     * Unique identifier for the product category.
-     */
     @Id
     @UuidGenerator
-    @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    @Column(name = CommonFields.ID, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
     protected String id;
 
     /**
-     * The unique display name of the category (e.g., "Minimalist", "Industrial").
+     * Многие записи ProductCategory могут ссылаться на одну базовую Category
      */
-    @Column(name = CommonFields.NAME, nullable = false, unique = true)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = IdFields.CATEGORY_ID)
+    private Category category;
 
     /**
-     * The parent product type that this category belongs to.
-     * <p>
-     * Establishes a hierarchical relationship (e.g., Wallpapers -> Floral).
+     * Многие категории (Детские, Лофт, Сканди) относятся к Одному типу (Обои)
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = IdFields.PRODUCT_TYPE_ID)
     private ProductType productType;
 }

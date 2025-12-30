@@ -18,14 +18,10 @@ public interface RegisterUserUseCase {
      * Executes the registration process.
      *
      * @param command the data transfer object containing user registration details
-     * @throws SomeFieldsAreEmpty
-     * if required fields are missing
-     * @throws UsernameAlreadyTakenException
-     * if the username is already registered
-     * @throws EmailAlreadyTakenException
-     * if the email is already registered
-     * @throws PhoneNumberAlreadyTakenException
-     * if the phone number is already registered
+     * @throws SomeFieldsAreEmpty               if required fields are missing
+     * @throws UsernameAlreadyTakenException    if the username is already registered
+     * @throws EmailAlreadyTakenException       if the email is already registered
+     * @throws PhoneNumberAlreadyTakenException if the phone number is already registered
      */
     void execute(RegisterUserCommand command);
 }

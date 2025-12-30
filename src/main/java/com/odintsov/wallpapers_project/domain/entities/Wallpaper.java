@@ -20,8 +20,8 @@ import java.util.List;
 @Table(name = TableNames.WALLPAPERS)
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @SuperBuilder
 public class Wallpaper extends BaseProduct {

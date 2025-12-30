@@ -13,6 +13,7 @@ public final class IdFields {
     public static final String USER_ID = "userId";
     public static final String ORDER_ID = "orderId";
     public static final String ORDER_ITEM_ID = "orderItemId";
+    public static final String ORDER_HISTORY_ID = "orderHistoryId";
     public static final String WALLPAPER_ID = "wallpaperId";
     public static final String WALLPAPER_MATERIAL_ID = "wallpaperMaterialId";
     public static final String SOUVENIR_ID = "souvenirId";

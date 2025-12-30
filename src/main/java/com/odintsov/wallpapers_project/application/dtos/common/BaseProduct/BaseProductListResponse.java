@@ -15,7 +15,7 @@ public abstract class BaseProductListResponse {
     private String image;
     private String article;
     private List<String> categoryNames;
-    private Float basePrice;
-    private Float salePrice;
+    private Double basePrice;
+    private Double salePrice;
     private String slug;
 }

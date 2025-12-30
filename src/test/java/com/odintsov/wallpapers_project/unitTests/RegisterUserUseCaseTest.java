@@ -44,7 +44,7 @@ class RegisterUserUseCaseTest {
         when(userRepository.findByPhoneNumber(command.phoneNumber())).thenReturn(Optional.empty());
 
         User user = new User();
-        when(mapper.toEntity(command)).thenReturn(user);
+        when(mapper.fromCommandToEntity(command)).thenReturn(user);
 
         assertDoesNotThrow(() -> registerUserUseCase.execute(command));
 

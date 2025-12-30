@@ -1,10 +1,8 @@
 package com.odintsov.wallpapers_project.infrastructure.utils;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteBatch;
+import com.google.cloud.firestore.*;
+import com.odintsov.wallpapers_project.domain.enums.NestedFields;
 import com.odintsov.wallpapers_project.infrastructure.exceptions.FirebaseAccessException;
 
 import java.lang.reflect.Method;
@@ -12,9 +10,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 
@@ -38,7 +34,10 @@ public final class FirebaseUtils {
             Thread.currentThread().interrupt();
             throw new FirebaseAccessException("Firebase operation interrupted", e);
         } catch (ExecutionException e) {
-            throw new FirebaseAccessException("Firebase operation failed", e);
+            if (e.getCause() != null) {
+                System.err.println("!!! FIRESTORE ERROR: " + e.getCause().getMessage());
+            }
+            throw new FirebaseAccessException("Firebase operation failed: " + e.getMessage(), e);
         }
     }
 
@@ -49,6 +48,37 @@ public final class FirebaseUtils {
             result.add(doc.toObject(clazz));
         }
         return result;
+    }
+
+    public static <T> T save(Firestore firestore, String collectionName, T entity) {
+        String id = getOrCreateId(entity);
+
+        await(firestore.collection(collectionName).document(id).set(entity));
+
+        return entity;
+    }
+
+    public static <T> Optional<T> findById(Firestore firestore, String collectionName, Class<T> clazz, String id) {
+        if (id == null || id.isBlank()) {
+            return Optional.empty();
+        }
+
+        try {
+            DocumentSnapshot doc = await(
+                    firestore.collection(collectionName)
+                            .document(id)
+                            .get()
+            );
+
+            if (!doc.exists()) {
+                return Optional.empty();
+            }
+
+            return Optional.ofNullable(doc.toObject(clazz));
+        } catch (Exception e) {
+            throw new FirebaseAccessException("Deserialization failed for " + clazz.getSimpleName() +
+                    " with ID: " + id, e);
+        }
     }
 
     public static <T> List<T> saveAll(Firestore firestore, String collectionName, List<T> entities) {
@@ -94,5 +124,20 @@ public final class FirebaseUtils {
         }
     }
 
+    public static <T> List<T> findByProductTypeId(Firestore firestore, String collectionName, String productTypeId, Class<T> clazz) {
+        QuerySnapshot snapshot = await(
+                firestore.collection(collectionName)
+                        .whereEqualTo(NestedFields.PRODUCT_TYPE_ID, productTypeId)
+                        .get()
+        );
+
+        if (snapshot.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return snapshot.getDocuments().stream()
+                .map(doc -> doc.toObject(clazz))
+                .toList();
+    }
 
 }

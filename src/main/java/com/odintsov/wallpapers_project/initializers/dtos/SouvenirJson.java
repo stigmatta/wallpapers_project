@@ -6,12 +6,12 @@ public record SouvenirJson(
         String name,
         String image,
         String article,
-        float basePrice,
+        Double basePrice,
         int quantity,
         String description,
-        float width,
-        float length,
-        float thickness,
+        Double width,
+        Double length,
+        Double thickness,
         List<String> categories
 ) {
 }

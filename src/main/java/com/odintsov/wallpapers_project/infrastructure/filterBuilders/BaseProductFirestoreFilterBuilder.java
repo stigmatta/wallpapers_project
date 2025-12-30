@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.infrastructure.filterBuilders;
 
 import com.google.cloud.firestore.Query;
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
+import com.odintsov.wallpapers_project.domain.enums.ProductFields;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
 
 
@@ -11,6 +12,7 @@ import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilter
  * This class handles common product filtering logic, such as prefix-based name searches,
  * category membership checks via array intersections, and price range constraints.
  * </p>
+ *
  * @param <F> A subtype of BaseProductFilter to allow extension for specific products.
  */
 public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
@@ -22,23 +24,20 @@ public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
 
         Query query = baseQuery;
 
-        // Фильтр по имени
         if (filter.getName() != null && !filter.getName().isBlank()) {
-            String name = filter.getName().toLowerCase();
+            String name = filter.getName();
             query = query
-                    .orderBy("nameLower")
+                    .orderBy("name")
                     .startAt(name)
                     .endAt(name + "\uf8ff");
         }
 
-        // Фильтр по категории
         if (filter.getCategoryId() != null) {
             query = query.whereArrayContains("categoryIds", filter.getCategoryId());
         }
 
-        // Фильтр по базовой цене
         if (filter.getBasePrice() != null) {
-            query = query.whereLessThanOrEqualTo("basePrice", filter.getBasePrice());
+            query = query.whereLessThanOrEqualTo(ProductFields.PRICE, filter.getBasePrice());
         }
 
         return query;

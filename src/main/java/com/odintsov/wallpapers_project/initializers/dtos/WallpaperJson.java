@@ -5,8 +5,8 @@ import java.util.List;
 public record WallpaperJson(
         String name,
         String article,
-        Float basePrice,
-        Float salePrice,
+        Double basePrice,
+        Double salePrice,
         String image,
         String description,
         Float density,

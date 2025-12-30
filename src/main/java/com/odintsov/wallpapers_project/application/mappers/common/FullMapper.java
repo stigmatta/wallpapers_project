@@ -10,5 +10,5 @@ public interface FullMapper<T, ListResponse, DetailedResponse, Command>
      * @param command the command to convert
      * @return the entity
      */
-    T toEntity(Command command);
+    T fromCommandToEntity(Command command);
 }

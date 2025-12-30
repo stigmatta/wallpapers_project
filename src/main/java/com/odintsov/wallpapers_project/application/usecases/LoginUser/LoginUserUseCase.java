@@ -17,8 +17,7 @@ public interface LoginUserUseCase {
      *
      * @param command contains the username/email and password
      * @return a {@link UUID} representing the newly created session token
-     * @throws InvalidCredentialsException
-     * if the user is not found or the password does not match
+     * @throws InvalidCredentialsException if the user is not found or the password does not match
      */
     UUID execute(LoginUserCommand command);
 }

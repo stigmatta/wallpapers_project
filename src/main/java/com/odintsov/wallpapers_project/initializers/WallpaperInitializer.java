@@ -2,12 +2,12 @@ package com.odintsov.wallpapers_project.initializers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.odintsov.wallpapers_project.domain.entities.ProductType;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
-import com.odintsov.wallpapers_project.domain.repositories.WallpaperMaterialRepository;
-import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
-import com.odintsov.wallpapers_project.domain.repositories.WallpaperRoomRepository;
+import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
+import com.odintsov.wallpapers_project.domain.repositories.*;
 import com.odintsov.wallpapers_project.initializers.dtos.WallpaperJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 public class WallpaperInitializer {
 
     private final WallpaperRepository wallpaperRepository;
+    private final ProductRepository productRepository;
     private final WallpaperMaterialRepository materialRepository;
+    private final ProductTypeRepository productTypeRepository;
     private final WallpaperRoomRepository roomRepository;
     private final ObjectMapper objectMapper;
 
@@ -33,6 +35,9 @@ public class WallpaperInitializer {
         if (wallpaperRepository.count() > 0) {
             return;
         }
+
+        ProductType wallpaperType = productTypeRepository.findByName(ProductTypes.WALLPAPER)
+                .orElseThrow(() -> new RuntimeException("ProductType not found in DB!"));
 
         if (materialRepository.count() == 0) {
             List<WallpaperMaterial> materials = objectMapper.readValue(
@@ -68,6 +73,7 @@ public class WallpaperInitializer {
         List<Wallpaper> wallpapers = wallpaperData.stream().map(data ->
                 Wallpaper.builder()
                         .name(data.name())
+                        .productType(wallpaperType)
                         .article(data.article())
                         .price(data.basePrice())
                         .salePrice(data.salePrice())
@@ -87,7 +93,7 @@ public class WallpaperInitializer {
                         .build()
         ).collect(Collectors.toList());
 
-        wallpaperRepository.saveAll(wallpapers);
+        productRepository.saveAll(wallpapers);
         wallpaperRepository.flush();
     }
 }

@@ -9,7 +9,7 @@ import com.odintsov.wallpapers_project.domain.enums.SessionFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.SessionRepository;
 import com.odintsov.wallpapers_project.infrastructure.mappers.FirebaseSessionMapper;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
@@ -21,7 +21,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 
-
 /**
  * Firestore adapter for {@link UserSession} persistence.
  * <p>
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
  * specific formatting for date fields (ISO_LOCAL_DATE_TIME).
  */
 @Component
-@Primary
+@Profile("firebase")
 public class FirebaseSessionRepositoryAdapter implements SessionRepository {
 
     private final Firestore firestore;

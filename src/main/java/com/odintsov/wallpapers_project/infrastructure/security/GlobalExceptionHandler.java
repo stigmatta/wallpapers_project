@@ -33,8 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles authentication and authorization failures, such as incorrect passwords
-     * or expired session tokens.
+     * Handles authentication and authorization failures
      * * @return 403 Forbidden
      */
     @ExceptionHandler(InvalidCredentialsException.class)
@@ -42,10 +41,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+
+    /**
+     * Handles authentication and authorization failures, such as expired session tokens.
+     * * @return 401 Unauthorized
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Void> handleUnauthorized() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
     /**
      * Handles attempts to register or update data with values that must be unique
      * (Email, Username, or Phone Number) but are already present in the database.
      * * @param ex The specific conflict exception containing the error message.
+     *
      * @return 409 Conflict with a JSON body explaining the specific collision.
      */
     @ExceptionHandler({
@@ -62,6 +72,7 @@ public class GlobalExceptionHandler {
      * Handles basic validation failures where required fields are missing from
      * the request payload.
      * * @param ex Exception containing details about missing fields.
+     *
      * @return 400 Bad Request
      */
     @ExceptionHandler(SomeFieldsAreEmpty.class)
@@ -74,6 +85,7 @@ public class GlobalExceptionHandler {
      * Handles unexpected failures during the user registration process that are
      * not related to validation or conflicts (e.g., internal service failures).
      * * @param ex The exception describing the creation failure.
+     *
      * @return 500 Internal Server Error
      */
     @ExceptionHandler(UserCannotBeCreatedException.class)
@@ -85,6 +97,7 @@ public class GlobalExceptionHandler {
     /**
      * Handles technical failures related to the external NoSQL database connection.
      * * @param ex The infrastructure-level exception.
+     *
      * @return 503 Service Unavailable, indicating the server is alive but its
      * database dependency is unreachable.
      */
@@ -98,6 +111,7 @@ public class GlobalExceptionHandler {
      * Catch-all handler for any {@link Exception} not specifically addressed above.
      * Prevents raw system errors from reaching the end user.
      * * @param ex The unhandled exception.
+     *
      * @return 500 Internal Server Error with a generic message.
      */
     @ExceptionHandler(Exception.class)

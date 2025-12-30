@@ -4,7 +4,8 @@ import com.odintsov.wallpapers_project.domain.entities.UserSession;
 import com.odintsov.wallpapers_project.domain.repositories.SessionRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,8 @@ import java.util.UUID;
  * a "Single Session" policy during the {@code save} operation and performs
  * proactive expiration checks during token lookups.
  */
-@Repository
+@Component
+@Profile("jpa")
 @Transactional
 public class JpaSessionRepositoryAdapter implements SessionRepository {
 

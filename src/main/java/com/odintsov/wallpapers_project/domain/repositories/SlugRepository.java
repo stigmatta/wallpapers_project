@@ -9,6 +9,7 @@ import java.util.Optional;
  * to primary keys. This is commonly used in E-commerce for Product, Category,
  * or Blog post lookups to improve SEO and user experience.
  * </p>
+ *
  * @param <T> The entity type that possesses a slug attribute.
  */
 public interface SlugRepository<T> {
@@ -16,6 +17,7 @@ public interface SlugRepository<T> {
     /**
      * Finds an entity based on its unique URL slug.
      * * @param slug The URL-safe string identifier (e.g., "minimalist-vinyl-wallpaper").
+     *
      * @return An Optional containing the entity if found, otherwise empty.
      */
     Optional<T> findBySlug(String slug);

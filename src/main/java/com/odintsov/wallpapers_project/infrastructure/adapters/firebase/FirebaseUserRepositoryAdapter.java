@@ -6,9 +6,10 @@ import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
+import com.odintsov.wallpapers_project.domain.enums.UserFields;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.UserFilterBuilder;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -25,7 +26,7 @@ import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils
  * administrative searches.
  */
 @Component
-@Primary
+@Profile("firebase")
 public class FirebaseUserRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<User, String, UserFilter>
         implements UserRepository {
@@ -51,7 +52,7 @@ public class FirebaseUserRepositoryAdapter
     public Optional<User> findByEmailOrUsername(String value) {
         QuerySnapshot emailSnapshot = await(
                 firestore.collection(collectionName())
-                        .whereEqualTo("email", value)
+                        .whereEqualTo(UserFields.EMAIL, value)
                         .get()
         );
         if (!emailSnapshot.isEmpty()) {
@@ -60,7 +61,7 @@ public class FirebaseUserRepositoryAdapter
 
         QuerySnapshot usernameSnapshot = await(
                 firestore.collection(collectionName())
-                        .whereEqualTo("username", value)
+                        .whereEqualTo(UserFields.USERNAME, value)
                         .get()
         );
         if (!usernameSnapshot.isEmpty()) {
@@ -74,7 +75,7 @@ public class FirebaseUserRepositoryAdapter
     public Optional<User> findByEmail(String email) {
         QuerySnapshot snapshot = await(
                 firestore.collection(collectionName())
-                        .whereEqualTo("email", email)
+                        .whereEqualTo(UserFields.EMAIL, email)
                         .get()
         );
         if (!snapshot.isEmpty()) {
@@ -87,7 +88,7 @@ public class FirebaseUserRepositoryAdapter
     public Optional<User> findByUsername(String username) {
         QuerySnapshot snapshot = await(
                 firestore.collection(collectionName())
-                        .whereEqualTo("username", username)
+                        .whereEqualTo(UserFields.USERNAME, username)
                         .get()
         );
         if (!snapshot.isEmpty()) {
@@ -100,7 +101,7 @@ public class FirebaseUserRepositoryAdapter
     public Optional<User> findByPhoneNumber(String phoneNumber) {
         QuerySnapshot snapshot = await(
                 firestore.collection(collectionName())
-                        .whereEqualTo("phoneNumber", phoneNumber)
+                        .whereEqualTo(UserFields.PHONE_NUMBER, phoneNumber)
                         .get()
         );
         if (!snapshot.isEmpty()) {

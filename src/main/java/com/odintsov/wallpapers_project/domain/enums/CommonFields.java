@@ -10,29 +10,49 @@ package com.odintsov.wallpapers_project.domain.enums;
  */
 public final class CommonFields {
 
-    /** Database column name for primary identifiers. */
+    /**
+     * Database column name for primary identifiers.
+     */
     public static final String ID = "id";
 
-    /** Database column name for display names or titles. */
+    /**
+     * Database column name for display names or titles.
+     */
     public static final String NAME = "name";
 
-    /** Database column name for long-form text descriptions. */
+    /**
+     * Database column name for long-form text descriptions.
+     */
     public static final String DESCRIPTION = "description";
 
-    /** Database column name for record creation timestamps. */
+    /**
+     * Database column name for record creation timestamps.
+     */
     public static final String CREATED_AT = "createdAt";
 
-    /** Database column name for entity lifecycle states (e.g., Order status). */
+    /**
+     * Database column name for entity lifecycle states (e.g., Order status).
+     */
     public static final String STATUS = "status";
 
-    /** Database column name for URL-friendly resource identifiers. */
+    /**
+     * Database column name for URL-friendly resource identifiers.
+     */
     public static final String SLUG = "slug";
 
-    /** Database column name for discriminating between product categories. */
+    /**
+     * Database column name for discriminating between product categories.
+     */
     public static final String PRODUCT_TYPE = "productType";
 
-    /** Database column name for generic value fields in link tables. */
+    /**
+     * Database column name for generic value fields in link tables.
+     */
     public static final String VALUE = "value";
+
+    public static final String DATA_TYPE = "data_type";
+
+    public static final String IS_REQUIRED = "is_required";
 
     /**
      * Private constructor to prevent instantiation of this utility class.

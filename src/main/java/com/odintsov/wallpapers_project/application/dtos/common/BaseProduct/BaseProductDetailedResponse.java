@@ -13,8 +13,8 @@ public abstract class BaseProductDetailedResponse {
     private String id;
     private String name;
     private String article;
-    private Float basePrice;
-    private Float salePrice;
+    private Double basePrice;
+    private Double salePrice;
     private String image;
     private String description;
 }

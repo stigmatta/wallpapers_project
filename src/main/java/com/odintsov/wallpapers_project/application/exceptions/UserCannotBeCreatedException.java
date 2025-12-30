@@ -10,7 +10,9 @@ package com.odintsov.wallpapers_project.application.exceptions;
  */
 public abstract class UserCannotBeCreatedException extends RuntimeException {
 
-    /** The default prefix for all error messages in this hierarchy. */
+    /**
+     * The default prefix for all error messages in this hierarchy.
+     */
     private static final String BASE_MESSAGE = "User cannot be created";
 
     /**

@@ -24,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+
 @Table(name = TableNames.PRINTINGS)
 public class Printing extends BaseProduct {
 

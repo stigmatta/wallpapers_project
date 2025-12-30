@@ -1,8 +1,12 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import com.odintsov.wallpapers_project.domain.enums.*;
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
+import com.odintsov.wallpapers_project.domain.enums.ProductFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
@@ -18,6 +22,7 @@ import java.util.List;
  * It aggregates the total price, maintains the current {@link OrderStatus},
  * and serves as the parent for a collection of {@link OrderItem} records.
  */
+@Builder
 @Entity
 @Table(name = TableNames.ORDERS)
 @Data
@@ -50,15 +55,9 @@ public class Order {
      * Timestamp indicating when the order was placed.
      * Defaults to the current system time.
      */
-    @Column(name = CommonFields.CREATED_AT, nullable = false)
+    @Builder.Default
+    @Column(name = CommonFields.CREATED_AT)
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    /**
-     * The current lifecycle state of the order (e.g., NEW, PAID, SHIPPED).
-     */
-    @Column(name = CommonFields.STATUS, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status = OrderStatus.NEW;
 
     /**
      * The list of specific products and quantities associated with this order.
@@ -66,6 +65,7 @@ public class Order {
      * Managed via composition; deleting an order will delete its associated items.
      */
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<OrderItem> items = new ArrayList<>();
 
 }

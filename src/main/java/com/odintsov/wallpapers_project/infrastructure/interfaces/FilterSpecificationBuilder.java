@@ -15,6 +15,7 @@ public interface FilterSpecificationBuilder<T, FilterDTO> {
     /**
      * Constructs a {@link Specification} based on the provided filter.
      * * @param filter The object containing search parameters.
+     *
      * @return A JPA Specification used for dynamic database querying.
      */
     Specification<T> build(FilterDTO filter);
