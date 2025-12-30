@@ -10,6 +10,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+
+/**
+ * REST Controller for accessing the wallpaper catalog.
+ * <p>
+ * Provides endpoints for paginated browsing with complex filtering capabilities,
+ * as well as detailed resource retrieval via unique identifiers or SEO-friendly slugs.
+ * </p>
+ */
 @RestController
 @RequestMapping("/wallpapers")
 public class WallpaperController {

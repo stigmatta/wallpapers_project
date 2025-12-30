@@ -5,6 +5,13 @@ import com.odintsov.wallpapers_project.domain.entities.BaseProduct;
 import java.text.Normalizer;
 import java.util.Locale;
 
+
+/**
+ * Utility for generating SEO-friendly URL identifiers (slugs).
+ * <p>
+ * This class processes product names to remove accents, special characters,
+ * and spaces, creating a consistent string format used for human-readable URLs.
+ */
 public final class SlugUtils {
 
     private SlugUtils() {

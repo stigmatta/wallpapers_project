@@ -15,9 +15,17 @@ import java.util.Optional;
 
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
 
+
+/**
+ * Firestore-specific implementation of the {@link UserRepository}.
+ * <p>
+ * This adapter manages the {@link User} collection in Firestore, providing
+ * optimized lookups for unique identifiers such as email, username, and
+ * phone number. It leverages the {@link UserFilterBuilder} for advanced
+ * administrative searches.
+ */
 @Component
 @Primary
-
 public class FirebaseUserRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<User, String, UserFilter>
         implements UserRepository {

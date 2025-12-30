@@ -15,8 +15,20 @@ import java.util.Optional;
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.getOrCreateId;
 
+
+/**
+ * Generic Firestore adapter providing a bridge between the Domain Repository
+ * and Google Cloud NoSQL storage.
+ * <p>
+ * This class handles the complexity of Firestore document mapping,
+ * asynchronous future resolution, and paginated filtering.
+ * * @param <T>  The Domain Entity type.
+ * @param <ID> The ID type (mapped to Document ID).
+ * @param <F>  The Filter DTO type for dynamic queries.
+ */
 public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
         implements CrudRepository<T, ID, F> {
+
 
     protected final Firestore firestore;
     protected final Class<T> entityClass;

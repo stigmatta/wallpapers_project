@@ -30,5 +30,6 @@ public final class TableNames {
     public static final String WALLPAPER_ROOMS = "WSH_WALLPAPER_ROOMS";
 
     private TableNames() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 }

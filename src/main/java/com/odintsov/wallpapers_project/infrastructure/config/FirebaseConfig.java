@@ -12,6 +12,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Configuration class for initializing Google Firebase services.
+ * <p>
+ * This class sets up the {@link FirebaseApp} using service account credentials
+ * and provides a {@link Firestore} bean for NoSQL database interactions.
+ * </p>
+ */
 @Configuration
 public class FirebaseConfig {
 

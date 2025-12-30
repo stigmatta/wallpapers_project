@@ -4,6 +4,15 @@ import com.google.cloud.firestore.Query;
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
 
+
+/**
+ * A reusable builder for constructing Firestore queries based on {@link BaseProductFilter}.
+ * <p>
+ * This class handles common product filtering logic, such as prefix-based name searches,
+ * category membership checks via array intersections, and price range constraints.
+ * </p>
+ * @param <F> A subtype of BaseProductFilter to allow extension for specific products.
+ */
 public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
         implements FirestoreFilterBuilder<F> {
 

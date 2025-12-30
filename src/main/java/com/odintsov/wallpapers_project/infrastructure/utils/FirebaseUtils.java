@@ -17,6 +17,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ * Utility class for Firestore operations and data transformation.
+ * <p>
+ * This class provides synchronous wrappers for asynchronous Firebase calls,
+ * reflection-based ID management for entities, and standardized date-time
+ * parsing for NoSQL document consistency.
+ * </p>
+ */
 public final class FirebaseUtils {
 
     private FirebaseUtils() {

@@ -29,7 +29,8 @@ public class LoginUserUseCaseImpl implements LoginUserUseCase {
             throw new InvalidCredentialsException();
         }
 
-        return UUID.fromString(sessionService.createSession(UUID.fromString(user.getId()), 1));
+        int EXPIRE_MINUTES = 60;
+        return UUID.fromString(sessionService.createSession(UUID.fromString(user.getId()), EXPIRE_MINUTES));
     }
 }
 

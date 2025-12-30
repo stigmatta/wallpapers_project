@@ -7,6 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Component responsible for populating the database with initial seed data.
+ * <p>
+ * This class implements {@link CommandLineRunner} to execute initialization logic
+ * once the Spring application context is started. It coordinates multiple
+ * specialized initializers to ensure data integrity and correct relationship
+ * mapping (e.g., categories must exist before products).
+ */
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {

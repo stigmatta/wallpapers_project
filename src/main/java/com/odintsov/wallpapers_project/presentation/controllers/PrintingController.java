@@ -11,6 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+
+/**
+ * REST Controller for managing printing products and souvenirs.
+ * <p>
+ * This controller provides endpoints for public access to the printing catalog,
+ * supporting advanced filtering, pagination, and dual-lookup strategies (UUID or Slug).
+ */
 @RestController
 @RequestMapping("/printings")
 public class PrintingController {

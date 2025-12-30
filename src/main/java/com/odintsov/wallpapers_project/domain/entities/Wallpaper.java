@@ -9,6 +9,13 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+/**
+ * Entity representing a wallpaper product in the catalog.
+ * <p>
+ * This class extends {@link BaseProduct} to include technical wallpaper
+ * specifications such as density and waterproof status. It also maintains
+ * multi-faceted relationships for classification by room type and material.
+ */
 @Entity
 @Table(name = TableNames.WALLPAPERS)
 @Getter
@@ -17,9 +24,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @SuperBuilder
-
 public class Wallpaper extends BaseProduct {
 
+    /**
+     * The list of categories assigned to this wallpaper (e.g., "Floral", "Modern").
+     */
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = TableNames.WALLPAPER_CATEGORY_LINKS,
@@ -27,8 +36,16 @@ public class Wallpaper extends BaseProduct {
             inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
     )
     protected List<Category> categories;
+
+    /**
+     * The thickness or weight of the wallpaper material, typically measured in g/m².
+     */
     @Column(name = WallpaperFields.DENSITY, nullable = false)
     private Float density;
+
+    /**
+     * The types of material this wallpaper is composed of (e.g., "Vinyl", "Non-woven").
+     */
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = TableNames.WALLPAPER_MATERIAL_LINKS,
@@ -36,8 +53,16 @@ public class Wallpaper extends BaseProduct {
             inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
     )
     private List<WallpaperMaterial> materials;
+
+    /**
+     * Indicates whether the wallpaper is suitable for high-humidity environments.
+     */
     @Column(name = WallpaperFields.WATERPROOF, nullable = false)
     private Boolean waterproof;
+
+    /**
+     * Suggestions for which rooms this wallpaper is designed for (e.g., "Living Room", "Bathroom").
+     */
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = TableNames.WALLPAPER_ROOM_LINKS,

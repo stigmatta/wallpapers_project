@@ -11,6 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+
+/**
+ * REST Controller providing endpoints for souvenir product management.
+ * <p>
+ * This controller handles public requests to browse the souvenir catalog,
+ * providing support for dynamic filtering via {@link SouvenirFilter} and
+ * pagination. It supports resource retrieval by both unique UUID and
+ * SEO-friendly slugs.
+ */
 @RestController
 @RequestMapping("/souvenirs")
 public class SouvenirController {

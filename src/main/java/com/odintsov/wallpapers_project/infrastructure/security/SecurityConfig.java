@@ -8,6 +8,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+/**
+ * Main security configuration for the application.
+ * <p>
+ * This class configures Spring Security to handle password hashing via BCrypt
+ * and defines the HTTP security filter chain. In its current state, it provides
+ * a permissive configuration suitable for development, disabling CSRF and
+ * allowing unrestricted access to all endpoints.
+ * </p>
+ */
 @Configuration
 public class SecurityConfig {
 

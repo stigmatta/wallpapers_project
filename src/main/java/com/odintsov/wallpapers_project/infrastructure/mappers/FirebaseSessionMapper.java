@@ -13,6 +13,14 @@ import java.util.UUID;
 
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.parseDateTime;
 
+
+
+/**
+ * Mapper utility for converting Firestore document snapshots into {@link UserSession} entities.
+ * <p>
+ * This class handles the conversion of String-based identifiers and ISO-formatted
+ * date-time strings back into their respective Java types (UUID and LocalDateTime).
+ */
 public final class FirebaseSessionMapper {
 
     public static UserSession toEntity(DocumentSnapshot doc) {
@@ -24,4 +32,6 @@ public final class FirebaseSessionMapper {
 
         return new UserSession(userId, token).withCreatedAndExpires(createdAt, expiresAt);
     }
+
+    private FirebaseSessionMapper() {}
 }

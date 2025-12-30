@@ -12,7 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Generic adapter between domain repositories and Spring Data JPA
+ * Abstract JPA implementation of the {@link CrudRepository}.
+ * <p>
+ * This adapter delegates calls to a Spring Data JPA repository. It utilizes
+ * {@link org.springframework.data.jpa.domain.Specification} to provide
+ * flexible, type-safe database querying based on domain filters.
+ * </p>
+ *
+ * @param <T>   The domain entity type.
+ * @param <ID>  The identifier type.
+ * @param <F>   The filter DTO type.
+ * @param <JPA> The underlying Spring Data repository interface.
  */
 public abstract class BaseJpaRepositoryAdapter<
         T,

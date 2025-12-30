@@ -10,4 +10,8 @@ public final class ProductFields {
     public static final String ARTICLE = "article";
     public static final String IMAGE_URL = "imageUrl";
     public static final String DEADLINE = "deadline";
+
+    private ProductFields() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 }

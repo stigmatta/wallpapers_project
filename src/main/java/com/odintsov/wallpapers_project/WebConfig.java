@@ -6,6 +6,15 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+/**
+ * Web-layer configuration for the application.
+ * <p>
+ * This class configures global CORS (Cross-Origin Resource Sharing) rules,
+ * enabling the frontend application (typically running on React/Next.js)
+ * to securely interact with the REST API.
+ * </p>
+ */
 @Configuration
 public class WebConfig {
     @Bean

@@ -12,6 +12,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
+/**
+ * JPA-based implementation of {@link SessionRepository}.
+ * <p>
+ * This adapter manages user sessions within a relational database. It implements
+ * a "Single Session" policy during the {@code save} operation and performs
+ * proactive expiration checks during token lookups.
+ */
 @Repository
 @Transactional
 public class JpaSessionRepositoryAdapter implements SessionRepository {

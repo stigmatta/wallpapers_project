@@ -11,6 +11,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+
+/**
+ * JPA implementation of the {@link UserRepository}.
+ * <p>
+ * This adapter delegates standard lookups to the {@link JpaUserRepository}
+ * and provides a complex {@code filter} implementation using JPA Specifications
+ * for partial and case-insensitive matching.
+ */
 @Component
 public class JpaUserRepositoryAdapter
         extends BaseJpaRepositoryAdapter<User, String, UserFilter, JpaUserRepository>

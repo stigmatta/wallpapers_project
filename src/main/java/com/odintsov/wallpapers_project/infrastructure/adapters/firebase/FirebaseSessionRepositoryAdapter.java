@@ -21,6 +21,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 
+
+/**
+ * Firestore adapter for {@link UserSession} persistence.
+ * <p>
+ * This implementation uses the Google Cloud Firestore SDK to manage session data.
+ * It performs manual mapping of domain entities to Firestore maps to ensure
+ * specific formatting for date fields (ISO_LOCAL_DATE_TIME).
+ */
 @Component
 @Primary
 public class FirebaseSessionRepositoryAdapter implements SessionRepository {

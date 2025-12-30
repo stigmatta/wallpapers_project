@@ -20,6 +20,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+
+/**
+ * REST Controller for user identity and access management.
+ * <p>
+ * This controller handles account lifecycles (registration, login, logout)
+ * and provides endpoints for user profile management and administrative
+ * listing with complex filtering support.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
