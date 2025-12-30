@@ -13,5 +13,6 @@ public record SouvenirJson(
         float length,
         float thickness,
         List<String> categories
-) {}
+) {
+}
 

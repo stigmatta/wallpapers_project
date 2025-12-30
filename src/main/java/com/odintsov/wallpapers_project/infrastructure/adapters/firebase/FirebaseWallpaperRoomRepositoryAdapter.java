@@ -4,6 +4,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRoomRepository;
 import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.context.annotation.Primary;
@@ -25,7 +26,7 @@ public class FirebaseWallpaperRoomRepositoryAdapter
     }
 
     protected String collectionName() {
-        return "wallpaper_rooms";
+        return TableNames.WALLPAPER_ROOMS;
     }
 
     protected String getId(WallpaperMaterial entity) {

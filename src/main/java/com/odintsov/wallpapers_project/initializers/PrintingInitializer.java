@@ -38,7 +38,8 @@ public class PrintingInitializer {
         if (methodsRepository.count() == 0) {
             List<PrintMethod> methods = objectMapper.readValue(
                     new ClassPathResource("data/print_methods.json").getInputStream(),
-                    new TypeReference<>() {}
+                    new TypeReference<>() {
+                    }
             );
             methodsRepository.saveAll(methods);
         }
@@ -48,14 +49,15 @@ public class PrintingInitializer {
 
         List<PrintingJson> printingData = objectMapper.readValue(
                 new ClassPathResource("data/printings.json").getInputStream(),
-                new TypeReference<>() {}
+                new TypeReference<>() {
+                }
         );
 
         for (PrintingJson data : printingData) {
             Printing printing = Printing.builder()
                     .name(data.name())
                     .article(data.article())
-                    .basePrice(data.basePrice())
+                    .price(data.basePrice())
                     .salePrice(data.salePrice())
                     .image(data.image())
                     .description(data.description())

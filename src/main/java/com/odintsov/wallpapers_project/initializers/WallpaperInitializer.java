@@ -1,5 +1,6 @@
 package com.odintsov.wallpapers_project.initializers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 
 @Component
@@ -37,7 +37,8 @@ public class WallpaperInitializer {
         if (materialRepository.count() == 0) {
             List<WallpaperMaterial> materials = objectMapper.readValue(
                     new ClassPathResource("data/wallpaper_materials.json").getInputStream(),
-                    new TypeReference<>() {}
+                    new TypeReference<>() {
+                    }
             );
             materialRepository.saveAll(materials);
         }
@@ -47,9 +48,12 @@ public class WallpaperInitializer {
         if (roomRepository.count() == 0) {
             List<WallpaperRoom> rooms = objectMapper.readValue(
                     new ClassPathResource("data/wallpaper_rooms.json").getInputStream(),
-                    new TypeReference<>() {}
+                    new TypeReference<>() {
+                    }
             );
-            rooms.forEach(r -> { if(r.getId() == null) r.setId(UUID.randomUUID().toString()); });
+            rooms.forEach(r -> {
+                if (r.getId() == null) r.setId(UUID.randomUUID().toString());
+            });
             roomRepository.saveAll(rooms);
         }
         Map<String, WallpaperRoom> roomMap = roomRepository.findAll().stream()
@@ -57,14 +61,15 @@ public class WallpaperInitializer {
 
         List<WallpaperJson> wallpaperData = objectMapper.readValue(
                 new ClassPathResource("data/wallpapers.json").getInputStream(),
-                new TypeReference<>() {}
+                new TypeReference<>() {
+                }
         );
 
         List<Wallpaper> wallpapers = wallpaperData.stream().map(data ->
                 Wallpaper.builder()
                         .name(data.name())
                         .article(data.article())
-                        .basePrice(data.basePrice())
+                        .price(data.basePrice())
                         .salePrice(data.salePrice())
                         .image(data.image())
                         .description(data.description())

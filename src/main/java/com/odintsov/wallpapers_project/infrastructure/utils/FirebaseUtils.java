@@ -8,6 +8,10 @@ import com.google.cloud.firestore.WriteBatch;
 import com.odintsov.wallpapers_project.infrastructure.exceptions.FirebaseAccessException;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -70,5 +74,16 @@ public final class FirebaseUtils {
             throw new IllegalStateException("Entity must have getId()/setId()", e);
         }
     }
+
+    public static LocalDateTime parseDateTime(String dateStr) {
+        try {
+            return OffsetDateTime.parse(dateStr)
+                    .atZoneSameInstant(ZoneId.systemDefault())
+                    .toLocalDateTime();
+        } catch (DateTimeParseException e) {
+            return LocalDateTime.parse(dateStr);
+        }
+    }
+
 
 }

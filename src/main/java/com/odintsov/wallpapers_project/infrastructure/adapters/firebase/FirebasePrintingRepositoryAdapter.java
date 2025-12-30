@@ -2,9 +2,10 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.Firestore;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingFilter;
-import com.odintsov.wallpapers_project.infrastructure.filterBuilders.PrintingFilterBuilder;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingRepository;
+import com.odintsov.wallpapers_project.infrastructure.filterBuilders.PrintingFilterBuilder;
 import com.odintsov.wallpapers_project.infrastructure.utils.SlugUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class FirebasePrintingRepositoryAdapter
 
     @Override
     protected String collectionName() {
-        return "printings";
+        return TableNames.PRINTINGS;
     }
 
 

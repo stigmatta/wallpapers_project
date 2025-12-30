@@ -32,18 +32,19 @@ public class WallpaperMapper implements DtoMapper<
                                 .map(Category::getName)
                                 .toList()
                 )
-                .basePrice(entity.getBasePrice())
+                .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
                 .slug(entity.getSlug())
                 .build();
     }
+
     @Override
     public WallpaperDetailedResponse toDetailedResponseDto(Wallpaper entity) {
         return WallpaperDetailedResponse.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .article(entity.getArticle())
-                .basePrice(entity.getBasePrice())
+                .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
                 .image(entity.getImage())
                 .description(entity.getDescription())

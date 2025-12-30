@@ -19,7 +19,6 @@ public class DataInitializer implements CommandLineRunner {
     private final UserInitializer userInitializer;
 
 
-
     @Override
     public void run(String... args) {
         try {

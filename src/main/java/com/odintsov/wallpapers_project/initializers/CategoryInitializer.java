@@ -27,7 +27,8 @@ public class CategoryInitializer {
 
         List<Category> categories = objectMapper.readValue(
                 new ClassPathResource("data/categories.json").getInputStream(),
-                new TypeReference<>() {}
+                new TypeReference<>() {
+                }
         );
 
         categoryRepository.saveAll(categories);

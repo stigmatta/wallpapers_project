@@ -1,5 +1,7 @@
 package com.odintsov.wallpapers_project.application.usecases.LoginUser;
 
+import java.util.UUID;
+
 public interface LoginUserUseCase {
-    void execute(LoginUserCommand command);
+    UUID execute(LoginUserCommand command);
 }

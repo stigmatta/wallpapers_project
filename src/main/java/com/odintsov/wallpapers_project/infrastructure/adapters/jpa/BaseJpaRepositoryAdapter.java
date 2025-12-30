@@ -43,7 +43,9 @@ public abstract class BaseJpaRepositoryAdapter<
         return jpaRepository.saveAll(entities);
     }
 
-    public void delete(ID id) { jpaRepository.deleteById(id);}
+    public void delete(ID id) {
+        jpaRepository.deleteById(id);
+    }
 
     public long count() {
         return jpaRepository.count();
@@ -54,8 +56,8 @@ public abstract class BaseJpaRepositoryAdapter<
     }
 
     public Page<T> filter(F filter,
-                                       Pageable pageable,
-                                       FilterSpecificationBuilder<T, F> builder) {
+                          Pageable pageable,
+                          FilterSpecificationBuilder<T, F> builder) {
         Specification<T> spec = builder.build(filter);
         return jpaRepository.findAll(spec, pageable);
     }

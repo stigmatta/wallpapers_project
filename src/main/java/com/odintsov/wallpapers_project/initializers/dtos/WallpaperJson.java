@@ -14,4 +14,5 @@ public record WallpaperJson(
         Integer quantity,
         List<String> rooms,
         List<String> materials
-) {}
+) {
+}

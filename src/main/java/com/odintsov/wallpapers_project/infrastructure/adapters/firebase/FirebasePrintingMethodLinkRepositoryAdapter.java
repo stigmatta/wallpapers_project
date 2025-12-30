@@ -3,6 +3,7 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.entities.PrintingMethodsLink;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingMethodLinkRepository;
 import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.context.annotation.Primary;
@@ -23,7 +24,7 @@ public class FirebasePrintingMethodLinkRepositoryAdapter
     }
 
     protected String collectionName() {
-        return "printing_method_links";
+        return TableNames.PRINTING_METHOD_LINKS;
     }
 
     protected String getId(PrintingMethodsLink entity) {

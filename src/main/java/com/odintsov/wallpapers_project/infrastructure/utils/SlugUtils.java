@@ -7,7 +7,8 @@ import java.util.Locale;
 
 public final class SlugUtils {
 
-    private SlugUtils() {}
+    private SlugUtils() {
+    }
 
     public static void generateSlugIfMissing(BaseProduct entity) {
         if (entity.getSlug() == null && entity.getName() != null) {

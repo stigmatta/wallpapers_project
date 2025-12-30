@@ -1,5 +1,7 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +17,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Table(name = "WSH_PRINTINGS")
+@Table(name = TableNames.PRINTINGS)
 public class Printing extends BaseProduct {
-
-    @OneToMany(mappedBy = "printing", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PrintingMethodsLink> printingLinks;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
-            name = "PRINTING_CATEGORY_LINK",
-            joinColumns = @JoinColumn(name = "PRINTING_ID"),
-            inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
+            name = TableNames.PRINTING_CATEGORY_LINKS,
+            joinColumns = @JoinColumn(name = IdFields.PRINTING_ID),
+            inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
     )
     protected List<Category> categories;
+    @OneToMany(mappedBy = "printing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrintingMethodsLink> printingLinks;
 
 }

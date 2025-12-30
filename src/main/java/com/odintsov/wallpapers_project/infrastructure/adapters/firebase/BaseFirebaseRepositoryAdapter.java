@@ -32,8 +32,8 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
     }
 
     protected abstract String collectionName();
-    protected abstract String getId(T entity);
 
+    protected abstract String getId(T entity);
 
 
     @Override

@@ -45,7 +45,7 @@ public class UserMapper implements FullMapper<
                 .username(command.username())
                 .email(command.email())
                 .phoneNumber(command.phoneNumber())
-                .hashedPassword(passwordEncoder.encode(command.password()))
+                .password(passwordEncoder.encode(command.password()))
                 .build();
     }
 

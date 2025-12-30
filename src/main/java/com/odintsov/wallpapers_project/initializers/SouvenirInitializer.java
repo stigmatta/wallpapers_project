@@ -1,22 +1,22 @@
 package com.odintsov.wallpapers_project.initializers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
 import com.odintsov.wallpapers_project.initializers.dtos.SouvenirJson;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ClassPathResource;
-
 
 
 @Component
@@ -56,7 +56,7 @@ public class SouvenirInitializer {
                     .name(data.name())
                     .image(data.image())
                     .article(data.article())
-                    .basePrice(data.basePrice())
+                    .price(data.basePrice())
                     .quantity(data.quantity())
                     .description(data.description())
                     .width(data.width())

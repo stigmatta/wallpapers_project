@@ -4,4 +4,5 @@ public record UserJson(
         String username,
         String email,
         String password
-) {}
+) {
+}

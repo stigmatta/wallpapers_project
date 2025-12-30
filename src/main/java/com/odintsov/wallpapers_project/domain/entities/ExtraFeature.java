@@ -1,5 +1,7 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,18 +17,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "WSH_EXTRA_FEATURES")
+@Table(name = TableNames.EXTRA_FEATURES)
 public class ExtraFeature {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     protected String id;
 
-    @Column(name = "FEATURE_NAME", nullable = false, unique = true)
-    private String featureName;
+    @Column(name = CommonFields.NAME, nullable = false, unique = true)
+    private String name;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = CommonFields.DESCRIPTION)
     private String description;
 
     @OneToMany(mappedBy = "extraFeature", cascade = CascadeType.ALL, orphanRemoval = true)

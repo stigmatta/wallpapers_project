@@ -1,11 +1,17 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import jakarta.persistence.*;
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
+import com.odintsov.wallpapers_project.domain.enums.WallpaperFields;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Table(name = "WSH_WALLPAPER_MATERIALS")
+@Table(name = TableNames.WALLPAPER_MATERIALS)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,14 +22,14 @@ public class WallpaperMaterial {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
     protected String id;
 
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = CommonFields.NAME, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "PRICE_MULTIPLIER")
+    @Column(name = WallpaperFields.PRICE_MULTIPLIER)
     private Double priceMultiplier;
 }
 

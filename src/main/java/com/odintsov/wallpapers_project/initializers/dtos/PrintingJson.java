@@ -11,4 +11,5 @@ public record PrintingJson(
         String description,
         Integer quantity,
         List<String> methods
-) {}
+) {
+}

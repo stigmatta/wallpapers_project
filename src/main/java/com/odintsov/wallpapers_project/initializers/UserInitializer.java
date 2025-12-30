@@ -30,14 +30,15 @@ public class UserInitializer {
 
         List<UserJson> userData = objectMapper.readValue(
                 new ClassPathResource("data/users.json").getInputStream(),
-                new TypeReference<>() {}
+                new TypeReference<>() {
+                }
         );
 
         List<User> users = userData.stream().map(data ->
                 User.builder()
                         .username(data.username())
                         .email(data.email())
-                        .hashedPassword(passwordEncoder.encode(data.password()))
+                        .password(passwordEncoder.encode(data.password()))
                         .build()
         ).toList();
 

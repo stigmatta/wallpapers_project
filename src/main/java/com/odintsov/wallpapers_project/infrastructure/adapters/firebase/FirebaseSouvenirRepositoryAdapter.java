@@ -4,6 +4,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.SouvenirFilterBuilder;
 import com.odintsov.wallpapers_project.infrastructure.utils.SlugUtils;
@@ -28,7 +29,7 @@ public class FirebaseSouvenirRepositoryAdapter
 
     @Override
     protected String collectionName() {
-        return "souvenirs";
+        return TableNames.SOUVENIRS;
     }
 
     @Override

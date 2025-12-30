@@ -1,14 +1,20 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
+import com.odintsov.wallpapers_project.domain.enums.UserFields;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "WSH_USERS")
+@Table(name = TableNames.USERS)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,20 +23,20 @@ public class User {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     protected String id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = UserFields.EMAIL, nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = UserFields.USERNAME, nullable = false, unique = true)
     private String username;
 
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = UserFields.PHONE_NUMBER, nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column(name = "HASHED_PASSWORD", nullable = false)
-    private String hashedPassword;
+    @Column(name = UserFields.PASSWORD, nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

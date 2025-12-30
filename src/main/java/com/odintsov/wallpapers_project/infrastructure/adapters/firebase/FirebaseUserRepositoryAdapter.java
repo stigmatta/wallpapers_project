@@ -1,9 +1,11 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.UserFilterBuilder;
 import org.springframework.context.annotation.Primary;
@@ -29,7 +31,7 @@ public class FirebaseUserRepositoryAdapter
 
     @Override
     protected String collectionName() {
-        return "users";
+        return TableNames.USERS;
     }
 
     @Override

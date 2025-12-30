@@ -1,6 +1,11 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import jakarta.persistence.*;
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -10,7 +15,7 @@ import org.hibernate.annotations.UuidGenerator;
  * This entity is typically used to classify categories or other product-related entities.
  */
 @Entity
-@Table(name = "WSH_PRODUCT_TYPES")
+@Table(name = TableNames.PRODUCT_TYPES)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,13 +29,13 @@ public class ProductType {
      */
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
+    @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
     protected String id;
     /**
      * The name or identifier of the product type (e.g., "WALLPAPERS", "SOUVENIRS").
      * This field is typically unique and non-nullable.
      */
-    @Column(nullable = false, unique = true)
+    @Column(name = CommonFields.NAME, nullable = false, unique = true)
     private String name;
 }

@@ -1,6 +1,7 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.odintsov.wallpapers_project.domain.entities.Category;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.NullTypeFirestoreFilterBuilder;
 import org.springframework.context.annotation.Primary;
@@ -20,7 +21,7 @@ public class FirebaseCategoryRepositoryAdapter
 
     @Override
     protected String collectionName() {
-        return "categories";
+        return TableNames.CATEGORIES;
     }
 
     @Override

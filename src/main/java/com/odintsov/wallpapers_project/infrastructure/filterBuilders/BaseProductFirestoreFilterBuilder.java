@@ -1,8 +1,8 @@
 package com.odintsov.wallpapers_project.infrastructure.filterBuilders;
 
 import com.google.cloud.firestore.Query;
-import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
+import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
 
 public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
         implements FirestoreFilterBuilder<F> {

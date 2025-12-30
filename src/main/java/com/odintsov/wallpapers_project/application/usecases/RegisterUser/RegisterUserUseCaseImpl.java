@@ -8,7 +8,6 @@ import com.odintsov.wallpapers_project.application.mappers.UserMapper;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +41,5 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         User user = mapper.toEntity(command);
 
         userRepository.save(user);
-
-        ResponseEntity.ok().build();
     }
 }

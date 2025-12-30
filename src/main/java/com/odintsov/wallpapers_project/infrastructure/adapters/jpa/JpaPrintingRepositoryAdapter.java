@@ -1,10 +1,10 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingFilter;
-import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifications;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
 import com.odintsov.wallpapers_project.domain.repositories.PrintingRepository;
 import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaPrintingRepository;
+import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

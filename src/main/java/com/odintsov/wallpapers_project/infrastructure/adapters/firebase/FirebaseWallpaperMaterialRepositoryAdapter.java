@@ -3,6 +3,7 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperMaterialRepository;
 import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.context.annotation.Primary;
@@ -24,7 +25,7 @@ public class FirebaseWallpaperMaterialRepositoryAdapter
     }
 
     protected String collectionName() {
-        return "wallpaper_materials";
+        return TableNames.WALLPAPER_MATERIALS;
     }
 
     protected String getId(WallpaperMaterial entity) {

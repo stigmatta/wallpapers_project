@@ -30,7 +30,7 @@ public class SouvenirMapper implements DtoMapper<
                                 .map(Category::getName)
                                 .toList()
                 )
-                .basePrice(entity.getBasePrice())
+                .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
                 .build();
     }
@@ -41,7 +41,7 @@ public class SouvenirMapper implements DtoMapper<
                 .id(entity.getId())
                 .name(entity.getName())
                 .article(entity.getArticle())
-                .basePrice(entity.getBasePrice())
+                .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
                 .image(entity.getImage())
                 .description(entity.getDescription())

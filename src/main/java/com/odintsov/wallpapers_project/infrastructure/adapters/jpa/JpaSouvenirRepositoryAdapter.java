@@ -1,10 +1,10 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.jpa;
 
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
-import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifications;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
 import com.odintsov.wallpapers_project.infrastructure.persistence.jpa.JpaSouvenirRepository;
+import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -4,6 +4,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilter;
 import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
+import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.WallpaperRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.WallpaperFilterBuilder;
 import com.odintsov.wallpapers_project.infrastructure.utils.SlugUtils;
@@ -28,7 +29,7 @@ public class FirebaseWallpaperRepositoryAdapter
 
     @Override
     protected String collectionName() {
-        return "wallpapers";
+        return TableNames.WALLPAPERS;
     }
 
     @Override
