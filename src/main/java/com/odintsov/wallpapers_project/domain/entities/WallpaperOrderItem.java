@@ -1,9 +1,6 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import com.odintsov.wallpapers_project.domain.enums.CommonFields;
-import com.odintsov.wallpapers_project.domain.enums.IdFields;
-import com.odintsov.wallpapers_project.domain.enums.ProductFields;
-import com.odintsov.wallpapers_project.domain.enums.TableNames;
+import com.odintsov.wallpapers_project.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -60,4 +57,10 @@ public class WallpaperOrderItem {
      */
     @Column(name = ProductFields.PRICE, nullable = false)
     private Double price;
+
+    @Column(name = WallpaperFields.WIDTH, nullable = false)
+    private Double width;
+
+    @Column(name = WallpaperFields.HEIGHT, nullable = false)
+    private Double height;
 }
