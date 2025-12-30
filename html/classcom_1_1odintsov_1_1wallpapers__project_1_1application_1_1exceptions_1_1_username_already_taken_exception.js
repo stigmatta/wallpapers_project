@@ -1,0 +1,4 @@
+var classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_username_already_taken_exception =
+[
+    [ "UsernameAlreadyTakenException", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_username_already_taken_exception.html#a0f25651cc59cf1c607b1d2ab95946281", null ]
+];

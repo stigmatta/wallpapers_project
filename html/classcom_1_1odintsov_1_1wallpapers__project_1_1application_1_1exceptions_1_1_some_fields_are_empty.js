@@ -1,0 +1,4 @@
+var classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_some_fields_are_empty =
+[
+    [ "SomeFieldsAreEmpty", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_some_fields_are_empty.html#ab60bddcc346c37741bab9fc03990521e", null ]
+];

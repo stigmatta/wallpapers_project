@@ -1,0 +1,4 @@
+var classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_user_cannot_be_created_exception =
+[
+    [ "UserCannotBeCreatedException", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_user_cannot_be_created_exception.html#a87ba4a88b2133dd9184195b6887e43e3", null ]
+];
