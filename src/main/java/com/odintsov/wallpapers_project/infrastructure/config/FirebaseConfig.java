@@ -8,9 +8,10 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Configuration class for initializing Google Firebase services.
@@ -24,18 +25,28 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        InputStream serviceAccount = getClass().getClassLoader()
-                .getResourceAsStream("firebase-service-account.json");
-
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(Objects.requireNonNull(serviceAccount)))
-                .build();
-
-        if (FirebaseApp.getApps().isEmpty()) {
-            return FirebaseApp.initializeApp(options);
-        } else {
+        if (!FirebaseApp.getApps().isEmpty()) {
             return FirebaseApp.getInstance();
         }
+
+        String firebaseConfigJson = System.getenv("FIREBASE_CONFIG_JSON");
+        InputStream serviceAccount;
+
+        if (firebaseConfigJson != null && !firebaseConfigJson.isEmpty()) {
+            serviceAccount = new ByteArrayInputStream(firebaseConfigJson.getBytes(StandardCharsets.UTF_8));
+        } else {
+            serviceAccount = getClass().getClassLoader().getResourceAsStream("firebase-service-account.json");
+
+            if (serviceAccount == null) {
+                throw new IllegalStateException("Firebase service account file not found and FIREBASE_CONFIG_JSON is empty");
+            }
+        }
+
+        FirebaseOptions options = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
+
+        return FirebaseApp.initializeApp(options);
     }
 
     @Bean
