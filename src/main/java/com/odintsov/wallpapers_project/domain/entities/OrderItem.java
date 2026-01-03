@@ -47,10 +47,6 @@ public class OrderItem {
     @JoinColumn(name = IdFields.ORDER_ID)
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = IdFields.ORDER_HISTORY_ID)
-    private OrderHistory orderHistory;
-
     /**
      * The category or class name of the product (e.g., "WALLPAPER", "SOUVENIR").
      * Used to determine which service or repository to use when fetching product details.
