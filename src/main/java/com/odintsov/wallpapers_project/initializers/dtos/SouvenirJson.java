@@ -1,9 +1,11 @@
 package com.odintsov.wallpapers_project.initializers.dtos;
 
+
 import java.util.List;
 
 public record SouvenirJson(
         String name,
+        String slug,
         String image,
         String article,
         Double basePrice,
@@ -12,7 +14,6 @@ public record SouvenirJson(
         Double width,
         Double length,
         Double thickness,
-        List<String> categories
-) {
+        List<String> categories) {
 }
 

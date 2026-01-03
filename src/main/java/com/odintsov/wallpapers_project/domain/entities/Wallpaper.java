@@ -27,17 +27,6 @@ import java.util.List;
 public class Wallpaper extends BaseProduct {
 
     /**
-     * The list of categories assigned to this wallpaper (e.g., "Floral", "Modern").
-     */
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = TableNames.WALLPAPER_CATEGORY_LINKS,
-            joinColumns = @JoinColumn(name = IdFields.WALLPAPER_ID),
-            inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
-    )
-    protected List<Category> categories;
-
-    /**
      * The thickness or weight of the wallpaper material, typically measured in g/m².
      */
     @Column(name = WallpaperFields.DENSITY, nullable = false)

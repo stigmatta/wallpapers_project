@@ -28,7 +28,7 @@ public class FirebaseSouvenirRepositoryAdapter
         this.firestore = FirestoreClient.getFirestore();
         this.setTypeDiscriminator(
                 NestedFields.PRODUCT_TYPE_ID,
-                typeRegistry.getTypeId(ProductTypes.SOUVENIR)
+                () -> typeRegistry.getTypeId(ProductTypes.SOUVENIR)
         );
     }
 

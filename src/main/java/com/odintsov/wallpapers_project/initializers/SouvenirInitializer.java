@@ -63,6 +63,7 @@ public class SouvenirInitializer {
 
             return Souvenir.builder()
                     .name(data.name())
+                    .slug(data.slug())
                     .productType(souvenirType)
                     .image(data.image())
                     .article(data.article())

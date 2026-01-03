@@ -15,7 +15,6 @@ public class OrderDocument {
     private String id;
     private String userId;
     private Double price;
-    private String status;
     private String createdAt;
     private List<OrderItemDocument> items;
 }

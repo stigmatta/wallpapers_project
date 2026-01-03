@@ -1,11 +1,9 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +32,9 @@ public class Category {
     @UuidGenerator
     @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     protected String id;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = IdFields.PRODUCT_TYPE_ID, nullable = false)
+    protected ProductType productType;
     /**
      * The display name of the category (e.g., "Architecture").
      */

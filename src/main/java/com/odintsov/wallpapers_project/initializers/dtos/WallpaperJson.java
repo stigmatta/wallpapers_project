@@ -1,9 +1,11 @@
 package com.odintsov.wallpapers_project.initializers.dtos;
 
+
 import java.util.List;
 
 public record WallpaperJson(
         String name,
+        String slug,
         String article,
         Double basePrice,
         Double salePrice,
@@ -13,6 +15,6 @@ public record WallpaperJson(
         Boolean waterproof,
         Integer quantity,
         List<String> rooms,
-        List<String> materials
-) {
+        List<String> materials,
+        List<String> categories) {
 }

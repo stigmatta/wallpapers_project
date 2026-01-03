@@ -1,14 +1,19 @@
 package com.odintsov.wallpapers_project.presentation.controllers;
 
+import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperFilter;
 import com.odintsov.wallpapers_project.application.dtos.Wallpaper.WallpaperListResponse;
 import com.odintsov.wallpapers_project.application.services.WallpaperService;
+import com.odintsov.wallpapers_project.presentation.dtos.WallpaperCatalogResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -29,11 +34,20 @@ public class WallpaperController {
     }
 
     @GetMapping
-    public Page<WallpaperListResponse> getWallpapers(
+    public ResponseEntity<WallpaperCatalogResponse> getWallpapers(
             @ModelAttribute WallpaperFilter filter,
             @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return wallpaperService.findAll(filter, pageable);
+        Page<WallpaperListResponse> wallpapersPage = wallpaperService.findAll(filter, pageable);
+
+        List<CategoryResponse> categories = wallpaperService.getAvailableCategories();
+
+        return ResponseEntity.ok(
+                WallpaperCatalogResponse.builder()
+                        .products(wallpapersPage)
+                        .availableCategories(categories)
+                        .build()
+        );
     }
 
     @GetMapping("/{id:[0-9a-fA-F-]{36}}")

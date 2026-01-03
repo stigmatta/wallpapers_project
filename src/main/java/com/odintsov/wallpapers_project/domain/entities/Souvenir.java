@@ -1,16 +1,15 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
-import com.odintsov.wallpapers_project.domain.enums.IdFields;
 import com.odintsov.wallpapers_project.domain.enums.SouvenirFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * Entity representing a souvenir product in the catalog.
@@ -28,20 +27,6 @@ import java.util.List;
 @SuperBuilder
 
 public class Souvenir extends BaseProduct {
-
-    /**
-     * The list of categories assigned to this souvenir.
-     * <p>
-     * Managed through a dedicated join table. Uses {@code MERGE} and
-     * {@code PERSIST} cascades to handle category mapping updates.
-     */
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = TableNames.SOUVENIR_CATEGORY_LINKS,
-            joinColumns = @JoinColumn(name = IdFields.SOUVENIR_ID),
-            inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
-    )
-    protected List<Category> categories;
 
     /**
      * The horizontal dimension of the souvenir in centimeters or millimeters.

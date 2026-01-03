@@ -31,6 +31,8 @@ public interface CrudRepository<T, ID, F> {
      */
     List<T> findAll() throws EntityNotFoundException;
 
+    Optional<T> findBySlug(String slug);
+
     /**
      * Saves a given entity. Use the returned instance for further operations.
      */

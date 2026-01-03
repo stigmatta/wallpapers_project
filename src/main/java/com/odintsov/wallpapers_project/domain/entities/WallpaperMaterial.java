@@ -1,6 +1,7 @@
 package com.odintsov.wallpapers_project.domain.entities;
 
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
+import com.odintsov.wallpapers_project.domain.enums.ProductFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.enums.WallpaperFields;
 import jakarta.persistence.Column;
@@ -35,13 +36,18 @@ public class WallpaperMaterial {
     @Column(name = CommonFields.ID, updatable = false, nullable = false, length = 36, columnDefinition = "VARCHAR2(36)")
     @EqualsAndHashCode.Include
     protected String id;
-
+    /**
+     * Primary display image URL.
+     */
+    @Column(name = ProductFields.IMAGE, nullable = false)
+    protected String image;
     /**
      * Unique name of the material (e.g., "Premium Silk", "Standard Paper").
      */
     @Column(name = CommonFields.NAME, nullable = false, unique = true)
     private String name;
-
+    @Column(name = CommonFields.DESCRIPTION, nullable = false, unique = true)
+    private String description;
     /**
      * A coefficient used to calculate the final price of the wallpaper.
      * <p>

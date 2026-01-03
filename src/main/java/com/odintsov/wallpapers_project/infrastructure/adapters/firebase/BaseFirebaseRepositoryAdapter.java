@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
 import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.getOrCreateId;
@@ -36,6 +37,7 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
     protected final FirestoreFilterBuilder<F> filterBuilder;
     protected String typeIdPath;
     protected String typeIdValue;
+    private Supplier<String> typeIdSupplier;
 
     protected BaseFirebaseRepositoryAdapter(
             Class<T> entityClass,
@@ -55,12 +57,16 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
     protected abstract String getId(T entity);
 
-    protected void setTypeDiscriminator(String path, String value) {
+    protected void setTypeDiscriminator(String path, Supplier<String> supplier) {
         this.typeIdPath = path;
-        this.typeIdValue = value;
+        this.typeIdSupplier = supplier;
     }
 
     protected Query applyTypeFilter(Query query) {
+        if (typeIdValue == null && typeIdSupplier != null) {
+            this.typeIdValue = typeIdSupplier.get();
+        }
+
         if (typeIdPath != null && typeIdValue != null) {
             return query.whereEqualTo(typeIdPath, typeIdValue);
         }

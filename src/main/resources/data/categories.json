@@ -1,5 +1,11 @@
 [
-  { "name": "Decor" },
-  { "name": "Gift" },
-  { "name": "Vintage" }
+  { "name": "Дитяча", "productType": "WALLPAPER" },
+  { "name": "Вітальня", "productType": "WALLPAPER" },
+  { "name": "3D Фотошпалери", "productType": "WALLPAPER" },
+  { "name": "Декор для дому", "productType": "SOUVENIR" },
+  { "name": "Подарунки", "productType": "SOUVENIR" },
+  { "name": "Кераміка", "productType": "SOUVENIR" },
+  { "name": "Візитки", "productType": "PRINTING" },
+  { "name": "Флаєри", "productType": "PRINTING" },
+  { "name": "Листівки", "productType": "PRINTING" }
 ]

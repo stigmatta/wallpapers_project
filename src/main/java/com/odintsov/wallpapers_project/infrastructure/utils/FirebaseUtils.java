@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.infrastructure.utils;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.odintsov.wallpapers_project.domain.enums.CommonFields;
 import com.odintsov.wallpapers_project.domain.enums.NestedFields;
 import com.odintsov.wallpapers_project.infrastructure.exceptions.FirebaseAccessException;
 
@@ -79,6 +80,18 @@ public final class FirebaseUtils {
             throw new FirebaseAccessException("Deserialization failed for " + clazz.getSimpleName() +
                     " with ID: " + id, e);
         }
+    }
+
+    public static <T> Optional<T> findByName(Firestore firestore, String collectionName, Class<T> clazz, String name) {
+        QuerySnapshot snapshot = await(
+                firestore.collection(collectionName)
+                        .whereEqualTo(CommonFields.NAME, name)
+                        .get()
+        );
+        if (!snapshot.isEmpty()) {
+            return Optional.of(snapshot.getDocuments().getFirst().toObject(clazz));
+        }
+        return Optional.empty();
     }
 
     public static <T> List<T> saveAll(Firestore firestore, String collectionName, List<T> entities) {

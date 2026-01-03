@@ -28,7 +28,7 @@ public class FirebaseWallpaperRepositoryAdapter
 
         this.setTypeDiscriminator(
                 NestedFields.PRODUCT_TYPE_ID,
-                typeRegistry.getTypeId(ProductTypes.WALLPAPER)
+                () -> typeRegistry.getTypeId(ProductTypes.WALLPAPER)
         );
     }
 

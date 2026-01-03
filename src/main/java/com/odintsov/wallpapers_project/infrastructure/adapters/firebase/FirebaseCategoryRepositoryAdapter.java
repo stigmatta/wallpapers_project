@@ -5,10 +5,13 @@ import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import com.odintsov.wallpapers_project.infrastructure.filterBuilders.NullTypeFirestoreFilterBuilder;
+import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.lang.model.type.NullType;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @Profile("firebase")
@@ -28,6 +31,16 @@ public class FirebaseCategoryRepositoryAdapter
     @Override
     protected String getId(Category entity) {
         return entity.getId();
+    }
+
+    @Override
+    public List<Category> findByProductTypeId(String productTypeId) {
+        return FirebaseUtils.findByProductTypeId(firestore, collectionName(), productTypeId, Category.class);
+    }
+
+    @Override
+    public Optional<Category> findByName(String name) {
+        return FirebaseUtils.findByName(firestore, collectionName(), Category.class, name);
     }
 }
 

@@ -72,6 +72,13 @@ public class CreateOrderValidator {
         Map<String, Object> rules = rule.getValidationRules() != null ? rule.getValidationRules() : Collections.emptyMap();
         String type = rule.getDataType().toUpperCase();
 
+        if (rules.containsKey("options")) {
+            List<?> options = (List<?>) rules.get("options");
+            if (!options.contains(value)) {
+                throw new IllegalArgumentException("Invalid value for " + key + ". Allowed options: " + options);
+            }
+        }
+
         switch (type) {
             case "NUMBER" -> {
                 double val;
@@ -91,10 +98,27 @@ public class CreateOrderValidator {
                 if (rules.containsKey("max") && val > ((Number) rules.get("max")).doubleValue()) {
                     throw new IllegalArgumentException(key + " must not exceed " + rules.get("max"));
                 }
+                if (rules.containsKey("step")) {
+                    double step = ((Number) rules.get("step")).doubleValue();
+                    if (val % step != 0) {
+                        throw new IllegalArgumentException(key + " must be a multiple of " + step);
+                    }
+                }
+            }
+
+            case "STRING" -> {
+                String strVal = value.toString();
+                if (rules.containsKey("pattern")) {
+                    String pattern = (String) rules.get("pattern");
+                    if (!strVal.matches(pattern)) {
+                        throw new IllegalArgumentException("Spec " + key + " does not match required format: " + pattern);
+                    }
+                }
             }
 
             case "BOOLEAN" -> {
-                if (!(value instanceof Boolean)) {
+                if (!(value instanceof Boolean) &&
+                        !(value instanceof String && ("true".equalsIgnoreCase((String) value) || "false".equalsIgnoreCase((String) value)))) {
                     throw new IllegalArgumentException("Spec " + key + " must be a boolean (true/false)");
                 }
             }

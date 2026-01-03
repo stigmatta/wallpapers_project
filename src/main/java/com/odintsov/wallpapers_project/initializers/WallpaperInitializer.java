@@ -2,13 +2,12 @@ package com.odintsov.wallpapers_project.initializers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.odintsov.wallpapers_project.domain.entities.ProductType;
-import com.odintsov.wallpapers_project.domain.entities.Wallpaper;
-import com.odintsov.wallpapers_project.domain.entities.WallpaperMaterial;
-import com.odintsov.wallpapers_project.domain.entities.WallpaperRoom;
+import com.odintsov.wallpapers_project.domain.entities.*;
 import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
 import com.odintsov.wallpapers_project.domain.repositories.*;
+import com.odintsov.wallpapers_project.infrastructure.utils.ProductTypeRegistry;
 import com.odintsov.wallpapers_project.initializers.dtos.WallpaperJson;
+import com.odintsov.wallpapers_project.initializers.dtos.WallpaperMaterialJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -26,9 +25,13 @@ public class WallpaperInitializer {
     private final WallpaperRepository wallpaperRepository;
     private final ProductRepository productRepository;
     private final WallpaperMaterialRepository materialRepository;
+    private final ExtraFeatureRepository extraFeatureRepository;
     private final ProductTypeRepository productTypeRepository;
+    private final CategoryRepository categoryRepository;
     private final WallpaperRoomRepository roomRepository;
     private final ObjectMapper objectMapper;
+    private final ProductTypeRegistry productTypeRegistry;
+
 
     @Transactional
     public void initWallpapers() throws IOException {
@@ -40,13 +43,24 @@ public class WallpaperInitializer {
                 .orElseThrow(() -> new RuntimeException("ProductType not found in DB!"));
 
         if (materialRepository.count() == 0) {
-            List<WallpaperMaterial> materials = objectMapper.readValue(
+            List<WallpaperMaterialJson> materialsData = objectMapper.readValue(
                     new ClassPathResource("data/wallpaper_materials.json").getInputStream(),
                     new TypeReference<>() {
                     }
             );
+
+            List<WallpaperMaterial> materials = materialsData.stream().map(data ->
+                    WallpaperMaterial.builder()
+                            .name(data.name())
+                            .description(data.description())
+                            .priceMultiplier(data.priceMultiplier())
+                            .image(data.image())
+                            .build()
+            ).collect(Collectors.toList());
+
             materialRepository.saveAll(materials);
         }
+
         Map<String, WallpaperMaterial> materialMap = materialRepository.findAll().stream()
                 .collect(Collectors.toMap(WallpaperMaterial::getName, m -> m));
 
@@ -64,6 +78,12 @@ public class WallpaperInitializer {
         Map<String, WallpaperRoom> roomMap = roomRepository.findAll().stream()
                 .collect(Collectors.toMap(WallpaperRoom::getName, r -> r));
 
+        Map<String, Category> categoryMap = categoryRepository.findByProductTypeId(wallpaperType.getId())
+                .stream()
+                .collect(Collectors.toMap(Category::getName, c -> c));
+
+        List<ExtraFeature> wallpaperFeatures = extraFeatureRepository.findByProductTypeId(productTypeRegistry.getTypeId(ProductTypes.WALLPAPER));
+
         List<WallpaperJson> wallpaperData = objectMapper.readValue(
                 new ClassPathResource("data/wallpapers.json").getInputStream(),
                 new TypeReference<>() {
@@ -73,6 +93,7 @@ public class WallpaperInitializer {
         List<Wallpaper> wallpapers = wallpaperData.stream().map(data ->
                 Wallpaper.builder()
                         .name(data.name())
+                        .slug(data.slug())
                         .productType(wallpaperType)
                         .article(data.article())
                         .price(data.basePrice())

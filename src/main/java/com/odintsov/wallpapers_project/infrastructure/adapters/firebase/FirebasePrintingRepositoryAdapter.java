@@ -25,7 +25,7 @@ public class FirebasePrintingRepositoryAdapter
         super(Printing.class, new PrintingFilterBuilder(), firestore);
         this.setTypeDiscriminator(
                 NestedFields.PRODUCT_TYPE_ID,
-                typeRegistry.getTypeId(ProductTypes.PRINTING)
+                () -> typeRegistry.getTypeId(ProductTypes.PRINTING)
         );
     }
 

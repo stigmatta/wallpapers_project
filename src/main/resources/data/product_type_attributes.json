@@ -27,5 +27,42 @@
     "validationRules": {
       "collection": "WSH_WALLPAPER_MATERIALS"
     }
+  },
+
+  {
+    "productType": "PRINTING",
+    "attributeKey": "print_method_id",
+    "dataType": "ENTITY_REFERENCE",
+    "isRequired": true,
+    "validationRules": {
+      "collection": "WSH_PRINT_METHODS"
+    }
+  },
+  {
+    "productType": "PRINTING",
+    "attributeKey": "paper_density",
+    "dataType": "STRING",
+    "isRequired": false,
+    "validationRules": {
+      "options": ["80g", "130g", "350g"]
+    }
+  },
+  {
+    "productType": "SOUVENIR",
+    "attributeKey": "color",
+    "dataType": "STRING",
+    "isRequired": true,
+    "validationRules": {
+      "options": ["White", "Black", "Red", "Blue", "Corporate"]
+    }
+  },
+  {
+    "productType": "SOUVENIR",
+    "attributeKey": "gift_wrap",
+    "dataType": "BOOLEAN",
+    "isRequired": false,
+    "validationRules": {
+      "default": false
+    }
   }
 ]

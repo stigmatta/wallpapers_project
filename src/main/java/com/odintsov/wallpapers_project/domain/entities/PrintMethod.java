@@ -3,12 +3,12 @@ package com.odintsov.wallpapers_project.domain.entities;
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
 import com.odintsov.wallpapers_project.domain.enums.ProductFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Entity representing a specific manufacturing or printing technique.
@@ -41,16 +41,13 @@ public class PrintMethod {
     @Column(name = CommonFields.NAME, nullable = false)
     private String name;
 
+    @Column(name = CommonFields.DESCRIPTION, nullable = false)
+    private String description;
+
     /**
      * The estimated number of days required to complete production using this method.
      */
     @Column(name = ProductFields.DEADLINE, nullable = false)
     private Integer deadline;
 
-    /**
-     * Collection of links associating this method with various {@link Printing} products.
-     */
-    @OneToMany(mappedBy = "method")
-    @Builder.Default
-    private List<PrintingMethodsLink> printingLinks = new ArrayList<>();
 }

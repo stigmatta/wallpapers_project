@@ -1,5 +1,20 @@
 [
-  { "name": "САМОКЛЕЮЧІ", "priceMultiplier": 1.0 },
-  { "name": "ФЛІЗЕЛІН", "priceMultiplier": 1.2 },
-  { "name": "ВІНІЛ НА ФЛІЗЕЛІНІ", "priceMultiplier": 1.5 }
+  {
+    "name": "САМОКЛЕЮЧІ",
+    "priceMultiplier": 1.0,
+    "description": "Мають клейовий шар на звороті, що дозволяє монтувати їх без додаткового клею. Найкраще підходять для ідеально рівних поверхонь та меблів.",
+    "image": "https://s3-odintsov-3c2.s3.eu-central-1.amazonaws.com/samokleyuchi.webp"
+  },
+  {
+    "name": "ФЛІЗЕЛІН",
+    "priceMultiplier": 1.2,
+    "description": "Екологічний матеріал, що 'дихає'. Має матову текстуру, легко приховує дрібні нерівності стін та не деформується під час висихання.",
+    "image": "https://s3-odintsov-3c2.s3.eu-central-1.amazonaws.com/flizelin.webp"
+  },
+  {
+    "name": "ВІНІЛ НА ФЛІЗЕЛІНІ",
+    "priceMultiplier": 1.5,
+    "description": "Найміцніший варіант із захисним вініловим шаром. Стійкий до вологи та миття, ідеально підходить для кухні, коридору або дитячої кімнати.",
+    "image": "https://s3-odintsov-3c2.s3.eu-central-1.amazonaws.com/vinil.webp"
+  }
 ]

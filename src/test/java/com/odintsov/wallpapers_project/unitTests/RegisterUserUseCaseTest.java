@@ -1,10 +1,10 @@
 package com.odintsov.wallpapers_project.unitTests;
 
 import com.odintsov.wallpapers_project.application.exceptions.*;
+import com.odintsov.wallpapers_project.application.mappers.UserMapper;
 import com.odintsov.wallpapers_project.application.usecases.RegisterUser.RegisterUserCommand;
 import com.odintsov.wallpapers_project.application.usecases.RegisterUser.RegisterUserUseCaseImpl;
-import com.odintsov.wallpapers_project.application.mappers.UserMapper;
-import com.odintsov.wallpapers_project.domain.entities.User;
+import com.odintsov.wallpapers_project.application.usecases.RegisterUser.RegisterUserValidator;
 import com.odintsov.wallpapers_project.domain.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,21 +12,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RegisterUserUseCaseTest {
 
+    @InjectMocks
+    private RegisterUserUseCaseImpl registerUserUseCase;
+
     @Mock
-    private UserRepository userRepository;
+    private RegisterUserValidator validator;
 
     @Mock
     private UserMapper mapper;
 
-    @InjectMocks
-    private RegisterUserUseCaseImpl registerUserUseCase;
+    @Mock
+    private UserRepository repository;
 
     @BeforeEach
     void setUp() {
@@ -34,28 +35,26 @@ class RegisterUserUseCaseTest {
     }
 
     @Test
-    void execute_validCommand_savesUser() {
+    void execute_validCommand_doesNotThrow() {
         RegisterUserCommand command = new RegisterUserCommand(
                 "user@example.com", "username", "1234567890", "password"
         );
 
-        when(userRepository.findByUsername(command.username())).thenReturn(Optional.empty());
-        when(userRepository.findByEmail(command.email())).thenReturn(Optional.empty());
-        when(userRepository.findByPhoneNumber(command.phoneNumber())).thenReturn(Optional.empty());
-
-        User user = new User();
-        when(mapper.fromCommandToEntity(command)).thenReturn(user);
+        doNothing().when(validator).validate(command);
 
         assertDoesNotThrow(() -> registerUserUseCase.execute(command));
 
-        verify(userRepository, times(1)).save(user);
+        verify(validator, times(1)).validate(command);
     }
 
     @Test
     void execute_emptyFields_throwsSomeFieldsAreEmpty() {
         RegisterUserCommand command = new RegisterUserCommand("", "", "123", "pass");
 
+        doThrow(new SomeFieldsAreEmpty()).when(validator).validate(command);
+
         assertThrows(SomeFieldsAreEmpty.class, () -> registerUserUseCase.execute(command));
+        verify(validator, times(1)).validate(command);
     }
 
     @Test
@@ -63,9 +62,12 @@ class RegisterUserUseCaseTest {
         RegisterUserCommand command = new RegisterUserCommand(
                 "user@example.com", "username", "123", "pass"
         );
-        when(userRepository.findByUsername(command.username())).thenReturn(Optional.of(new User()));
+
+        doThrow(new UsernameAlreadyTakenException(command.username()))
+                .when(validator).validate(command);
 
         assertThrows(UsernameAlreadyTakenException.class, () -> registerUserUseCase.execute(command));
+        verify(validator, times(1)).validate(command);
     }
 
     @Test
@@ -73,10 +75,12 @@ class RegisterUserUseCaseTest {
         RegisterUserCommand command = new RegisterUserCommand(
                 "user@example.com", "username", "123", "pass"
         );
-        when(userRepository.findByUsername(command.username())).thenReturn(Optional.empty());
-        when(userRepository.findByEmail(command.email())).thenReturn(Optional.of(new User()));
+
+        doThrow(new EmailAlreadyTakenException(command.email()))
+                .when(validator).validate(command);
 
         assertThrows(EmailAlreadyTakenException.class, () -> registerUserUseCase.execute(command));
+        verify(validator, times(1)).validate(command);
     }
 
     @Test
@@ -84,10 +88,11 @@ class RegisterUserUseCaseTest {
         RegisterUserCommand command = new RegisterUserCommand(
                 "user@example.com", "username", "1234567890", "pass"
         );
-        when(userRepository.findByUsername(command.username())).thenReturn(Optional.empty());
-        when(userRepository.findByEmail(command.email())).thenReturn(Optional.empty());
-        when(userRepository.findByPhoneNumber(command.phoneNumber())).thenReturn(Optional.of(new User()));
+
+        doThrow(new PhoneNumberAlreadyTakenException(command.phoneNumber()))
+                .when(validator).validate(command);
 
         assertThrows(PhoneNumberAlreadyTakenException.class, () -> registerUserUseCase.execute(command));
+        verify(validator, times(1)).validate(command);
     }
 }

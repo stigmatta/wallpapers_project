@@ -1,10 +1,8 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.entities.ProductType;
-import com.odintsov.wallpapers_project.domain.enums.CommonFields;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.ProductTypeRepository;
 import com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.odintsov.wallpapers_project.infrastructure.utils.FirebaseUtils.await;
 
 @Component
 @Profile("firebase")
@@ -40,15 +36,7 @@ public class FirebaseProductTypeRepositoryAdapter implements ProductTypeReposito
 
     @Override
     public Optional<ProductType> findByName(String name) {
-        QuerySnapshot snapshot = await(
-                firestore.collection(collectionName())
-                        .whereEqualTo(CommonFields.NAME, name)
-                        .get()
-        );
-        if (!snapshot.isEmpty()) {
-            return Optional.of(snapshot.getDocuments().getFirst().toObject(ProductType.class));
-        }
-        return Optional.empty();
+        return FirebaseUtils.findByName(firestore, collectionName(), ProductType.class, name);
     }
 
     @Override

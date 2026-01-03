@@ -1,15 +1,20 @@
 package com.odintsov.wallpapers_project.presentation.controllers;
 
 
+import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirListResponse;
 import com.odintsov.wallpapers_project.application.services.SouvenirService;
+import com.odintsov.wallpapers_project.presentation.dtos.SouvenirCatalogResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -32,12 +37,21 @@ public class SouvenirController {
     }
 
     @GetMapping
-    public Page<SouvenirListResponse> getSouvenirs(
+    public ResponseEntity<SouvenirCatalogResponse> getSouvenirs(
             @ModelAttribute SouvenirFilter filter,
             @PageableDefault(size = 20, sort = "id",
                     direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return souvenirService.findAll(filter, pageable);
+        Page<SouvenirListResponse> souvenirsPage = souvenirService.findAll(filter, pageable);
+
+        List<CategoryResponse> categories = souvenirService.getAvailableCategories();
+
+        return ResponseEntity.ok(
+                SouvenirCatalogResponse.builder()
+                        .products(souvenirsPage)
+                        .availableCategories(categories)
+                        .build()
+        );
     }
 
     @GetMapping("/{id:[0-9a-fA-F-]{36}}")

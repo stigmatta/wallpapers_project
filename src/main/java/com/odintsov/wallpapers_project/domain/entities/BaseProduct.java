@@ -111,6 +111,14 @@ public class BaseProduct {
     @JoinColumn(name = IdFields.PRODUCT_TYPE_ID, nullable = false)
     protected ProductType productType;
 
+    @ManyToMany
+    @JoinTable(
+            name = TableNames.PRODUCT_CATEGORY_LINKS,
+            joinColumns = @JoinColumn(name = IdFields.PRODUCT_ID),
+            inverseJoinColumns = @JoinColumn(name = IdFields.CATEGORY_ID)
+    )
+    protected List<Category> categories;
+
     /**
      * Lifecycle callback to automatically generate a slug from the name
      * if one is not explicitly provided.
@@ -121,7 +129,7 @@ public class BaseProduct {
     @PrePersist
     @PreUpdate
     public void generateSlug() {
-        if (this.slug == null && this.name != null) {
+        if (this.slug == null || this.slug.isBlank() && this.name != null && !this.name.isBlank()) {
             this.slug = this.name.toLowerCase()
                     .replaceAll("[^a-z0-9\\s-]", "")
                     .replaceAll("\\s+", "-");

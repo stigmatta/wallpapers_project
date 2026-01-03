@@ -5,31 +5,16 @@ import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirFilter;
 import com.odintsov.wallpapers_project.application.dtos.Souvenir.SouvenirListResponse;
 import com.odintsov.wallpapers_project.application.mappers.SouvenirMapper;
 import com.odintsov.wallpapers_project.domain.entities.Souvenir;
+import com.odintsov.wallpapers_project.domain.enums.ProductTypes;
 import com.odintsov.wallpapers_project.domain.repositories.SouvenirRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SouvenirService extends BaseCrudService<
-        Souvenir,
-        String,
-        SouvenirFilter,
-        SouvenirListResponse,
-        SouvenirDetailedResponse,
-        SouvenirRepository
+public class SouvenirService extends BaseProductService<
+        Souvenir, String, SouvenirFilter, SouvenirListResponse, SouvenirDetailedResponse, SouvenirRepository
         > {
 
-    public SouvenirService(SouvenirRepository repository,
-                           SouvenirMapper mapper) {
-        super(repository, mapper);
+    public SouvenirService(SouvenirRepository repository, SouvenirMapper mapper) {
+        super(repository, mapper, ProductTypes.SOUVENIR);
     }
-
-    public SouvenirDetailedResponse findBySlug(String slug) {
-        Souvenir souvenir = repository.findBySlug(slug)
-                .orElseThrow(() -> new EntityNotFoundException("Souvenir not found with slug: " + slug));
-
-        return mapper.toDetailedResponseDto(souvenir);
-    }
-
 }
-
