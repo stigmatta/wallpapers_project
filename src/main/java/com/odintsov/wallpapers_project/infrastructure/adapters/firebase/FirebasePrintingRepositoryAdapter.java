@@ -20,11 +20,9 @@ public class FirebasePrintingRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<Printing, String, PrintingFilter>
         implements PrintingRepository {
 
-    protected final Firestore firestore;
 
     public FirebasePrintingRepositoryAdapter(Firestore firestore, ProductTypeRegistry typeRegistry) {
-        super(Printing.class, new PrintingFilterBuilder());
-        this.firestore = firestore;
+        super(Printing.class, new PrintingFilterBuilder(), firestore);
         this.setTypeDiscriminator(
                 NestedFields.PRODUCT_TYPE_ID,
                 typeRegistry.getTypeId(ProductTypes.PRINTING)

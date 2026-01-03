@@ -23,8 +23,8 @@ public class FirebaseSouvenirRepositoryAdapter
 
     protected final Firestore firestore;
 
-    public FirebaseSouvenirRepositoryAdapter(ProductTypeRegistry typeRegistry) {
-        super(Souvenir.class, new SouvenirFilterBuilder());
+    public FirebaseSouvenirRepositoryAdapter(Firestore firestore, ProductTypeRegistry typeRegistry) {
+        super(Souvenir.class, new SouvenirFilterBuilder(), firestore);
         this.firestore = FirestoreClient.getFirestore();
         this.setTypeDiscriminator(
                 NestedFields.PRODUCT_TYPE_ID,

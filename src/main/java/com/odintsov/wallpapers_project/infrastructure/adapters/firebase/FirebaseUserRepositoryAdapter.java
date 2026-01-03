@@ -2,7 +2,6 @@ package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.User.UserFilter;
 import com.odintsov.wallpapers_project.domain.entities.User;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
@@ -31,11 +30,8 @@ public class FirebaseUserRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<User, String, UserFilter>
         implements UserRepository {
 
-    protected final Firestore firestore;
-
-    public FirebaseUserRepositoryAdapter() {
-        super(User.class, new UserFilterBuilder());
-        this.firestore = FirestoreClient.getFirestore();
+    public FirebaseUserRepositoryAdapter(Firestore firestore) {
+        super(User.class, new UserFilterBuilder(), firestore);
     }
 
     @Override

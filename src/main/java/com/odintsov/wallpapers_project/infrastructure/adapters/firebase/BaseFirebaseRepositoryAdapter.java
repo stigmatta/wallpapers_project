@@ -1,7 +1,6 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.domain.enums.CommonFields;
 import com.odintsov.wallpapers_project.domain.repositories.CrudRepository;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
@@ -40,9 +39,10 @@ public abstract class BaseFirebaseRepositoryAdapter<T, ID, F>
 
     protected BaseFirebaseRepositoryAdapter(
             Class<T> entityClass,
-            FirestoreFilterBuilder<F> filterBuilder
+            FirestoreFilterBuilder<F> filterBuilder,
+            Firestore firestore
     ) {
-        this.firestore = FirestoreClient.getFirestore();
+        this.firestore = firestore;
         this.entityClass = entityClass;
         this.filterBuilder = filterBuilder;
     }

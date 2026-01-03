@@ -1,7 +1,6 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
 import com.google.cloud.firestore.Firestore;
-import com.google.firebase.cloud.FirestoreClient;
 import com.odintsov.wallpapers_project.application.dtos.Product.ProductFilter;
 import com.odintsov.wallpapers_project.domain.entities.BaseProduct;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
@@ -20,11 +19,9 @@ public class FirebaseProductRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<BaseProduct, String, ProductFilter>
         implements ProductRepository {
 
-    protected final Firestore firestore;
 
-    public FirebaseProductRepositoryAdapter() {
-        super(BaseProduct.class, new ProductFilterBuilder());
-        this.firestore = FirestoreClient.getFirestore();
+    public FirebaseProductRepositoryAdapter(Firestore firestore) {
+        super(BaseProduct.class, new ProductFilterBuilder(), firestore);
     }
 
     @Override

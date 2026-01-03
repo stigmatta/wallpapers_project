@@ -1,5 +1,6 @@
 package com.odintsov.wallpapers_project.infrastructure.adapters.firebase;
 
+import com.google.cloud.firestore.Firestore;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.enums.TableNames;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
@@ -15,8 +16,8 @@ public class FirebaseCategoryRepositoryAdapter
         extends BaseFirebaseRepositoryAdapter<Category, String, NullType>
         implements CategoryRepository {
 
-    public FirebaseCategoryRepositoryAdapter() {
-        super(Category.class, new NullTypeFirestoreFilterBuilder());
+    public FirebaseCategoryRepositoryAdapter(Firestore firestore) {
+        super(Category.class, new NullTypeFirestoreFilterBuilder(), firestore);
     }
 
     @Override

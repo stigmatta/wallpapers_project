@@ -22,8 +22,8 @@ public class FirebaseWallpaperRepositoryAdapter
 
     protected final Firestore firestore;
 
-    public FirebaseWallpaperRepositoryAdapter(ProductTypeRegistry typeRegistry) {
-        super(Wallpaper.class, new WallpaperFilterBuilder());
+    public FirebaseWallpaperRepositoryAdapter(Firestore firestore, ProductTypeRegistry typeRegistry) {
+        super(Wallpaper.class, new WallpaperFilterBuilder(), firestore);
         this.firestore = FirestoreClient.getFirestore();
 
         this.setTypeDiscriminator(
