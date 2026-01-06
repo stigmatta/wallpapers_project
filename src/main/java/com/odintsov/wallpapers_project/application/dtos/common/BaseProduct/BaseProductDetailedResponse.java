@@ -24,5 +24,4 @@ public abstract class BaseProductDetailedResponse {
     private String description;
     private Set<ExtraFeature> features;
     private List<CategoryResponse> categories;
-
 }

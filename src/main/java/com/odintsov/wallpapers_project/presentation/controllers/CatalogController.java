@@ -1,15 +1,13 @@
 package com.odintsov.wallpapers_project.presentation.controllers;
 
 import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
-import com.odintsov.wallpapers_project.application.mappers.CategoryMapper;
+import com.odintsov.wallpapers_project.application.dtos.ExtraFeatureResponse;
+import com.odintsov.wallpapers_project.application.dtos.ProductTypeResponse;
+import com.odintsov.wallpapers_project.application.services.CatalogService;
 import com.odintsov.wallpapers_project.application.usecases.GlobalSearch.GlobalSearchResponse;
 import com.odintsov.wallpapers_project.application.usecases.GlobalSearch.GlobalSearchUseCase;
-import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +17,7 @@ import java.util.List;
 public class CatalogController {
 
     private final GlobalSearchUseCase globalSearchUseCase;
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
+    private final CatalogService catalogService;
 
 
     @GetMapping("/search")
@@ -30,8 +27,16 @@ public class CatalogController {
 
     @GetMapping("/categories")
     public List<CategoryResponse> getCategories() {
-        return categoryRepository.findAll().stream()
-                .map(categoryMapper::toResponse)
-                .toList();
+        return catalogService.getCategories();
+    }
+
+    @GetMapping("/features/{productTypeId}")
+    public List<ExtraFeatureResponse> getFeatures(@PathVariable String productTypeId) {
+        return catalogService.getFeatures(productTypeId);
+    }
+
+    @GetMapping("/product-types")
+    public List<ProductTypeResponse> getProductTypes() {
+        return catalogService.getProductTypes();
     }
 }

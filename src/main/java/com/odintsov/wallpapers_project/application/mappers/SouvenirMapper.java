@@ -16,10 +16,10 @@ public class SouvenirMapper implements DtoMapper<
         SouvenirDetailedResponse
         > {
 
-    private final CategoryMapper categoryMapper;
+    private final CatalogMapper catalogMapper;
 
-    public SouvenirMapper(CategoryMapper categoryMapper) {
-        this.categoryMapper = categoryMapper;
+    public SouvenirMapper(CatalogMapper catalogMapper) {
+        this.catalogMapper = catalogMapper;
     }
 
 
@@ -33,7 +33,7 @@ public class SouvenirMapper implements DtoMapper<
                 .categories(
                         entity.getCategories() == null
                                 ? Collections.emptyList()
-                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                                : entity.getCategories().stream().map(catalogMapper::categoryToResponse).collect(Collectors.toList())
                 )
                 .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
@@ -57,7 +57,7 @@ public class SouvenirMapper implements DtoMapper<
                 .categories(
                         entity.getCategories() == null
                                 ? Collections.emptyList()
-                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                                : entity.getCategories().stream().map(catalogMapper::categoryToResponse).collect(Collectors.toList())
                 )
                 .build();
     }

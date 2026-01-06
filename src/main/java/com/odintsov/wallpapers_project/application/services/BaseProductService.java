@@ -2,7 +2,7 @@ package com.odintsov.wallpapers_project.application.services;
 
 import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
 import com.odintsov.wallpapers_project.application.exceptions.EntityNotFoundException;
-import com.odintsov.wallpapers_project.application.mappers.CategoryMapper;
+import com.odintsov.wallpapers_project.application.mappers.CatalogMapper;
 import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
 import com.odintsov.wallpapers_project.domain.entities.Category;
 import com.odintsov.wallpapers_project.domain.repositories.CategoryRepository;
@@ -19,7 +19,7 @@ public abstract class BaseProductService<T, ID, F, LR, DR, R extends CrudReposit
     @Autowired
     protected CategoryRepository categoryRepository;
     @Autowired
-    protected CategoryMapper categoryMapper;
+    protected CatalogMapper catalogMapper;
     @Autowired
     protected ProductTypeRegistry productTypeRegistry;
 
@@ -39,6 +39,6 @@ public abstract class BaseProductService<T, ID, F, LR, DR, R extends CrudReposit
     public List<CategoryResponse> getAvailableCategories() {
         String typeId = productTypeRegistry.getTypeId(this.productType);
         List<Category> categories = categoryRepository.findByProductTypeId(typeId);
-        return categoryMapper.toResponseList(categories);
+        return catalogMapper.categoryToResponseList(categories);
     }
 }

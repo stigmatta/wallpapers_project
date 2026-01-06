@@ -18,10 +18,10 @@ public class WallpaperMapper implements DtoMapper<
         WallpaperDetailedResponse
         > {
 
-    private final CategoryMapper categoryMapper;
+    private final CatalogMapper catalogMapper;
 
-    public WallpaperMapper(CategoryMapper categoryMapper) {
-        this.categoryMapper = categoryMapper;
+    public WallpaperMapper(CatalogMapper catalogMapper) {
+        this.catalogMapper = catalogMapper;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class WallpaperMapper implements DtoMapper<
                 .categories(
                         entity.getCategories() == null
                                 ? Collections.emptyList()
-                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                                : entity.getCategories().stream().map(catalogMapper::categoryToResponse).collect(Collectors.toList())
                 )
                 .basePrice(entity.getPrice())
                 .salePrice(entity.getSalePrice())
@@ -61,7 +61,7 @@ public class WallpaperMapper implements DtoMapper<
                 .categories(
                         entity.getCategories() == null
                                 ? Collections.emptyList()
-                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                                : entity.getCategories().stream().map(catalogMapper::categoryToResponse).collect(Collectors.toList())
                 )
                 .build();
     }
