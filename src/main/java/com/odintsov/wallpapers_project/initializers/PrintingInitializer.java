@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class PrintingInitializer {
 
     private final PrintingRepository printingRepository;
-    private final ProductRepository productRepository;
     private final PrintingMethodRepository methodsRepository;
     private final ProductTypeRepository productTypeRepository;
     private final CategoryRepository categoryRepository;
@@ -88,7 +87,8 @@ public class PrintingInitializer {
                         .build()
         ).collect(Collectors.toList());
 
-        productRepository.saveAll(printings);
+//        productRepository.saveAll(printings);
+        printingRepository.saveAll(printings);
         printingRepository.flush();
     }
 }

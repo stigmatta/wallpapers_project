@@ -51,6 +51,7 @@ public class PrintingMapper implements DtoMapper<
                 .salePrice(entity.getSalePrice())
                 .image(entity.getImage())
                 .description(entity.getDescription())
+                .methods(entity.getMethods())
                 .build();
     }
 

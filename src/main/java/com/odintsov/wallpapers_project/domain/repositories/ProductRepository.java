@@ -9,4 +9,6 @@ public interface ProductRepository
         extends CrudRepository<BaseProduct, String, ProductFilter>,
         SlugRepository<BaseProduct> {
     void saveAll(List<? extends BaseProduct> entities);
+
+    List<BaseProduct> findGlobal(String name);
 }

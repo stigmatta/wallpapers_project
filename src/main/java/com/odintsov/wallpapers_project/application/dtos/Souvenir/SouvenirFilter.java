@@ -11,7 +11,4 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class SouvenirFilter extends BaseProductFilter {
-    private Float width;
-    private Float length;
-    private Float thickness;
 }

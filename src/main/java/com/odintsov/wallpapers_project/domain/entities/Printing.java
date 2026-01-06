@@ -13,8 +13,7 @@ import java.util.List;
  * Entity representing a printing product in the catalog.
  * <p>
  * Inherits core product attributes from {@link BaseProduct} and adds
- * specific associations for {@link Category} classifications and
- * available {@link PrintingMethodsLink} configurations.
+ * specific associations for {@link Category} classifications
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -34,5 +33,15 @@ public class Printing extends BaseProduct {
     )
     @Builder.Default
     private List<PrintMethod> methods = new ArrayList<>();
+
+    private List<String> methodIds;
+
+    public void syncMethodIds() {
+        if (this.methods != null) {
+            this.methodIds = this.methods.stream()
+                    .map(PrintMethod::getId)
+                    .toList();
+        }
+    }
 
 }

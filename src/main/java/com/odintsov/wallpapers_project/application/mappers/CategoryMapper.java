@@ -2,12 +2,12 @@ package com.odintsov.wallpapers_project.application.mappers;
 
 import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
 import com.odintsov.wallpapers_project.domain.entities.Category;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class CategoryMapper {
 
     public CategoryResponse toResponse(Category category) {

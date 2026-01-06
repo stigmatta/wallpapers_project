@@ -23,6 +23,8 @@ public final class IdFields {
     public static final String PRINT_METHOD_ID = "printMethodId";
     public static final String EXTRA_FEATURE_ID = "extraFeatureId";
     public static final String CATEGORY_ID = "categoryId";
+    public static final String CATEGORY_IDS = "categoryIds";
+    public static final String METHOD_IDS = "methodIds";
     public static final String ROOM_ID = "roomId";
 
     /**

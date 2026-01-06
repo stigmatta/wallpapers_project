@@ -11,6 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class BaseProductFilter {
     private String name;
-    private Long categoryId;
+    private String categoryId;
     private Double basePrice;
 }

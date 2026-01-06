@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.infrastructure.filterBuilders;
 
 import com.google.cloud.firestore.Query;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingFilter;
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
 
 public class PrintingFilterBuilder extends BaseProductFirestoreFilterBuilder<PrintingFilter> {
 
@@ -9,7 +10,7 @@ public class PrintingFilterBuilder extends BaseProductFirestoreFilterBuilder<Pri
     public Query apply(Query baseQuery, PrintingFilter filter) {
         Query query = super.apply(baseQuery, filter);
         if (filter.getPrintMethod() != null && !filter.getPrintMethod().isBlank()) {
-            query = query.whereEqualTo("printMethod", filter.getPrintMethod());
+            query = query.whereArrayContains(IdFields.METHOD_IDS, filter.getPrintMethod());
         }
 
         return query;

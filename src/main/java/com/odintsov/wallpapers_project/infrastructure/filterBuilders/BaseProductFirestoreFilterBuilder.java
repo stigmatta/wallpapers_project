@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.infrastructure.filterBuilders;
 
 import com.google.cloud.firestore.Query;
 import com.odintsov.wallpapers_project.application.dtos.common.BaseProduct.BaseProductFilter;
+import com.odintsov.wallpapers_project.domain.enums.IdFields;
 import com.odintsov.wallpapers_project.domain.enums.ProductFields;
 import com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder;
 
@@ -33,7 +34,7 @@ public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
         }
 
         if (filter.getCategoryId() != null) {
-            query = query.whereArrayContains("categoryIds", filter.getCategoryId());
+            query = query.whereArrayContains(IdFields.CATEGORY_IDS, filter.getCategoryId());
         }
 
         if (filter.getBasePrice() != null) {

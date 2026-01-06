@@ -119,6 +119,18 @@ public class BaseProduct {
     )
     protected List<Category> categories;
 
+    @ElementCollection
+    @CollectionTable(name = IdFields.CATEGORY_IDS)
+    protected List<String> categoryIds;
+
+    public void syncCategoryIds() {
+        if (this.categories != null) {
+            this.categoryIds = this.categories.stream()
+                    .map(Category::getId)
+                    .toList();
+        }
+    }
+
     /**
      * Lifecycle callback to automatically generate a slug from the name
      * if one is not explicitly provided.
