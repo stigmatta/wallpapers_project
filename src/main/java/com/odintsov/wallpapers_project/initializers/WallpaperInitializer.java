@@ -82,37 +82,41 @@ public class WallpaperInitializer {
                 .stream()
                 .collect(Collectors.toMap(Category::getName, c -> c));
 
-        List<ExtraFeature> wallpaperFeatures = extraFeatureRepository.findByProductTypeId(productTypeRegistry.getTypeId(ProductTypes.WALLPAPER));
-
         List<WallpaperJson> wallpaperData = objectMapper.readValue(
                 new ClassPathResource("data/wallpapers.json").getInputStream(),
                 new TypeReference<>() {
                 }
         );
 
-        List<Wallpaper> wallpapers = wallpaperData.stream().map(data ->
-                Wallpaper.builder()
-                        .name(data.name())
-                        .slug(data.slug())
-                        .productType(wallpaperType)
-                        .article(data.article())
-                        .price(data.basePrice())
-                        .salePrice(data.salePrice())
-                        .image(data.image())
-                        .description(data.description())
-                        .density(data.density())
-                        .waterproof(data.waterproof())
-                        .quantity(data.quantity())
-                        .materials(new ArrayList<>(data.materials().stream()
-                                .map(materialMap::get)
-                                .filter(Objects::nonNull)
-                                .toList()))
-                        .rooms(new ArrayList<>(data.rooms().stream()
-                                .map(roomMap::get)
-                                .filter(Objects::nonNull)
-                                .toList()))
-                        .build()
-        ).collect(Collectors.toList());
+        List<Wallpaper> wallpapers = wallpaperData.stream().map(data -> {
+            List<Category> wallpaperCategories = data.categories().stream()
+                    .map(categoryMap::get)
+                    .filter(Objects::nonNull)
+                    .toList();
+
+            return Wallpaper.builder()
+                    .name(data.name())
+                    .slug(data.slug())
+                    .productType(wallpaperType)
+                    .article(data.article())
+                    .price(data.basePrice())
+                    .salePrice(data.salePrice())
+                    .image(data.image())
+                    .description(data.description())
+                    .density(data.density())
+                    .waterproof(data.waterproof())
+                    .quantity(data.quantity())
+                    .materials(new ArrayList<>(data.materials().stream()
+                            .map(materialMap::get)
+                            .filter(Objects::nonNull)
+                            .toList()))
+                    .rooms(new ArrayList<>(data.rooms().stream()
+                            .map(roomMap::get)
+                            .filter(Objects::nonNull)
+                            .toList()))
+                    .categories(new ArrayList<>(wallpaperCategories))
+                    .build();
+        }).collect(Collectors.toList());
 
         productRepository.saveAll(wallpapers);
         wallpaperRepository.flush();

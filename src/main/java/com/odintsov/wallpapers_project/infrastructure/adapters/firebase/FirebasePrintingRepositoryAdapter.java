@@ -43,6 +43,7 @@ public class FirebasePrintingRepositoryAdapter
     @Override
     public <S extends Printing> S save(S entity) {
         entity.syncMethodIds();
+        entity.syncCategoryIds();
         return super.save(entity);
     }
 
@@ -50,6 +51,7 @@ public class FirebasePrintingRepositoryAdapter
     public void saveAll(java.util.List<? extends Printing> entities) {
         for (Printing entity : entities) {
             entity.syncMethodIds();
+            entity.syncCategoryIds();
         }
         super.saveAll(entities);
     }

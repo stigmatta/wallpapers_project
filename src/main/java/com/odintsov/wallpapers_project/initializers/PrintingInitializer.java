@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 @Component
 @RequiredArgsConstructor
 public class PrintingInitializer {
@@ -42,8 +41,7 @@ public class PrintingInitializer {
         if (methodsRepository.count() == 0) {
             List<PrintMethod> methodsData = objectMapper.readValue(
                     new ClassPathResource("data/print_methods.json").getInputStream(),
-                    new TypeReference<>() {
-                    }
+                    new TypeReference<>() {}
             );
 
             methodsData.forEach(m -> {
@@ -61,33 +59,35 @@ public class PrintingInitializer {
 
         List<PrintingJson> printingData = objectMapper.readValue(
                 new ClassPathResource("data/printings.json").getInputStream(),
-                new TypeReference<>() {
-                }
+                new TypeReference<>() {}
         );
 
-        List<Printing> printings = printingData.stream().map(data ->
-                Printing.builder()
-                        .name(data.name())
-                        .slug(data.slug())
-                        .productType(printingType)
-                        .article(data.article())
-                        .price(data.basePrice())
-                        .salePrice(data.salePrice())
-                        .image(data.image())
-                        .description(data.description())
-                        .quantity(data.quantity())
-                        .categories(new ArrayList<>(data.categories().stream()
-                                .map(categoryMap::get)
-                                .filter(Objects::nonNull)
-                                .toList()))
-                        .methods(new ArrayList<>(data.methods().stream()
-                                .map(methodsMap::get)
-                                .filter(Objects::nonNull)
-                                .toList()))
-                        .build()
-        ).collect(Collectors.toList());
+        List<Printing> printings = printingData.stream().map(data -> {
+            List<Category> printingCategories = data.categories().stream()
+                    .map(categoryMap::get)
+                    .filter(Objects::nonNull)
+                    .toList();
 
-//        productRepository.saveAll(printings);
+            List<PrintMethod> printingMethods = data.methods().stream()
+                    .map(methodsMap::get)
+                    .filter(Objects::nonNull)
+                    .toList();
+
+            return Printing.builder()
+                    .name(data.name())
+                    .slug(data.slug())
+                    .productType(printingType)
+                    .article(data.article())
+                    .price(data.basePrice())
+                    .salePrice(data.salePrice())
+                    .image(data.image())
+                    .description(data.description())
+                    .quantity(data.quantity())
+                    .categories(new ArrayList<>(printingCategories))
+                    .methods(new ArrayList<>(printingMethods))
+                    .build();
+        }).collect(Collectors.toList());
+
         printingRepository.saveAll(printings);
         printingRepository.flush();
     }

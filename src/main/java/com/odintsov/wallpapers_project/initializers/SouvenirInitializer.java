@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +42,8 @@ public class SouvenirInitializer {
         ProductType souvenirType = productTypeRepository.findByName(ProductTypes.SOUVENIR)
                 .orElseThrow(() -> new RuntimeException("ProductType not found in DB!"));
 
-        Map<String, Category> catMap = categoryRepository.findAll().stream()
+        Map<String, Category> catMap = categoryRepository.findByProductTypeId(souvenirType.getId())
+                .stream()
                 .collect(Collectors.toMap(
                         Category::getName,
                         c -> c,
@@ -51,15 +52,14 @@ public class SouvenirInitializer {
 
         List<SouvenirJson> souvenirData = objectMapper.readValue(
                 new ClassPathResource("data/souvenirs.json").getInputStream(),
-                new TypeReference<>() {
-                }
+                new TypeReference<>() {}
         );
 
         List<Souvenir> souvenirs = souvenirData.stream().map(data -> {
             List<Category> souvenirCategories = data.categories().stream()
                     .map(catMap::get)
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
+                    .toList();
 
             return Souvenir.builder()
                     .name(data.name())
@@ -73,12 +73,11 @@ public class SouvenirInitializer {
                     .width(data.width())
                     .length(data.length())
                     .thickness(data.thickness())
-                    .categories(souvenirCategories)
+                    .categories(new ArrayList<>(souvenirCategories))
                     .build();
         }).collect(Collectors.toList());
 
         productRepository.saveAll(souvenirs);
+        souvenirRepository.flush();
     }
-
-
 }
