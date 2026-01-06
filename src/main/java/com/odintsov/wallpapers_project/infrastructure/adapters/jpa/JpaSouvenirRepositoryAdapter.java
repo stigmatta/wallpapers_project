@@ -8,7 +8,6 @@ import com.odintsov.wallpapers_project.infrastructure.utils.BaseProductSpecifica
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -25,21 +24,7 @@ public class JpaSouvenirRepositoryAdapter
 
     @Override
     public Page<Souvenir> filter(SouvenirFilter filter, Pageable pageable) {
-        return super.filter(filter, pageable, f -> {
-            Specification<Souvenir> spec = BaseProductSpecifications.buildSpecification(f);
-
-            if (f.getWidth() != null) {
-                spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("width"), f.getWidth()));
-            }
-            if (f.getLength() != null) {
-                spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("length"), f.getLength()));
-            }
-            if (f.getThickness() != null) {
-                spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("thickness"), f.getThickness()));
-            }
-
-            return spec;
-        });
+        return super.filter(filter, pageable, BaseProductSpecifications::buildSpecification);
     }
 
     @Override
