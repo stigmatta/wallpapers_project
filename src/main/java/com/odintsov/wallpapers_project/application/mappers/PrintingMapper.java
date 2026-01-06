@@ -52,6 +52,11 @@ public class PrintingMapper implements DtoMapper<
                 .image(entity.getImage())
                 .description(entity.getDescription())
                 .methods(entity.getMethods())
+                .categories(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                )
                 .build();
     }
 

@@ -54,6 +54,11 @@ public class SouvenirMapper implements DtoMapper<
                 .length(entity.getLength())
                 .width(entity.getWidth())
                 .thickness(entity.getThickness())
+                .categories(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                )
                 .build();
     }
 

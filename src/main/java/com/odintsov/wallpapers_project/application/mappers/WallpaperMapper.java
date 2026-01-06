@@ -58,6 +58,11 @@ public class WallpaperMapper implements DtoMapper<
                         .map(WallpaperRoom::getName)
                         .collect(Collectors.toSet()))
                 .materials(new HashSet<>(entity.getMaterials()))
+                .categories(
+                        entity.getCategories() == null
+                                ? Collections.emptyList()
+                                : entity.getCategories().stream().map(categoryMapper::toResponse).collect(Collectors.toList())
+                )
                 .build();
     }
 
