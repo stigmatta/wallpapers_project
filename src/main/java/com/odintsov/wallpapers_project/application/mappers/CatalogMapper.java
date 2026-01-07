@@ -30,6 +30,7 @@ public class CatalogMapper {
     public ExtraFeatureResponse featureToResponse(ExtraFeature feature) {
         return ExtraFeatureResponse.builder()
                 .id(feature.getId())
+                .name(feature.getName())
                 .description(feature.getDescription())
                 .price(feature.getPrice())
                 .productType(feature.getProductType())

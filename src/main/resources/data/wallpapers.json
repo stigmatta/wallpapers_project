@@ -41,7 +41,7 @@
     "waterproof": true,
     "quantity": 45,
     "rooms": ["ДИТЯЧА"],
-    "materials": ["ПАПІР", "ФЛІЗЕЛІН"],
+    "materials": ["ВІНІЛ", "ФЛІЗЕЛІН"],
     "categories": ["Дитяча"]
   },
   {
@@ -71,7 +71,7 @@
     "waterproof": false,
     "quantity": 60,
     "rooms": ["ДИТЯЧА"],
-    "materials": ["ПАПІР"],
+    "materials": ["ВІНІЛ"],
     "categories": ["Дитяча"]
   },
   {
@@ -161,7 +161,7 @@
     "waterproof": true,
     "quantity": 55,
     "rooms": ["ДИТЯЧА"],
-    "materials": ["ПАПІР"],
+    "materials": ["ВІНІЛ"],
     "categories": ["Дитяча"]
   },
   {
@@ -206,7 +206,7 @@
     "waterproof": false,
     "quantity": 40,
     "rooms": ["ДИТЯЧА"],
-    "materials": ["ПАПІР"],
+    "materials": ["ВІНІЛ", "ФЛІЗЕЛІН"],
     "categories": ["Дитяча"]
   },
   {
@@ -251,7 +251,7 @@
     "waterproof": true,
     "quantity": 35,
     "rooms": ["ДИТЯЧА"],
-    "materials": ["ПАПІР", "ФЛІЗЕЛІН"],
+    "materials": ["ФЛІЗЕЛІН"],
     "categories": ["Дитяча"]
   },
   {
