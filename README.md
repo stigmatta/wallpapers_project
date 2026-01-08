@@ -2,6 +2,10 @@
 
 ## `com.odintsov.wallpapers_project`
 
+## 📚 Documentation
+You can find the full API and Class documentation here:
+[Browse Doxygen Docs](./docs/index.html)
+
 ### `application`
 Contains **business logic**, **use cases**, **services**, and **DTOs** (Data Transfer Objects).  
 This is the core of the application — coordinates between presentation and domain layers.
