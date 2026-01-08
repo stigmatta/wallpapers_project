@@ -11,6 +11,11 @@ public class ProductMapper {
                 .id(product.getId())
                 .name(product.getName())
                 .productType(product.getProductType().getName())
+                .article(product.getArticle())
+                .basePrice(product.getPrice())
+                .salePrice(product.getSalePrice())
+                .slug(product.getSlug())
+                .image(product.getImage())
                 .build();
     }
 }

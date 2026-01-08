@@ -20,7 +20,7 @@ public class LoginUserUseCaseImpl implements LoginUserUseCase {
 
         var user = validator.validate(command);
 
-        int EXPIRE_MINUTES = 60;
+        int EXPIRE_MINUTES = 1440; //24 hours
         return UUID.fromString(
                 sessionService.createSession(UUID.fromString(user.getId()), EXPIRE_MINUTES)
         );

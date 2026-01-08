@@ -8,5 +8,10 @@ import lombok.Data;
 public class SearchItemResponse {
     private String id;
     private String name;
+    private String article;
     private String productType;
+    private Double basePrice;
+    private Double salePrice;
+    private String slug;
+    private String image;
 }
