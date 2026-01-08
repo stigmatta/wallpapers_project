@@ -1,7 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_session_repository_adapter =
-[
-    [ "deleteByToken", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_session_repository_adapter.html#ad2c607fc43d85b2c3a0917ac141de8a3", null ],
-    [ "findAllByUserId", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_session_repository_adapter.html#a7e225c9b43cd16c6a2fcef6d1bdb261a", null ],
-    [ "findByToken", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_session_repository_adapter.html#a4997b2943aabdd725faaffee9a86e8a0", null ],
-    [ "save", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_session_repository_adapter.html#abc8fd5867af321b431033e8b7b94e59d", null ]
-];

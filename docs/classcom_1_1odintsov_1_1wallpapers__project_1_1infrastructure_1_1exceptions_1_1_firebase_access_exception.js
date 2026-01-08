@@ -1,4 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1exceptions_1_1_firebase_access_exception =
-[
-    [ "FirebaseAccessException", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1exceptions_1_1_firebase_access_exception.html#a97a24904bd1ccbdd5961e1a0b62371bb", null ]
-];

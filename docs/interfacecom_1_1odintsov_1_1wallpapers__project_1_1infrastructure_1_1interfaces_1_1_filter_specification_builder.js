@@ -1,4 +1,0 @@
-var interfacecom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1interfaces_1_1_filter_specification_builder =
-[
-    [ "build", "interfacecom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1interfaces_1_1_filter_specification_builder.html#a6c9df4824636c3a072b4652b18ff3ac3", null ]
-];

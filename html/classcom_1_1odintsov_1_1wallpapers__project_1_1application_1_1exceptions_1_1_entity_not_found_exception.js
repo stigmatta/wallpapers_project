@@ -1,5 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_entity_not_found_exception =
-[
-    [ "EntityNotFoundException", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_entity_not_found_exception.html#af9b181047edcc0db3deed868ffe29585", null ],
-    [ "EntityNotFoundException", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_entity_not_found_exception.html#aa94e4e40f4f653012b620982416c99a4", null ]
-];
