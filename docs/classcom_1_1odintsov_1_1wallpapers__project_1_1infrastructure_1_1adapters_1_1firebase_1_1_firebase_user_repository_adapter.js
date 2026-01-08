@@ -1,7 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1firebase_1_1_firebase_user_repository_adapter =
-[
-    [ "findByEmail", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1firebase_1_1_firebase_user_repository_adapter.html#a6e5a50cbe726684ed20ac41fc88195d9", null ],
-    [ "findByEmailOrUsername", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1firebase_1_1_firebase_user_repository_adapter.html#a54c9fe62c241edfe489594884aa9581d", null ],
-    [ "findByPhoneNumber", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1firebase_1_1_firebase_user_repository_adapter.html#a903c82d0a2e2aa64eea952ab76fe9709", null ],
-    [ "findByUsername", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1firebase_1_1_firebase_user_repository_adapter.html#aaa6d0b9c7efb24fdf5319db4e284403d", null ]
-];

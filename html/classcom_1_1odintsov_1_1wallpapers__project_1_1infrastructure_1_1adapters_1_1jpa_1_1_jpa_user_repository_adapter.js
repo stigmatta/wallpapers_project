@@ -1,7 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_user_repository_adapter =
-[
-    [ "findByEmail", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_user_repository_adapter.html#a4297cd5de88707285a825bfe9a15602c", null ],
-    [ "findByEmailOrUsername", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_user_repository_adapter.html#abc35831eb597532c65020dd208f59671", null ],
-    [ "findByPhoneNumber", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_user_repository_adapter.html#a4cfd618f2b269e71d922d99fcf6422ab", null ],
-    [ "findByUsername", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1adapters_1_1jpa_1_1_jpa_user_repository_adapter.html#a8f06a13febf9d0a0c8c0ca02677d7adb", null ]
-];

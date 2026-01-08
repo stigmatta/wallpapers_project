@@ -1,4 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_email_already_taken_exception =
-[
-    [ "EmailAlreadyTakenException", "classcom_1_1odintsov_1_1wallpapers__project_1_1application_1_1exceptions_1_1_email_already_taken_exception.html#ad72bdf58c506a89821bd01b2b039d20e", null ]
-];

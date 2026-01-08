@@ -1,4 +1,0 @@
-var interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1mappers_1_1common_1_1_full_mapper =
-[
-    [ "toEntity", "interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1mappers_1_1common_1_1_full_mapper.html#a385e0e9c4c339ec778450f0e63094bf0", null ]
-];

@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['apply_0',['apply',['../classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1filter_builders_1_1_base_product_firestore_filter_builder.html#a8a3cd0bee3d2ad75137af79afd6818e3',1,'com.odintsov.wallpapers_project.infrastructure.filterBuilders.BaseProductFirestoreFilterBuilder.apply()'],['../classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1filter_builders_1_1_null_type_firestore_filter_builder.html#aa4830063c9171f85fce3b37dd27a7362',1,'com.odintsov.wallpapers_project.infrastructure.filterBuilders.NullTypeFirestoreFilterBuilder.apply()'],['../interfacecom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1interfaces_1_1_firestore_filter_builder.html#a8869ede5eff68f9ada7f936f59a86db8',1,'com.odintsov.wallpapers_project.infrastructure.interfaces.FirestoreFilterBuilder.apply()']]],
-  ['article_1',['article',['../classcom_1_1odintsov_1_1wallpapers__project_1_1domain_1_1entities_1_1_base_product.html#ad4c7bd428e068139ddb0a17668d3c595',1,'com::odintsov::wallpapers_project::domain::entities::BaseProduct']]]
-];

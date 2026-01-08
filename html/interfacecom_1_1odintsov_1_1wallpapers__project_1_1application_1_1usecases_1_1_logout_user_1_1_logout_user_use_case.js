@@ -1,4 +1,0 @@
-var interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1usecases_1_1_logout_user_1_1_logout_user_use_case =
-[
-    [ "execute", "interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1usecases_1_1_logout_user_1_1_logout_user_use_case.html#aab7ca38070564dda275c59c97b24ce6b", null ]
-];

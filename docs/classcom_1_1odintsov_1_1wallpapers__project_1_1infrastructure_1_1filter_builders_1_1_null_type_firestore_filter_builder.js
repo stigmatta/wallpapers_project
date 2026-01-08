@@ -1,4 +1,0 @@
-var classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1filter_builders_1_1_null_type_firestore_filter_builder =
-[
-    [ "apply", "classcom_1_1odintsov_1_1wallpapers__project_1_1infrastructure_1_1filter_builders_1_1_null_type_firestore_filter_builder.html#aa4830063c9171f85fce3b37dd27a7362", null ]
-];
