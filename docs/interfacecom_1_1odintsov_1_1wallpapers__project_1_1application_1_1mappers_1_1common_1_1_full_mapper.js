@@ -1,0 +1,4 @@
+var interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1mappers_1_1common_1_1_full_mapper =
+[
+    [ "fromCommandToEntity", "interfacecom_1_1odintsov_1_1wallpapers__project_1_1application_1_1mappers_1_1common_1_1_full_mapper.html#add7d3900884eefa1e0d84f881e768676", null ]
+];
