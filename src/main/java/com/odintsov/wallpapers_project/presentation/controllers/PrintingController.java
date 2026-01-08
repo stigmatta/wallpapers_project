@@ -2,6 +2,7 @@ package com.odintsov.wallpapers_project.presentation.controllers;
 
 
 import com.odintsov.wallpapers_project.application.dtos.CategoryResponse;
+import com.odintsov.wallpapers_project.application.dtos.Printing.PrintMethodResponse;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingFilter;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingListResponse;
@@ -60,5 +61,10 @@ public class PrintingController {
     @GetMapping("/{slug}")
     public PrintingDetailedResponse getBySlug(@PathVariable String slug) {
         return printingService.findBySlug(slug);
+    }
+
+    @GetMapping("/methods")
+    public List<PrintMethodResponse> getMethods() {
+        return printingService.getPrintMethods();
     }
 }

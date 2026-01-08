@@ -38,7 +38,7 @@ public class BaseProductFirestoreFilterBuilder<F extends BaseProductFilter>
         }
 
         if (filter.getBasePrice() != null) {
-            query = query.whereLessThanOrEqualTo(ProductFields.PRICE, filter.getBasePrice());
+            query = query.whereLessThanOrEqualTo(ProductFields.EFFECTIVE_PRICE, filter.getBasePrice());
         }
 
         return query;

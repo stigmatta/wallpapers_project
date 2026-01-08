@@ -40,6 +40,7 @@ public class FirebaseProductRepositoryAdapter
     @Override
     public <S extends BaseProduct> S save(S entity) {
         SlugUtils.generateSlugIfMissing(entity);
+        entity.calculateEffectivePrice();
         entity.syncCategoryIds();
         return super.save(entity);
     }
@@ -48,6 +49,7 @@ public class FirebaseProductRepositoryAdapter
     public void saveAll(List<? extends BaseProduct> entities) {
         for (BaseProduct entity : entities) {
             SlugUtils.generateSlugIfMissing(entity);
+            entity.calculateEffectivePrice();
             entity.syncCategoryIds();
         }
         super.saveAll(entities);
@@ -64,4 +66,5 @@ public class FirebaseProductRepositoryAdapter
                 .get())
                 .toObjects(BaseProduct.class);
     }
+
 }

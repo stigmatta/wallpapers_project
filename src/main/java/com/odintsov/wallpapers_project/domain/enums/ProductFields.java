@@ -3,6 +3,7 @@ package com.odintsov.wallpapers_project.domain.enums;
 public final class ProductFields {
     public static final String PRICE = "price";
     public static final String SALE_PRICE = "salePrice";
+    public static final String EFFECTIVE_PRICE = "effectivePrice";
     public static final String RATING = "rating";
     public static final String QUANTITY = "quantity";
     public static final String IMAGE = "image";

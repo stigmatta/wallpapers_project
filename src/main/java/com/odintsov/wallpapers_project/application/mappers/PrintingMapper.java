@@ -1,8 +1,10 @@
 package com.odintsov.wallpapers_project.application.mappers;
 
+import com.odintsov.wallpapers_project.application.dtos.Printing.PrintMethodResponse;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingDetailedResponse;
 import com.odintsov.wallpapers_project.application.dtos.Printing.PrintingListResponse;
 import com.odintsov.wallpapers_project.application.mappers.common.DtoMapper;
+import com.odintsov.wallpapers_project.domain.entities.PrintMethod;
 import com.odintsov.wallpapers_project.domain.entities.Printing;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,15 @@ public class PrintingMapper implements DtoMapper<
                                 ? Collections.emptyList()
                                 : entity.getCategories().stream().map(catalogMapper::categoryToResponse).collect(Collectors.toList())
                 )
+                .build();
+    }
+
+    public PrintMethodResponse toPrintMethodResponse(PrintMethod method) {
+        return PrintMethodResponse.builder()
+                .id(method.getId())
+                .name(method.getName())
+                .description(method.getDescription())
+                .deadline(method.getDeadline())
                 .build();
     }
 

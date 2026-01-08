@@ -77,6 +77,9 @@ public class BaseProduct {
     @Column(name = ProductFields.SALE_PRICE, nullable = false)
     protected Double salePrice;
 
+    @Column(name = ProductFields.EFFECTIVE_PRICE)
+    protected Double effectivePrice;
+
     /**
      * Average customer rating score.
      */
@@ -138,13 +141,11 @@ public class BaseProduct {
      * Converts to lowercase, removes special characters, and replaces spaces with hyphens.
      * </p>
      */
-    @PrePersist
-    @PreUpdate
-    public void generateSlug() {
-        if (this.slug == null || this.slug.isBlank() && this.name != null && !this.name.isBlank()) {
-            this.slug = this.name.toLowerCase()
-                    .replaceAll("[^a-z0-9\\s-]", "")
-                    .replaceAll("\\s+", "-");
+    public void calculateEffectivePrice() {
+        if (this.salePrice != null && this.salePrice > 0 && this.salePrice < this.price) {
+            this.effectivePrice = this.salePrice;
+        } else {
+            this.effectivePrice = this.price;
         }
     }
 }
