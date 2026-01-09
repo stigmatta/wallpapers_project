@@ -25,7 +25,8 @@ public class WebConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:3000",
-                                "https://react-wallpaper-java-git-verce-7c3143-andrey-odintsovs-projects.vercel.app"
+                                "https://react-wallpaper-java-git-verce-7c3143-andrey-odintsovs-projects.vercel.app",
+                                "https://react-wallpaper-java-drab.vercel.app"
                         )                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

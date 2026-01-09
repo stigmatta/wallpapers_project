@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Component
 public class FirebaseOrderMapper {
 
-
     public OrderDocument toDocument(Order order) {
         if (order == null) return null;
 
