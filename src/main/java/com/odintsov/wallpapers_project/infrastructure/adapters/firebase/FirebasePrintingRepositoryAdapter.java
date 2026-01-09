@@ -44,6 +44,7 @@ public class FirebasePrintingRepositoryAdapter
     public <S extends Printing> S save(S entity) {
         entity.syncMethodIds();
         entity.syncCategoryIds();
+        entity.calculateEffectivePrice();
         return super.save(entity);
     }
 
@@ -52,6 +53,7 @@ public class FirebasePrintingRepositoryAdapter
         for (Printing entity : entities) {
             entity.syncMethodIds();
             entity.syncCategoryIds();
+            entity.calculateEffectivePrice();
         }
         super.saveAll(entities);
     }

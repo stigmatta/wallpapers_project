@@ -36,7 +36,7 @@ public class PrintingController {
     }
 
     @GetMapping
-    public ResponseEntity<PrintingCatalogResponse> getSouvenirs(
+    public ResponseEntity<PrintingCatalogResponse> getPrintings(
             @ModelAttribute PrintingFilter filter,
             @PageableDefault(size = 20, sort = "id",
                     direction = Sort.Direction.ASC) Pageable pageable
